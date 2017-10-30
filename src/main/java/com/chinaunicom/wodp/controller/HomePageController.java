@@ -23,6 +23,7 @@ public class HomePageController {
 	private String filePath;
 	/**
 	 * AJAX文件上传
+	 * 测试上传到git  希望能成功
 	 * @param file
 	 * @param request
 	 * @param response
