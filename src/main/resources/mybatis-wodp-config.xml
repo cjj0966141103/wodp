@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+				"http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <configuration>
+	  <settings>
+		<setting name="lazyLoadingEnabled" value="false" />
+	</settings>
+
+    <mappers>  
+        <!-- <mapper resource="sqlmap/MallBankcardMapper.xml"/>  -->
+        <mapper resource="sqlmap/RegisterMapper.xml"/> 
+        <mapper resource="sqlmap/WorkBillMapper.xml"/>
+        
+        <!-- 产品 --> 
+        <mapper resource="sqlmap/ProductMapper.xml"/> 
+        <!-- 产品需求 -->
+        <mapper resource="sqlmap/ProductRequirementMapper.xml"/> 
+        <!-- 操作员  -->
+        <mapper resource="sqlmap/OperatorMapper.xml"/> 
+        <!-- 商户 -->
+        <mapper resource="sqlmap/TenantMapper.xml"/>
+        <!-- 商户注销日志 -->
+        <mapper resource="sqlmap/TenantCancelLogMapper.xml"/>
+        <!-- 资源 -->
+        <mapper resource="sqlmap/ResourceMapper.xml"/>
+    </mappers>  
+	</configuration>
+
+	
+
+	

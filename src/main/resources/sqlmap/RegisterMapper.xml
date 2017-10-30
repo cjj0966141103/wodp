@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaunicom.wodp.mapper.RegisterMapper" >
+
+	<delete id="deleteUser" parameterType="string" >
+		delete from register where loginName=#{loginName}
+	</delete>
+	
+	<!-- 根据登录名获取当前密码 -->
+	<select id="getPasswordByUsername" parameterType="string" resultType="string">
+		select loginPwd from register where loginName=#{loginName}
+	</select>
+	
+	<!-- 根据用户名 修改密码 -->
+	<update id="alterPassWord" parameterType="com.chinaunicom.wodp.pojo.AlterPwd" >
+		 update register 
+			 <trim prefix="set" suffixOverrides=",">
+			     <if test="newPassword!=null">loginPwd=#{newPassword},</if>
+			 </trim>
+		 where  loginName=#{loginName}
+	</update>
+	
+	<!-- 根据用户名 查询 此用户名是否是管理员 -->
+	<select id="getIsAdminByUsername" parameterType="string" resultType="int">
+ 		select isAdmin from register where loginName = #{loginName}
+ 	</select>
+ 	
+ 	<!-- 根据传递的 是否是管理员 选择权限 -->
+ 	<select id="getUsernamePrivilege" parameterType="int" resultType="string">
+ 		SELECT p.name FROM 
+						  role r,
+						  privilege p,
+						  role_privilege rp
+ 					  WHERE 
+						  rp.rid=r.id AND
+						  rp.pid=p.id AND
+						  r.id=#{isAdmin};
+ 	</select>
+ 
+ 	<select id="checkName" parameterType="string" resultType="int">
+ 		select count(1) from register where loginName = #{loginName}
+ 	</select>
+ 
+ 	<insert id="save"  parameterType="com.chinaunicom.wodp.pojo.RegisterUser">
+		insert into register( username, loginName,isAdmin, admin, sex, email,
+							 qq, mobile, telephone, memo, pureOrgId, nickname,
+							 loginPwd, certNo, addr, roleIds, rtw_roleId, rtw_orgId
+							 , rtw_orgName, rtw_orgpid, addNodeId, totalSpace, folderName,
+							 userType, realName, filePath, pushFtp, ftpIp,
+							 ftpPort, ftpPath, ftpUsername, ftpPassword, orgId,
+							 orgName, orgHeadName, orgCertNo,
+							 orgTel, regCode, orgAddr, onlineStatus, remark)
+		values(#{username},#{loginName},#{isAdmin},#{admin},#{sex},#{email},#{qq},#{mobile},#{telephone},#{memo},#{pureOrgId},
+			   #{nickname},#{loginPwd},#{certNo},#{addr},#{roleIds},#{rtw_roleId},#{rtw_orgId},#{rtw_orgName},#{rtw_orgpid},#{addNodeId},
+			   #{totalSpace},#{folderName},#{userType},#{realName},#{filePath},#{pushFtp},#{ftpIp},#{ftpPort},#{ftpPath},
+			   #{ftpUsername},#{ftpPassword},#{orgId},#{orgName},#{orgHeadName},#{orgCertNo},
+			   #{orgTel},#{regCode},#{orgAddr},#{onlineStatus},#{remark})
+	</insert>
+	
+	 <insert id="saveSelective" parameterType="com.chinaunicom.wodp.pojo.RegisterUser">
+   
+    insert into register
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+     
+     
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="loginName != null" >
+        loginName,
+      </if>
+      <if test="isAdmin != null" >
+        isAdmin,
+      </if>
+      <if test="admin != null" >
+        admin,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="memo != null" >
+        memo,
+      </if>
+      <if test="pureOrgId != null" >
+        pureOrgId,
+      </if>
+      <if test="nickname != null" >
+        nickname,
+      </if>
+      <if test="loginPwd != null" >
+        loginPwd,
+      </if>
+      <if test="certNo != null" >
+        certNo,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="roleIds != null" >
+        roleIds,
+      </if>
+      <if test="rtw_roleId != null" >
+        rtw_roleId,
+      </if>
+      <if test="rtw_orgId != null" >
+        rtw_orgId,
+      </if>
+							
+      <if test="rtw_orgName != null" >
+        rtw_orgName,
+      </if>
+      <if test="rtw_orgpid != null" >
+        rtw_orgpid,
+      </if>
+      <if test="addNodeId != null" >
+        addNodeId,
+      </if>
+      
+      <if test="totalSpace != null" >
+        totalSpace,
+      </if>
+      <if test="folderName != null" >
+        folderName,
+      </if>
+      <if test="userType != null" >
+        userType,
+      </if>
+      <if test="realName != null" >
+        realName,
+      </if>
+      <if test="filePath != null" >
+        filePath,
+      </if>
+      <if test="pushFtp != null" >
+        pushFtp,
+      </if>
+      <if test="ftpIp != null" >
+        ftpIp,
+      </if>
+      <if test="ftpPort != null" >
+        ftpPort,
+      </if>
+      <if test="ftpPath != null" >
+        ftpPath,
+      </if>
+      <if test="ftpUsername != null" >
+        ftpUsername,
+      </if>
+      <if test="ftpPassword != null" >
+        ftpPassword,
+      </if>
+      <if test="orgId != null" >
+        orgId,
+      </if>
+      <if test="orgName != null" >
+        orgName,
+      </if>
+      <if test="orgHeadName != null" >
+        orgHeadName,
+      </if>
+      <if test="orgCertNo != null" >
+        orgCertNo,
+      </if>
+      <if test="orgTel != null" >
+        orgTel,
+      </if>
+      <if test="regCode != null" >
+        regCode,
+      </if>
+      <if test="orgAddr != null" >
+        orgAddr,
+      </if>
+      <if test="onlineStatus != null" >
+        onlineStatus,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+         
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     
+      
+      <if test="username != null" >
+        #{username},
+      </if>
+      <if test="loginName != null" >
+        #{loginName},
+      </if>
+      <if test="isAdmin != null" >
+        #{isAdmin},
+      </if>
+      <if test="admin != null" >
+        #{admin},
+      </if>
+      <if test="sex != null" >
+        #{sex},
+      </if>
+      <if test="email != null" >
+        #{email},
+      </if>
+      <if test="qq != null" >
+        #{qq},
+      </if>
+      <if test="mobile != null" >
+        #{mobile},
+      </if>
+      <if test="telephone != null" >
+        #{telephone},
+      </if>
+      <if test="memo != null" >
+        #{memo},
+      </if>
+      <if test="pureOrgId != null" >
+        #{pureOrgId },
+      </if>
+      <if test="nickname != null" >
+        #{nickname },
+      </if>
+      <if test="loginPwd != null" >
+        #{loginPwd },
+      </if>
+      <if test="certNo != null" >
+        #{certNo },
+      </if>
+      <if test="addr != null" >
+        #{addr },
+      </if>
+      <if test="roleIds != null" >
+        #{roleIds },
+      </if>
+      <if test="rtw_roleId != null" >
+        #{rtw_roleId },
+      </if>
+      <if test="rtw_orgId != null" >
+        #{rtw_orgId },
+      </if>
+      <if test="rtw_orgName != null" >
+        #{rtw_orgName },
+      </if>
+      <if test="rtw_orgpid != null" >
+        #{rtw_orgpid },
+      </if>
+      <if test="addNodeId != null" >
+        #{addNodeId },
+      </if>
+      <if test="totalSpace != null" >
+        #{totalSpace },
+      </if>
+      <if test="folderName != null" >
+        #{folderName },
+      </if>
+      <if test="userType != null" >
+        #{userType },
+      </if>
+      <if test="realName != null" >
+        #{realName },
+      </if>
+      <if test="filePath != null" >
+        #{filePath },
+      </if>
+      
+      <if test="pushFtp != null" >
+        #{pushFtp },
+      </if>
+      <if test="ftpIp != null" >
+        #{ftpIp },
+      </if>
+      <if test="ftpPort != null" >
+        #{ftpPort },
+      </if>
+      <if test="ftpPath != null" >
+        #{ftpPath },
+      </if>
+      <if test="ftpUsername != null" >
+        #{ftpUsername },
+      </if>
+      <if test="ftpPassword != null" >
+        #{ftpPassword },
+      </if>
+      <if test="orgId != null" >
+        #{orgId },
+      </if>
+      <if test="orgName != null" >
+        #{orgName },
+      </if>
+      <if test="orgHeadName != null" >
+        #{orgHeadName },
+      </if>
+      <if test="orgCertNo != null" >
+        #{orgCertNo },
+      </if>
+      <if test="orgTel != null" >
+        #{orgTel },
+      </if>
+      <if test="regCode != null" >
+        #{regCode },
+      </if>
+      <if test="orgAddr != null" >
+        #{orgAddr },
+      </if>
+      <if test="onlineStatus != null" >
+        #{onlineStatus },
+      </if>
+      <if test="remark != null" >
+        #{remark },
+      </if>
+      
+    </trim>
+  </insert>
+ 
+</mapper>

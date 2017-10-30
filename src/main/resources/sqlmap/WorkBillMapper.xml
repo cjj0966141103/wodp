@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaunicom.wodp.mapper.WorkBillMapper">
+	<insert id="saveWorkBill" parameterType="com.chinaunicom.wodp.pojo.WorkBill">
+		insert into workbill(bus_id,work_no,product_id,max_num,serial_num,times,system_id,status,createTime)
+		values(#{bus_id},#{work_no},#{product_id},#{max_num},#{serial_num},#{times},#{system_id},#{status},#{createTime})
+	</insert>
+
+	<insert id="saveWorkBillSelective" parameterType="com.chinaunicom.wodp.pojo.WorkBill">
+		insert into workbill
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			
+			<if test="bus_id != null">
+				bus_id,
+			</if>
+			<if test="work_no != null">
+				work_no,
+			</if>
+			<if test="product_id != null">
+				product_id,
+			</if>
+			<if test="max_num != null">
+				max_num,
+			</if>
+			<if test="serial_num != null">
+				serial_num,
+			</if>
+			<if test="times != null">
+				times,
+			</if>
+			<if test="system_id != null">
+				system_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="createTime != null">
+				createTime,
+			</if>
+			
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+		
+			<if test="bus_id != null">
+				#{bus_id},
+			</if>
+			<if test="work_no != null">
+				#{work_no},
+			</if>
+			<if test="product_id != null">
+				#{product_id},
+			</if>
+			<if test="max_num != null">
+				#{max_num},
+			</if>
+			<if test="serial_num != null">
+				#{serial_num},
+			</if>
+			<if test="times != null">
+				#{times},
+			</if>
+			<if test="system_id != null">
+				#{system_id},
+			</if>
+			<if test="status != null">
+				#{status},
+			</if>
+			<if test="createTime != null">
+				#{createTime},
+			</if>
+			
+		</trim>
+	</insert>
+	
+	<!-- 根据工单号  判断  工单是否已经存在 -->
+	<select id="checkWorkNumber" parameterType="string" resultType="int">
+		select count(*) from workbill where work_no=#{work_no}
+	</select>
+	
+	<!-- 根据工单号获取工单 -->
+	<select id="getWorkBillAlter" parameterType="string" resultType="com.chinaunicom.wodp.pojo.WorkBillAlter">
+		select * from workbill w 
+			left join tenant t on w.bus_id=t.bus_id
+			left join product p on w.product_id=p.product_id where work_no=#{work_no}
+	</select>
+	
+	<!-- 根据条件查询 工单 -->
+	<sql id="query_workbill_where">
+		<where>
+			<if test="product_name != null and product_name != ''">
+				and p.product_name like "%"#{product_name}"%"
+			</if>
+			<if test="bus_name != null and bus_name != ''">
+				and t.bus_name like "%"#{bus_name}"%"
+			</if>
+			
+			<if test="status != 3">
+				and w.status = #{status}
+			</if>
+			<if test="beginTime != null and beginTime != ''">
+				<![CDATA[   and DATE_FORMAT(createTime, '%Y-%m-%d')>=  DATE_FORMAT(#{beginTime}, '%Y-%m-%d')]]>
+			</if>
+			<if test="endTime != null and endTime != ''">
+				<![CDATA[   and DATE_FORMAT(createTime, '%Y-%m-%d')<=  DATE_FORMAT(#{endTime}, '%Y-%m-%d')]]>
+			</if>
+			
+			
+		</where>
+	</sql>
+	<select id="queryWorkBill" parameterType="com.chinaunicom.wodp.pojo.WorkBillQuery" resultType="com.chinaunicom.wodp.pojo.WorkBill" >
+		select 
+			distinct
+			t.bus_name ,
+			p.product_name,
+			w.work_no,w.times,w.status,w.id,w.serial_num,w.createTime
+		from workbill w
+		   left join tenant t on w.bus_id=t.bus_id
+			left join product p on w.product_id=p.product_id 
+			<include refid="query_workbill_where"/>
+			order by createTime desc
+			<if test="startRow != null">
+				limit #{startRow},#{pageSize}
+			</if>
+	</select>
+	
+	<!-- 根据条件查询工单总数 -->
+	<select id="queryWorkBillCount" parameterType="com.chinaunicom.wodp.pojo.WorkBillQuery" resultType="int">
+		select  count(*) from workbill w
+			left join tenant t on w.bus_id=t.bus_id
+			left join product p on w.product_id=p.product_id
+		<include refid="query_workbill_where"/>
+	</select>
+	
+	<!-- 修改 工单 状态  -->
+	<update id="alterWorkBill" parameterType="com.chinaunicom.wodp.pojo.WorkBillAlter" >
+		update workbill 
+		 <trim prefix="set" suffixOverrides=",">
+		  <if test="execute_status!=null">status=#{execute_status},</if>
+		  <if test="file_name!=null">file_name=#{file_name},</if>
+		  <if test="remark!=null">remark=#{remark},</if>
+		  <if test="ip!=null">ip=#{ip},</if>
+		  <if test="port!=null">port=#{port},</if>
+		  <if test="user!=null">user=#{user},</if>
+		  <if test="password!=null">password=#{password},</if>
+		  <if test="file_path!=null">file_path=#{file_path},</if>
+		 </trim>
+		where work_no=#{work_no} 
+	</update>
+
+
+</mapper>

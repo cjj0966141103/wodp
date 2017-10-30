@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <title>HomePage</title>
+    <style>
+        *{padding: 0; margin: 0; font-family: "微软雅黑";}
+
+        /*header*/
+        .bg_header{ background-color: #e7ecf2; overflow:hidden;}
+        .bg_header img{
+            position: relative;
+            left: 50%;
+            margin-left: -960px;
+        }
+        #header{
+            z-index: 999;
+            position: fixed;
+            top: 0px;
+            width: 1200px;
+            left: 50%;
+            margin-left: -600px;
+            background-color: #b82424;
+        }
+        #header a{
+            padding-right: 35px;
+            text-decoration: none;
+            line-height: 48px;
+            color: white;
+            display: inline-block;
+        }
+        #header a:nth-child(1){
+            padding-left: 35px;
+        }
+        #header a:nth-child(5),#header a:nth-child(6){
+            float: right;
+        }
+
+        /*footer*/
+        .bg_footer{
+            background-color: #e7ecf2;
+        }
+        #column_box{
+            width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        #column_box .column{
+        	height:369px;
+            margin-right: 45px;
+            background-color: #e7ecf2;
+            width: 264px;
+            float: left;
+            border: 1px solid #bcbcbc;
+        }
+        #column_box .column:last-child{
+            margin-right: 0;
+        }
+        #column_box .column *{
+            text-align: center;
+        }
+        #column_box .column img{
+            margin: 30px 80px 10px;
+        }
+        #column_box .column p{
+            line-height: 26px;
+            padding: 15px 12px 20px;
+        }
+        #column_box .column a{
+            text-decoration: none;
+            background-color: #de4f6d;
+            display: block;
+            margin: 0 auto;
+            line-height: 38px;
+            color: white;
+            width: 238px;
+            margin-bottom: 15px;
+        }
+        .bg_footer>p{
+            line-height: 60px;
+            text-align: center;
+            width: 1200px;
+            margin: 40px  auto 0 auto;
+        }
+
+
+        /*main*/
+        .bg_main{
+            background-color: white;
+        }
+        #main{
+            padding-bottom: 40px;
+            width: 1200px;
+            margin: 0 auto;
+        }
+        #main .column{
+            overflow: hidden;
+        }
+        #column_l{
+            line-height: 23px;
+            width: 484px;
+            float: left;
+        }
+        #column_l p:first-child{
+            margin: 67px 0 36px 0;
+            text-indent: 2em;
+        }
+        #column_l p:last-child{
+            margin: 36px 0 0 0;
+        }
+        #column_r{
+            float: right;
+            margin: 58px 0 20px 0;
+        }
+        #column_r .column_r_c{
+            margin-top: 14px;
+            overflow: hidden;
+        }
+
+        #column_r .column_r_c>h3,#column_r .column_r_c>div{
+            float: left;
+        }
+        #column_r .column_r_c>h3{
+            text-align: center;
+            color: white;
+        }
+        #column_r .column_r_c1{ background-color: #b82424; border: 3px solid #b82424;}
+        #column_r .column_r_c2{ background-color: #de4f6d; border: 3px solid #de4f6d;}
+        #column_r .column_r_c3{ background-color: #e78c5d; border: 3px solid #e78c5d;}
+        #column_r .column_r_c4{ background-color: #808080; border: 3px solid #808080;}
+
+        #column_r .column_r_c1 h3{
+            padding: 14px 8px;
+        }
+        #column_r .column_r_c2 h3{
+            padding: 14px 16px;
+        }
+        #column_r .column_r_c3 h3{
+            padding: 36px 16px;
+        }
+        #column_r .column_r_c4 h3{
+            padding: 48px 16px;
+        }
+
+        #column_r .column_r_c>div{
+            background-color: white;
+            overflow: hidden;
+            width: 398px;
+        }
+        #column_r .column_r_c1>div span{
+            color: white;
+            text-align: center;
+            float: left;
+            display: block;
+            width: 70px;
+            line-height: 20px;
+            background-color: #b82424;
+            margin: 29px 4px;
+        }
+        #column_r .column_r_c2>div{
+            padding: 0 1px;
+        }
+        #column_r .column_r_c2>div span{
+            color: white;
+            text-align: center;
+            float: left;
+            display: block;
+            width: 70px;
+            line-height: 20px;
+            background-color: #de4f6d;
+            margin: 29px 4px;
+        }
+
+        #column_r .column_r_c4>div{ overflow: hidden; padding: 1px 1px;}
+        #column_r .column_r_c4>div>div{ float: left;}
+        #column_r .column_r_c4>div>div p{ color: white; background-color: #808080; }
+
+        #column_r .fl{ height: 120px; width: 192px;}
+        #column_r .f2{ height: 120px; width: 125px;}
+        #column_r .fl p{
+            margin: 14px 20px;;
+            text-align: center;
+            line-height: 20px;
+            width: 100%;
+        }
+        #column_r .f2 p{
+            padding: 26px 14px;
+            text-align: center;
+            width: 100%;
+            margin:  12px 30px;
+        }
+
+        #column_r .column_r_c3>div{
+            padding: 32px 1px;
+            overflow: hidden;
+        }
+        #column_r .div1,#column_r .div2,#column_r .div3{
+            margin-left: 5px;
+            float: left;
+        }
+        #column_r .div1{
+            width: 233px;
+            margin-left: 10px;
+            overflow: hidden;
+        }
+        #column_r .div1 .div1_c1,#column_r .div1 .div1_c2{
+            float: left;
+        }
+        #column_r .div1 .div1_c2{
+            margin-top: 7px;
+        }
+        #column_r .div1 .div1_c1 span{
+            padding: 0 9px;
+            line-height: 20px;
+            display: inline-block;
+            color: white;
+            background-color: #e78c5d;
+        }
+        #column_r .div1 .div1_c2 span{
+            padding: 0 95px;
+            line-height: 30px;
+            display: inline-block;
+            color: white;
+            background-color: #e78c5d;
+        }
+        #column_r .div2 span,#column_r .div3 span{
+            color: white;
+            text-align: center;
+            display: inline-block;
+            width: 70px;
+            line-height: 56px;
+            background-color: #e78c5d;
+        }
+    </style>
+</head>
+<script type="text/javascript" src="./res/JS/constant.js"></script>
+<script type="text/javascript" src="./res/JS/jquery.min.js"></script>
+
+<body>
+<div class="bg_header">
+    <img src="./res/images/banner2.png">
+    <div id="header">
+        <a href="">数据存储</a>
+        <a href="">数据加工</a>
+        <a href="">数据建模</a>
+        <a href="">数据审核</a>
+        <a id="login1" href="">登录</a>
+        <a id="regester1" href="">注册</a> 
+    </div>
+</div>
+<div class="bg_main">
+    <div id="main">
+        <div class="column">
+            <div class="column_l" id="column_l">
+                <p>大数据应用合作创新实验室作为中国联通集团大数据运营中心的数据平台原型验证能力,支持集团大数据运营相关
+                工作;并开放多层级数据服务能力,对外进行行业和创新应用孵化合作。</p>
+                <img src="./res/images/data2.png">
+                <p>一级数据中心基础能力平台面向一级平台和二级运营孵化平台对外部数据租户,提供数据存储、数据加工作业、数据
+                建模和数据安全审计等4类共14中数据开放服务能力。</p>
+            </div>
+            <div class="column_f" id="column_r">
+                <div  class="column_r_c column_r_c1">
+                    <h3>Gate Way<br>数据服务</h3>
+                    <div>
+                        <span>数据授权</span>
+                        <span>数据脱敏</span>
+                        <span>合规检查</span>
+                        <span>数据计量</span>
+                        <span>行为审计</span>
+                    </div>
+                </div>
+
+                <div  class="column_r_c column_r_c2">
+                    <h3>数据分析<br>挖掘平台</h3>
+                    <div>
+                        <span>数据授权</span>
+                        <span>数据脱敏</span>
+                        <span>合规检查</span>
+                        <span>数据计量</span>
+                        <span>行为审计</span>
+                    </div>
+                </div>
+
+                <div  class="column_r_c column_r_c3">
+                    <h3>数据基础<br>平台</h3>
+                    <div>
+                        <div class="div1">
+                            <div class="div1_c1">
+                                <span>Hive</span>
+                                <span>Spark</span>
+                                <span>MapReduce</span>
+                            </div>
+                            <div class="div1_c2"><span>HDFS</span></div>
+                        </div>
+                        <div class="div2"><span>Hbase</span></div>
+                        <div class="div3"><span>Oracle</span></div>
+                    </div>
+                </div>
+
+                <div  class="column_r_c column_r_c4">
+                    <h3>基础设施</h3>
+                    <div>
+                        <div class="fl">
+                            <p>计算资源</p>
+                            <p>存储资源</p>
+                            <p>网络资源</p>
+                        </div>
+                        <div class="f2">
+                            <p>统一云平台管理(IasS)</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bg_footer">
+    <div id="column_box">
+        <div class="column">
+            <img src="./res/images/cunchu2.png">
+            <h3>数据存储</h3>
+            <p>提供对于关系型和非关系型数据的两种存储能力，支持数据的上传、下载、增删改查、权限
+            管理、数据共享等功能</p>
+            
+        </div>
+        <div class="column">
+            <img src="./res/images/jiagong2.png">
+            <h3>数据加工</h3>
+            <p>通过图形界面提供5种大数据加工能力，包括数据采集、ETL加工、数据入库、统计分析、数据
+            检索，并支持用户上传自定义jar包来执行Spark、Mapreduce任务</p>
+            
+        </div>
+        <div class="column">
+            <img src="./res/images/jianmo2.png">
+            <h3>数据建模</h3>
+            <p>提供5种数据建模能力，包括指标+规则建模、标签+规则建模、SSAS建模、SSPS建模、R语言建模。并支持
+            把建好的模型以服务的形式发布上线，方便实时、定期的来批量加工用户数据</p>
+            
+        </div>
+        <div class="column">
+            <img src="./res/images/shenhe2.png">
+            <h3>数据审核</h3>
+            <p>作为一级平台数据的审核出口，提供5种数据审计能力，包括数据授权、行为审计、数据
+            脱敏、合规检查、数据计量功能</p>
+            
+        </div>
+    </div>
+    <p>Copyright &copy; 1999-2014 中国联通 ALL Rights Reserved 京ICP备11000964号-3</p>
+</div>
+<script type="text/javascript">
+	 $("#login1").attr("href",login);
+	document.getElementById("regester1").href ="./regest.html";
+</script>
+</body>
+</html>

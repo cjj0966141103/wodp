@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaunicom.wodp.mapper.OperatorMapper" >
+	
+	<resultMap id="operatorMap" type="com.chinaunicom.wodp.pojo.Operator" >
+	    <id column="id" property="id" jdbcType="BIGINT" />
+	    <result column="bus_id" property="bus_id" jdbcType="VARCHAR" />
+	    <result column="user_id" property="user_id" jdbcType="VARCHAR" />
+	    <result column="user_name" property="user_name" jdbcType="VARCHAR" />
+	    <result column="phone_no" property="phone_no" jdbcType="VARCHAR" />
+	    <result column="serial_num" property="serial_num" jdbcType="VARCHAR" />
+	    <result column="email" property="email" jdbcType="VARCHAR" />
+	    <result column="operate_type" property="operate_type" jdbcType="VARCHAR" />
+	    <result column="system_id" property="system_id" jdbcType="VARCHAR" />
+	    <result column="operator_check" property="operator_check" jdbcType="VARCHAR" />
+	    <result column="create_time" property="create_time" jdbcType="DATE" />
+	    <result column="check_time" property="check_time" jdbcType="DATE" />
+	    <result column="status" property="status" jdbcType="VARCHAR" />
+	    <result column="roles" property="roles" jdbcType="VARCHAR" />
+  	</resultMap>
+  	
+  	<resultMap id="operatorRoleMap" type="com.chinaunicom.wodp.pojo.OperatorRole" >
+	    <id column="id" property="id" jdbcType="BIGINT" />
+	    <result column="op_id" property="opId" jdbcType="BIGINT" />
+	    <result column="op_log_id" property="opId" jdbcType="BIGINT" />
+	    <result column="roles" property="roles" jdbcType="VARCHAR" />
+	    <result column="create_time" property="create_time" jdbcType="DATE" />
+  	</resultMap>
+  	
+  	<resultMap id="queryOperatorMap" type="com.chinaunicom.wodp.pojo.QueryOperator" extends="operatorMap" >
+  		 <result column="bus_name" property="bus_name" jdbcType="VARCHAR" />
+  	</resultMap>
+  	
+  	<!--operator_log以及operator_log_role相关操作 -->
+  	<!--操作员日志插入  -->
+	<insert id="addOperatorLog" parameterType="com.chinaunicom.wodp.pojo.Operator" useGeneratedKeys="true" keyProperty="id">
+		insert into operator_log
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="bus_id != null" >
+		    bus_id,
+		  </if>
+		  <if test="user_id != null" >
+		    user_id,
+		  </if>
+		  <if test="user_name != null" >
+		    user_name,
+		  </if>
+		  <if test="phone_no != null" >
+		    phone_no,
+		  </if>
+		  <if test="serial_num != null" >
+		    serial_num,
+		  </if>
+		  <if test="email != null" >
+		    email,
+		  </if>
+		  <if test="operate_type != null" >
+		    operate_type,
+		  </if>
+		  <if test="system_id != null" >
+		    system_id,
+		  </if>
+		  <if test="operator_check != null" >
+		    operator_check,
+		  </if>
+		  <if test="create_time == null" >
+		    create_time,
+		  </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="bus_id != null" >
+		    #{bus_id,jdbcType=VARCHAR},
+		  </if>
+		  <if test="user_id != null" >
+		    #{user_id,jdbcType=VARCHAR},
+		  </if>
+		  <if test="user_name != null" >
+		    #{user_name,jdbcType=VARCHAR},
+		  </if>
+		  <if test="phone_no != null" >
+		    #{phone_no,jdbcType=VARCHAR},
+		  </if>
+		  <if test="serial_num != null" >
+		    #{serial_num,jdbcType=VARCHAR},
+		  </if>
+		  <if test="email != null" >
+		    #{email,jdbcType=VARCHAR},
+		  </if>
+		  <if test="operate_type != null" >
+		    #{operate_type,jdbcType=VARCHAR},
+		  </if>
+		  <if test="system_id != null" >
+		    #{system_id,jdbcType=VARCHAR},
+		  </if>
+		  <if test="operator_check != null" >
+		    #{operator_check,jdbcType=VARCHAR},
+		  </if>
+		  <if test="create_time == null" >
+		    now(),
+		  </if>
+		</trim>
+	</insert>
+  	<!--操作员角色日志插入  -->
+  	<insert id="addOperatorLogRole" parameterType="com.chinaunicom.wodp.pojo.OperatorRole">
+	    insert into operator_log_role
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="opId != null" >
+	        op_log_id,
+	      </if>
+	      <if test="roles != null" >
+	        roles,
+	      </if>
+	      <if test="create_time == null" >
+	        create_time,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="opId != null" >
+	        #{opId,jdbcType=BIGINT},
+	      </if>
+	      <if test="roles != null" >
+	        #{roles,jdbcType=VARCHAR},
+	      </if>
+	      <if test="create_time == null" >
+	        now(),
+	      </if>
+	    </trim>
+  	</insert>
+  
+  	<!--操作员日志更新 -->
+ 	<update id="updateOperatorLog" parameterType="com.chinaunicom.wodp.pojo.Operator" >
+	    update operator_log
+	    <set >
+	      <if test="bus_id != null" >
+	        bus_id = #{bus_id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="user_id != null" >
+	        user_id = #{user_id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="user_name != null" >
+	        user_name = #{user_name,jdbcType=VARCHAR},
+	      </if>
+	      <if test="phone_no != null" >
+	        phone_no = #{phone_no,jdbcType=VARCHAR},
+	      </if>
+	      <if test="serial_num != null" >
+	        serial_num = #{serial_num,jdbcType=VARCHAR},
+	      </if>
+	      <if test="email != null" >
+	        email = #{email,jdbcType=VARCHAR},
+	      </if>
+	      <if test="operate_type != null" >
+	        operate_type = #{operate_type,jdbcType=VARCHAR},
+	      </if>
+	      <if test="system_id != null" >
+	        system_id = #{system_id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="operator_check != null" >
+	        operator_check = #{operator_check,jdbcType=VARCHAR},
+	      </if>
+	      <if test="check_time == null" >
+	        check_time = now(),
+	      </if>
+	    </set>
+	    where id = #{id,jdbcType=BIGINT}
+    </update>
+    <!--操作员日志查询  -->
+    <select id="findOperatorLogById" parameterType="java.lang.Long" resultMap="operatorMap">
+    	select a.*,c.roles from operator_log as a , operator_log_role as c where a.id =c.op_log_id and a.id = #{id,jdbcType=BIGINT}
+  	</select>
+  	<!--操作员角色日志查询  -->
+  	<select id="findOperatorLogRoleByOperatorId" parameterType="java.lang.Long" resultMap="operatorRoleMap">
+	 	select * from operator_log_role where op_log_id = #{operatorId,jdbcType=BIGINT}
+  	</select>
+  	
+  	<!--操作员角色日志查询  -->
+  	<select id="findCreateOperatorLogByUserId" parameterType="java.lang.String" resultMap="operatorMap">
+	 	select * from operator_log where user_id = #{user_id,jdbcType=VARCHAR} and operate_type = '1' and operator_check ='1' order by check_time asc limit 0,1
+  	</select>
+   
+   <!--根据条件查询操作员日志数量  -->
+    <select id="findOperatorLogNumber" parameterType="com.chinaunicom.wodp.pojo.QueryOperator" resultType="java.lang.Integer">
+	 	select count(*) from operator_log as a , tenant as b where a.bus_id = b.bus_id
+	 	  <if test="bus_id != null" >
+  		  	and a.bus_id = #{bus_id,jdbcType=VARCHAR}
+    	  </if>
+    	  <if test="bus_name != null and bus_name != '' " >
+  		  	and b.bus_name like '%${bus_name}%'
+    	  </if>
+    	  <if test="user_name != null and user_name != '' " >
+  		  	and a.user_name like '%${user_name}%'
+    	  </if>
+    	  <if test="operator_check != null and operator_check != -1 " >
+  		  	and a.operator_check = #{operator_check,jdbcType=VARCHAR}
+    	  </if>
+  	</select>
+  	
+  	<!--根据条件查询操作员日志数量  -->
+    <select id="findOperatorLog" parameterType="com.chinaunicom.wodp.pojo.QueryOperator" resultMap="queryOperatorMap">
+	 	select a.*,b.bus_name,c.roles from operator_log as a , tenant as b , operator_log_role as c where a.id =c.op_log_id and a.bus_id = b.bus_id
+    	  <if test="bus_name != null and bus_name != '' " >
+  		  	and b.bus_name like '%${bus_name}%' 
+    	  </if>
+    	  <if test="user_name != null and user_name != '' " >
+  		  	and a.user_name like '%${user_name}%'
+    	  </if>
+    	  <if test="operator_check != null and operator_check != -1" >
+  		  	and a.operator_check = #{operator_check,jdbcType=VARCHAR}
+    	  </if>
+    	  <if test="operator_check == 1 or operator_check == 0" >
+  		  	order by a.check_time desc
+    	  </if>
+    	  <if test="begin != null">
+			limit #{begin},#{pageSize}
+		  </if>
+  	</select>
+  	
+    
+    
+    <!--================================================================================================================-->
+    
+    <!--operator以及operator_role相关操作 -->
+    <!--操作员插入 -->
+    <insert id="addOperator" parameterType="com.chinaunicom.wodp.pojo.Operator" useGeneratedKeys="true" keyProperty="id">
+		insert into operator
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="bus_id != null" >
+		    bus_id,
+		  </if>
+		  <if test="user_id != null" >
+		    user_id,
+		  </if>
+		  <if test="user_name != null" >
+		    user_name,
+		  </if>
+		  <if test="phone_no != null" >
+		    phone_no,
+		  </if>
+		  <if test="serial_num != null" >
+		    serial_num,
+		  </if>
+		  <if test="email != null" >
+		    email,
+		  </if>
+		  <if test="system_id != null" >
+		    system_id,
+		  </if>
+		  <if test="status != null" >
+		    status,
+		  </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="bus_id != null" >
+		    #{bus_id,jdbcType=VARCHAR},
+		  </if>
+		  <if test="user_id != null" >
+		    #{user_id,jdbcType=VARCHAR},
+		  </if>
+		  <if test="user_name != null" >
+		    #{user_name,jdbcType=VARCHAR},
+		  </if>
+		  <if test="phone_no != null" >
+		    #{phone_no,jdbcType=VARCHAR},
+		  </if>
+		  <if test="serial_num != null" >
+		    #{serial_num,jdbcType=VARCHAR},
+		  </if>
+		  <if test="email != null" >
+		    #{email,jdbcType=VARCHAR},
+		  </if>
+		  <if test="system_id != null" >
+		    #{system_id,jdbcType=VARCHAR},
+		  </if>
+		  <if test="status != null" >
+		    #{status,jdbcType=VARCHAR},
+		  </if>
+		</trim>
+	</insert>
+	<!--操作员角色插入 -->
+	<insert id="addOperatorRole" parameterType="com.chinaunicom.wodp.pojo.OperatorRole">
+	    insert into operator_role
+	    <trim prefix="(" suffix=")" suffixOverrides="," >
+	      <if test="opId != null" >
+	        op_id,
+	      </if>
+	      <if test="roles != null" >
+	        roles,
+	      </if>
+	    </trim>
+	    <trim prefix="values (" suffix=")" suffixOverrides="," >
+	      <if test="opId != null" >
+	        #{opId,jdbcType=BIGINT},
+	      </if>
+	      <if test="roles != null" >
+	        #{roles,jdbcType=VARCHAR},
+	      </if>
+	    </trim>
+  	</insert>
+  	<!--操作员更新  -->
+ 	<update id="updateOperatorByUserId" parameterType="com.chinaunicom.wodp.pojo.Operator" >
+	    update operator
+	    <set >
+	      <if test="bus_id != null" >
+	        bus_id = #{bus_id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="user_id != null" >
+	        user_id = #{user_id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="user_name != null" >
+	        user_name = #{user_name,jdbcType=VARCHAR},
+	      </if>
+	      <if test="phone_no != null" >
+	        phone_no = #{phone_no,jdbcType=VARCHAR},
+	      </if>
+	      <if test="serial_num != null" >
+	        serial_num = #{serial_num,jdbcType=VARCHAR},
+	      </if>
+	      <if test="email != null" >
+	        email = #{email,jdbcType=VARCHAR},
+	      </if>
+	      <if test="system_id != null" >
+	        system_id = #{system_id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="status != null" >
+	        status = #{status,jdbcType=VARCHAR},
+	      </if>
+	    </set>
+	    where user_id = #{user_id,jdbcType=VARCHAR}
+    </update>
+    <!--操作员角色更新  -->
+ 	<update id="updateOperatorRoleByOpId" parameterType="com.chinaunicom.wodp.pojo.OperatorRole" >
+	    update operator_role
+	    <set >
+	      <if test="roles != null" >
+	        roles = #{roles,jdbcType=VARCHAR},
+	      </if>
+	    </set>
+	    where op_id = #{opId,jdbcType=BIGINT}
+    </update>
+    <!--操作员查询  -->
+    <select id="findOperatorByUserId" parameterType="java.lang.String" resultMap="operatorMap">
+    	select a.*,c.roles from operator as a , operator_role as c where a.id =c.op_id and a.user_id = #{user_id,jdbcType=VARCHAR}
+  	</select>
+  	<!--根据商户id查询操作员数量  -->
+    <select id="findOperatorNumberByBusId" parameterType="java.lang.String" resultType="java.lang.Integer">
+	 	select count(*) from operator where bus_id = #{bus_id,jdbcType=VARCHAR}
+  	</select>
+  	<!--操作员角色查询  -->
+  	<select id="findOperatorRoleByOperatorId" parameterType="java.lang.Long" resultMap="operatorRoleMap">
+	 	select * from operator_role where op_id = #{operatorId,jdbcType=BIGINT}
+  	</select>
+  	<!--操作员根据条件更新  -->
+ 	<update id="updateOperator" parameterType="com.chinaunicom.wodp.pojo.Operator" >
+	    update operator
+	    <set >
+	      <if test="bus_id != null" >
+	        bus_id = #{bus_id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="user_id != null" >
+	        user_id = #{user_id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="user_name != null" >
+	        user_name = #{user_name,jdbcType=VARCHAR},
+	      </if>
+	      <if test="phone_no != null" >
+	        phone_no = #{phone_no,jdbcType=VARCHAR},
+	      </if>
+	      <if test="serial_num != null" >
+	        serial_num = #{serial_num,jdbcType=VARCHAR},
+	      </if>
+	      <if test="email != null" >
+	        email = #{email,jdbcType=VARCHAR},
+	      </if>
+	      <if test="system_id != null" >
+	        system_id = #{system_id,jdbcType=VARCHAR},
+	      </if>
+	      <if test="status != null" >
+	        status = #{status,jdbcType=VARCHAR},
+	      </if>
+	    </set>
+	    where 1=1
+	      <if test="id != null" >
+  		  	and id = #{id,jdbcType=BIGINT}
+    	  </if>
+    	  <if test="bus_id != null" >
+  		  	and bus_id = #{bus_id,jdbcType=VARCHAR}
+    	  </if>
+    	  <if test="user_id != null" >
+  		  	and user_id = #{user_id,jdbcType=VARCHAR}
+    	  </if>
+    </update>
+    <!--根据条件查询操作员数量  -->
+    <select id="findOperator" parameterType="com.chinaunicom.wodp.pojo.QueryOperator" resultMap="queryOperatorMap">
+	 	select a.*,b.roles,c.create_time,c.check_time from operator as a , operator_role as b , operator_log as c 
+	 		where a.id =b.op_id and a.user_id = c.user_id
+	 	  <if test="bus_id != null" >
+  		  	and a.bus_id = #{bus_id,jdbcType=VARCHAR}
+    	  </if>
+    	  <if test="operate_type != null" >
+  		  	and c.operate_type = #{operate_type,jdbcType=VARCHAR}
+    	  </if>
+    	  <if test="operator_check != null and operator_check != -1" >
+  		  	and c.operator_check = #{operator_check,jdbcType=VARCHAR}
+    	  </if>
+    	  <if test="begin != null">
+			limit #{begin},#{pageSize}
+		  </if>
+  	</select>
+</mapper>

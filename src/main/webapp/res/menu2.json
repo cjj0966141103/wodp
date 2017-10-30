@@ -1,0 +1,11 @@
+[{"children":[{"children":[],"delete":true,"fullName":"中国联通/北京分公司","halfCheck":false,"id":2,"isParent"
+:true,"name":"北京分公司","nodeId":0,"nodeType":"org","open":true,"pid":1,"save":true,"top":false},{"children"
+:[],"delete":true,"fullName":"中国联通/上海分公司","halfCheck":false,"id":3,"isParent":true,"name":"上海分公司","nodeId"
+:0,"nodeType":"org","open":true,"pid":1,"save":true,"top":false},{"children":[],"delete":true,"fullName"
+:"中国联通/福建分公司","halfCheck":false,"id":4,"isParent":true,"name":"福建分公司","nodeId":0,"nodeType":"org","open"
+:true,"pid":1,"save":true,"top":false},{"children":[],"delete":true,"fullName":"中国联通/研究院","halfCheck"
+:false,"id":6,"isParent":true,"name":"研究院","nodeId":3,"nodeType":"org","open":true,"pid":1,"save":true
+,"top":false},{"children":[],"delete":false,"fullName":"其他","halfCheck":false,"id":-1,"isParent":true
+,"name":"其他","nodeId":0,"nodeType":"org","open":true,"pid":0,"save":false,"top":false}],"delete":true
+,"fullName":"中国联通","halfCheck":false,"id":1,"isParent":true,"name":"中国联通","nodeId":0,"nodeType":"org"
+,"open":true,"pid":0,"save":true,"top":true}]

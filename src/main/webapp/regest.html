@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{padding: 0; margin: 0; font-family: "微软雅黑";}
+        body{  background-color: #e7ecf2;  }
+    </style>
+    <link rel="stylesheet" href="./res/CSS/regest.css">
+    <link rel="stylesheet" href="./res/CSS/z_tree.css">
+    <link rel="stylesheet" href="./res/ztree/zTreeStyle.css">
+</head>
+<script type="text/javascript" src="./res/JS/constant.js"></script>
+
+<script type="text/javascript">
+//验证 用户名是否可以使用
+ 	function check(){
+		var value = $("#lala").val();
+	    var url = "./checkUsername"; 
+		$.post(url,{loginName:value},function(data){
+			  if(data.message == "用户名可以使用"){
+                 $("#tip").css("color","green");
+             }else{
+                 $("#tip").css("color","red");
+             }
+			$("#tip").val(data.message).show(); 
+
+		},'json'); 
+	}; 
+//检查邮箱是否可用
+	function checkEmail(){
+		var value=$("#emailll").val();
+		if (value=="") {
+			$("#emaill").css("color","red");
+			 $("#emaill").val("请输入邮箱").show();
+		}else{
+			$.ajax({
+	            type: "get",
+	            /* 提交的地址 */
+	            url: check_email,
+	            /* orgpid ziyuan*/
+	            data:{email:value},
+	            dataType:"jsonp",
+	            success: function(data){
+	            	 if(data.desc == "Email已存在"){
+	                    $("#emaill").css("color","red");
+	                }else{
+	                    $("#emaill").css("color","green");
+	                }
+	   			   $("#emaill").val(data.desc).show(); 
+	            	
+	            },
+	            error:function(){
+	                alert("系统错误");
+	            }
+	        });
+		}
+	};
+//检查qq是否可用
+	function checkQq(){
+		var value=$("#qqq").val();
+		if (value=="") {
+			$("#q").css("color","red");
+			 $("#q").val("请输入qq").show();
+		}else{
+			$.ajax({
+	            type: "get",
+	            /* 提交的地址 */
+	            url: check_qq,
+	            /* orgpid ziyuan*/
+	            data:{qq:value},
+	            dataType:"jsonp",
+	            success: function(data){
+	            	if(data.desc == "QQ可以注册"){
+	                    $("#q").css("color","green");
+	                }else{
+	                    $("#q").css("color","red");
+	                }
+	   			   $("#q").val(data.desc).show(); 
+	            },
+	            error:function(){
+	                alert("系统错误");
+	            }
+	        });
+		}
+	}
+
+</script>
+<body>
+<div class="bg_header">
+    <div id="header">
+        <img class="logo" src="./res/images/weblogo.png">
+        <h1 class="h_right">一级数据中心能力基础能力平台</h1>
+        <div class="h_left2">
+            <a id="tohome1" href="">退出</a>
+        
+        </div>
+        <div class="h_left1">
+            <p>欢迎注册！</p>
+        </div>
+    </div>
+</div>
+
+<div class="bg_main">
+    <div class="mian" id="main">
+        <form id="singupForm" target="submitIframe">
+            <div class="main_c main_1" id="myform1">
+                <span>账号注册</span><span style="color: red;">(*为必填项)</span>
+                <table id="table1" style="display: table">
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 登录账号</td>
+                        <td><input id="lala" type="text"  name="loginName" onblur="check();" placeholder="请输入账号" /></td>
+                    	<td><input id="tip" type="text" style="display: none; border: none;background-color: transparent;"></td>
+                    </tr>
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 姓名</td>
+                        <td><input type="text"  name="username"  placeholder="请输入用户名"/></td>
+                    </tr>
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 邮箱</td>
+                        <td><input id="emailll" type="text" name="email"  placeholder="请输入邮箱" onblur="checkEmail();" /></td>
+                        <td><input id="emaill" type="text" style="display: none; border: none;background-color: transparent;"></td>
+                    </tr>
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 联系电话</td>
+                        <td><input name="mobile" type="text"  placeholder="请输入电话"/></td>
+                    </tr>
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 身份证号</td>
+                        <td><input name="certNo" type="text" placeholder="请输入身份证号"/></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 角色选择</td>
+	                   		 <td>
+	                            <select id="isAdmin" name="isAdmin" onchange="func();" >
+	                                <option value="1" >系统管理员</option>                              
+								    <option value="2">普通用户</option>
+	                            </select>
+	                   		 </td>
+                    </tr>
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 登录密码</td>
+                        <td><input type="password" name="loginPwd"   placeholder="设置你的登录密码"/></td>
+                    </tr>
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 确认密码</td>
+                        <td><input type="password" name="login_pwd" placeholder="请再次输入你的密码"/></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="main_c main_2" id="myform2">
+                <p class="main_c_title">
+                    <span>数据作业注册</span>
+                    <input type="button"   value="注册" class="title1 registerDEW" style="margin: 0 23px 0 125px;"/>
+                    <input type="button"   value="暂不注册" class="title3 registerDEW"/>
+                    <input type="text" id="registerDEW" name="registerDEW" style="display:none;" value="0">
+                </p>
+                <table>
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 组织机构</td>
+                        <td>
+                            <div style=" background-color: white;padding: 10px; border: 1px solid #bfbdbe;  border-radius: 3px">
+                                <ul id="treeDemo" class="ztree"></ul>
+                                <input id = "treeid" name="rtw_orgId" type="hidden"/>
+                             </div>
+                        </td>
+                    </tr>
+                    <tr id="rtw_roleId">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 角色类型</td>
+                        <td>
+                            <select  name="rtw_roleId">
+							    <option value="2">普通用户</option>
+                                <option value="3">只读权限</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 存储份额</td>
+                        <td><input type="text" class="input" name="totalSpace"  placeholder="请输入存储份额"/></td>
+                    </tr>
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 存储目录</td>
+                        <td><input type="text" class="input" name="folderName"  placeholder="请输入存储目录"/></td>
+                    </tr>
+                   
+
+                    <tr>
+                        <td> 昵称</td>
+                        <td><input type="text" class="input" name="nickname"  placeholder="请输入昵称"/></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="main_c main_3" id="myform3">
+                <p class="main_c_title">
+                    <span>挖掘分析注册</span>
+                    <input type="button"  value="注册" class="title1 registerWJ" style="margin: 0 23px 0 117px;"/>
+                    <input type="button"  value="暂不注册" class="title3 registerWJ"/>
+                    <input type="text" id="registerWJ" name="registerWJ" style="display:none;" value="0">
+                </p>
+                <table>
+                   <!--  <tr>
+                        <td><input name="admin" type="hidden" value="0" > </td>
+                    </tr> -->
+                    <tr>
+                        <td>性别</td>
+                        <td>
+                            <select  name="sex">
+                                <option value="1">男</option>
+                                <option value="0">女</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <!-- <tr style="line-height: 30px">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 角色(多选)</td>
+                        <td><input type="checkbox" name="roleIds" value="m01"><span> 模型需求方</span></td>
+                        <td><input type="checkbox" name="roleIds" value="m02"><span> 业务分析人员</span></td>
+                        <td></td>
+                    </tr>
+                    <tr style="line-height: 30px">
+                        <td></td>
+                        <td><input type="checkbox" name="roleIds" value="m03"><span> 数据处理人员</span></td>
+                        <td><input type="checkbox" name="roleIds" value="m04"><span> 数据挖掘人员</span></td>    
+                    </tr>
+                    <tr style="line-height: 30px">
+                        <td></td>
+                         <td><input type="checkbox" name="roleIds" value="m05"><span> 模型管理人员</span></td>
+                    </tr> -->
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> QQ</td>
+                        <td><input type="text" id= "qqq" class="input" name="qq"  placeholder="请输入QQ" onblur="checkQq();"/></td>
+                        <td><input id="q" type="text" style="display: none; border: none;background-color: transparent;"></td>
+                    </tr>
+
+                    <tr>
+                        <td> 固定电话</td>
+                        <td><input type="text" class="input" name="telephone" /></td>
+                    </tr>
+                    <tr>
+                        <td> 备注</td>
+                        <td>
+                            <textarea name="memo"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span>省份</td>
+                        <td>
+                            <ul id="nav">
+                                <li id="nav_first"><input id="selectbc" type="text" value="请选择">
+                                    <input style="display: none;" id="selectb" name="pureOrgId" type="text" value="">
+                                    <ul id="nav_first_c">
+                                        <li id="nav_c" value="111">总部
+                                             <ul id="nav_c_c">
+                                                 <li value="10">内蒙古</li>
+                                                 <li value="11"> 北京</li>
+                                                 <li value="13"> 天津</li>
+                                                 <li value="17"> 山东</li>
+                                                 <li value="18"> 河北</li>
+                                                 <li value="19"> 山西</li>
+                                                 <li value="30"> 安徽</li>
+                                                 <li value="31"> 上海</li>
+                                                 <li value="34"> 江苏</li>
+                                                 <li value="36"> 浙江</li>
+                                                 <li value="38"> 福建</li>
+                                                 <li value="50"> 海南</li>
+                                                 <li value="51"> 广东</li>
+                                                 <li value="59"> 广西</li>
+                                                 <li value="70"> 青海</li>
+                                                 <li value="71"> 湖北</li>
+                                                 <li value="74"> 湖南</li>
+                                                 <li value="75"> 江西</li>
+                                                 <li value="76"> 河南</li>
+                                                 <li value="79"> 西藏</li>
+                                                 <li value="81"> 四川</li>
+                                                 <li value="83"> 重庆</li>
+                                                 <li value="84"> 陕西</li>
+                                                 <li value="85"> 贵州</li>
+                                                 <li value="86"> 云南</li>
+                                                 <li value="87"> 甘肃</li>
+                                                 <li value="88"> 宁夏</li>
+                                                 <li value="89"> 新疆</li>
+                                                 <li value="90"> 吉林</li>
+                                                 <li value="91"> 辽宁</li>
+                                                 <li value="97"> 黑龙江</li>
+                                             </ul>
+                                        </li>
+                                        <li value="222">研究院本部</li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="main_c main_4" id="myform4">
+                <p class="main_c_title">
+                    <span>数据审计注册</span>
+                    <input type="button"   value="注册" class="title1 registerGA" style="margin: 0 23px 0 112px;"/>
+                    <input type="button"   value="暂不注册" class="title3 registerGA"/>
+                    <input type="text" id="registerGA" name="registerGA" style="display:none;" value="0">
+                </p>
+                <table>
+                    <tr>
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 用户类型</td>
+                        <td>
+                            <select name="userType" id="userType1" class="usertypea"  onchange="changeUserType()">
+                                <option value="safeUser">数据库管理员</option>
+                                <option value="auditUser">审核人员</option>
+                                <option value="mainateUser">运维人员</option>
+                            </select>
+                            <select name="userType" id="userType2" class="usertypeb" onchange="changeUserType()">
+                                <option  value="dataUser">数据用户</option>
+                                <option  value="orgUser">机构用户</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td> 联系地址</td>
+                        <td><textarea name="addr"  id="addr"></textarea></td>
+                    </tr>
+
+                    <tr id="ttr20" style="display:none;">
+                        <td></td>
+                        <td>
+                            <img id="imgShow" width="80" height="50"  src=""/>
+                           <!--  <button type="button" class="btn btn-danger"  onclick="checkTextBox();">提交</button>
+                             <input   id="queding" value="确定" onclick="ajaxFileUpload()"> -->
+                            <button   id="queding"  onclick="ajaxFileUpload()">确定</button>
+                            <button  id="quxiao">取消</button>
+                        </td>
+                    </tr>
+                    <tr id="ttr16">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 证件附件</td>
+                        <td><input type="file" id="upload" />
+                            <!--影藏域 文件上传的原来名字-->
+                            <input id="realName" name="realName" type="text" style="display: none;">
+                            <!--影藏域 文件存放的路径-->
+                            <input id="filePath" name="filePath" type="text" style="display: none;"><br>
+                            <span id="imageMsg" style="display:none;color: red;">压缩打包上传，附件中要求信息包括注册人身份证、法人身份证、营业执照</span>
+                        </td>
+                    </tr>
+
+                   <!--  <tr data-name="gwUserTr"  id="ttr0">
+                        <td> PUSH FTP</td>
+                        <td title="输出文件是否需要PUSH到指定FTP">
+                            <input type="checkbox" name="pushFtp" value="1" onclick="$('tr[data-name=gwUserFtpTr]').toggle()"/><span> 需要</span></td>
+                    </tr>
+                    <tr data-name="gwUserFtpTr"  id="ttr1"  style="display:none">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> FTP IP</td>
+                        <td><input type="text" name="ftpIp" id="ftpIp" value="" maxlength="15"/></td>
+                    </tr>
+                    <tr data-name="gwUserFtpTr" id="ttr2"  style="display:none">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> FTP端口</td>
+                        <td><input type="text" name="ftpPort" value="" maxlength="4"/></td>
+                    </tr>
+                    <tr data-name="gwUserFtpTr" id="ttr3" style="display:none">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> FTP路径</td>
+                        <td><input type="text" name="ftpPath" value=""/></td>
+                    </tr>
+                    <tr data-name="gwUserFtpTr" id="ttr4" style="display:none">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> FTP用户名</td>
+                        <td><input type="text" name="ftpUsername" id="ftpUsername" value=""/></td>
+                    </tr>
+                    <tr data-name="gwUserFtpTr" id="ttr5" style="display:none">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> FTP密码</td>
+                        <td><input type="password" name="ftpPassword"  id="ftpPassword" value=""/></td>
+                    </tr>
+
+                    <tr data-name="gwUserFtpTr" id="ttr7" style="display:none">
+                        <td></td>
+                        <td>
+                            <input id="checkFtp" type="button" value="测试FTP连接" />
+                            <input id="ftptxt" type="text">
+                        </td>
+                    </tr> -->
+                    <tr id="ttr17">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 机构名称</td>
+                        <td>
+                            <select id="orgId" name="orgId">
+                                <option></option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="gw_org_list" style="display: none;">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 机构名称</td>
+                        <td><input type="text" id="orgName"  name="orgName"/></td>
+                    </tr>
+
+                    <tr data-name="gwOrgTr" id="ttr9" style="display:none">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 法人名称</td>
+                        <td><input name="orgHeadName" type="text"  /></td>
+                    </tr>
+                    <tr data-name="gwOrgTr" id="ttr10" style="display:none">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 法人身份证</td>
+                        <td><input name="orgCertNo" type="text"  /></td>
+                    </tr>
+                    <tr data-name="gwOrgTr" id="ttr11" style="display:none">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 工商编码</td>
+                        <td><input name="regCode" type="text"  /></td>
+                    </tr>
+
+                    <tr data-name="gwOrgTr" id="ttr12" style="display:none">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 机构电话</td>
+                        <td><input name="orgTel" type="text"  /></td>
+                    </tr>
+                    <tr id="ttr18" style="display: none;">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 值班状态</td>
+                        <td>
+                            <select name="onlineStatus">
+                                <option  value="0">非值班</option>
+                                <option value="1">值班</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="ttr19" style="display: none;">
+                        <td> 备注</td>
+                        <td>
+                            <textarea name="remark"  id ="remark"></textarea>
+                        </td>
+                    </tr>
+                    <tr data-name="gwOrgTr" style="display:none">
+                        <td><span style="color: red; position: relative;top: 3px;">*</span> 公司地址</td>
+                        <td><input name="orgAddr" type="text"  /></td>
+                    </tr>
+
+                </table>
+            </div>
+        </form>
+
+        <input id="registbtn" style="float: right; margin-right: 30%;" type="button" value="注册">
+    </div>
+</div>
+<iframe name="submitIframe" id="submitIframe" style="display:none;"></iframe>
+<!--darwin弹框-->
+<div id="formboxq">
+    <h1>新增组织机构</h1>
+    <div id="orgForm">
+        <p>
+            <label id="user"><span style="color: red; position: relative;top: 1px;">*</span> 机构名称</label>
+            <input id="org" name="rtw_orgName" type="text"  placeholder="机构名称">
+        </p>
+        <p>
+            <label id="ziyuan"><span style="color: red; position: relative;top: 1px;">*</span> 分配资源池</label>
+            <select id="ziyuanchi" name="addNodeId">
+                <option>请选择</option>
+                <option value="0">暂无资源池</option>
+            </select>
+            <span style="color: #00b7cb;font-size: 13px;">点击进入资源管理界面</span>
+            <!-- 父id -->
+            <input  id="orgpid" name="rtw_orgpid" type="hidden" >
+        </p>
+        <p>
+            <input id="sss" type="button" value="确定">
+            <input id="ccc" type="button" value="取消">
+        </p>
+    </div>
+</div>
+<!--darwin弹框结束-->
+<div class="bg_footer">
+    <p id="footer">
+        Copyright &copy; 1999-2014 中国联通 ALL Rights Reserved 京ICP备11000964号-3
+    </p>
+</div>
+
+<!--注册信息显示弹框-->
+<div id="registframe">
+    <p></p>
+    <input type="button" value="确定" id="colsebtn">
+</div>
+<!--注册信息显示弹框结束-->
+
+
+<script src="./res/JS/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="./res/JS/jquery-form.js"></script>
+<script type="text/javascript" src="./res/JS/regest.js"></script>
+<script type="text/javascript" src="./res/JS/gateway.js"></script>
+<script type="text/javascript" src="./res/ztree/jquery.ztree.all-3.5.js"></script>
+<script type="text/javascript" src="./res/JS/z_tree.js"></script>
+
+<script type="text/javascript">
+	document.getElementById("tohome1").href ="./homepage.html";
+</script>
+
+<!-- 当选择的角色类型改变的时候,下面有些选项的变化 -->
+<script type="text/javascript">
+	if($("#isAdmin").find("option:selected").text()=="系统管理员"){
+		$("#rtw_roleId").removeAttr("name").hide();
+		$(".usertypeb").removeAttr("name").hide();
+	}
+	if($("#isAdmin").find("option:selected").text()=="普通用户"){
+		$("#rtw_roleId").attr("name","rtw_roleId").show();
+		$(".usertypeb").attr("name","userType").show();
+		$(".usertypea").removeAttr("name").hide();
+	}
+	changeUserType();
+</script>
+<script type="text/javascript">
+	function func(){
+		if($("#isAdmin").find("option:selected").text()=="系统管理员"){
+			$("#rtw_roleId").removeAttr("name").hide();;
+			$(".usertypea").attr("name","userType").show();
+			$(".usertypeb").removeAttr("name").hide();
+		}
+		if($("#isAdmin").find("option:selected").text()=="普通用户"){
+			$(".usertypea").removeAttr("name").hide();
+			$("#rtw_roleId").attr("name","rtw_roleId").show();
+			$(".usertypeb").attr("name","userType").show();
+		}
+		//alert(1);
+		//document.location.reload();
+		changeUserType();
+	}
+</script>
+</body>
+</html>

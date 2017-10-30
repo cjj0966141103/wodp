@@ -1,0 +1,48 @@
+.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+#formboxq{
+
+    background-color: #FFFFFF;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -134px 0 0 -299px;
+    display: none;
+    width: 598px;
+    height: 268px;
+    border-radius: 8px;
+}
+
+#org,#ziyuan{
+    outline: none;
+    width: 217px;
+    height: 40px;
+    text-indent: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+#sss,#ccc{
+    color: #00b7cb;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    background-color: transparent;
+    width: 60px;
+    line-height: 40px;
+}
+#sss:hover,#ccc:hover{
+    color: white;
+    background-color: #00b7cb;
+}
+#user{
+    margin-left: -50px;
+}
+#ziyuan{
+    margin-left: 76px;
+}
+#formboxq>h1{
+    margin: 26px 0;
+}
+#formboxq>form>p{
+    margin: 15px 0;
+}

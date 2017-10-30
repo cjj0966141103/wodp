@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaunicom.wodp.mapper.ResourceMapper">
+	<!-- 增加Resource_log表 -->
+	<insert id="saveResourceLog" parameterType="com.chinaunicom.wodp.pojo.Resource" useGeneratedKeys="true" keyProperty="id">
+		insert into tenant_resource_log 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="tenant_id != null" >
+		    tenant_id,
+		  </if>
+		  <if test="disk != null" >
+		    disk,
+		  </if>
+		  <if test="serial_num != null" >
+		    serial_num,
+		  </if>
+		  <if test="system_id != null" >
+		    system_id,
+		  </if>
+		  <if test="operate_type != null" >
+		    operate_type,
+		  </if>
+		   <if test="create_time == null" >
+		    create_time,
+		    </if>
+		  <if test="resource_check != null" >
+		    resource_check,
+		  </if>
+		  <if test="check_time == null" >
+		    check_time,
+		  </if>
+		  <if test="check_desc != null" >
+		    check_desc,
+		  </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="tenant_id != null" >
+		    #{tenant_id,jdbcType=VARCHAR},
+		  </if>
+		  <if test="disk != null" >
+		    #{disk},
+		  </if>
+		  <if test="serial_num != null" >
+		    #{serial_num,jdbcType=VARCHAR},
+		  </if>
+		  <if test="system_id != null" >
+		    #{system_id,jdbcType=VARCHAR},
+		  </if>
+		  <if test="operate_type != null" >
+		    #{operate_type,jdbcType=VARCHAR},
+		  </if>
+		  <if test="create_time == null" >
+		 	 now(),
+		  </if>
+		  <if test="resource_check != null" >
+		    #{resource_check,jdbcType=VARCHAR},
+		  </if>
+		  <if test="check_time == null" >
+		    now(),
+		  </if>
+		  <if test="check_desc != null" >
+		   #{check_desc,jdbcType=VARCHAR},
+		  </if>
+		</trim>
+	</insert>
+	
+	<!-- 增加Resource表 -->
+	<insert id="saveResource" parameterType="com.chinaunicom.wodp.pojo.Resource">
+	insert into tenant_resource 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="tenant_id != null" >
+		    tenant_id,
+		  </if>
+		  <if test="disk != null" >
+		    disk,
+		  </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="tenant_id != null" >
+		    #{tenant_id,jdbcType=VARCHAR},
+		  </if>
+		  <if test="disk != null" >
+		    #{disk},
+		  </if>
+		</trim>
+	</insert>
+	
+	<!-- 根据tenant_id查询 Resource_log表-->
+	<select id="selectResourceLog" parameterType="String" resultType="com.chinaunicom.wodp.pojo.Resource">
+		select * from tenant_resource_log where id = #{id}
+	</select>
+	<!-- 根据表id查询 Resource_log表-->
+	<select id="selectResourceLogById" parameterType="String" resultType="com.chinaunicom.wodp.pojo.Resource">
+		select * from tenant_resource_log where id = #{id}
+	</select>
+	
+	<!-- 根据tenant_id查询DataResource_log表  -->
+	<select id="selectDataResourceLog" parameterType="String" resultType="com.chinaunicom.wodp.pojo.DataResource">
+		select * from tenant_data_resource_log where resource_log_id = #{resource_log_id}
+	</select>
+	
+	<!-- 根据tenant_id查询 Resource_log表-->
+	<select id="selectResource" parameterType="String" resultType="com.chinaunicom.wodp.pojo.Resource">
+		select * from tenant_resource where tenant_id = #{tenant_id}
+	</select>
+	<!-- 根据tenant_id查询DataResource表  -->
+	<select id="selectDataResource" parameterType="String" resultType="com.chinaunicom.wodp.pojo.DataResource">
+		select * from tenant_data_resource where tenant_id = #{tenant_id}
+	</select>
+	
+	<!-- 删除Resource_log -->
+	<delete id="deleteResourceLogByTenantId" parameterType="String">
+	delete from tenant_resource_log where tenant_id = #{tenant_id}
+	</delete>
+	<!-- 删除Resource -->
+	<delete id="deleteResourceByTenantId" parameterType="String">
+	delete from tenant_resource where tenant_id = #{tenant_id}
+	</delete>
+	
+	<!-- 删除DataResource_log -->
+	<delete id="deleteDataResourceLogByTenantId" parameterType="String">
+	delete from tenant_data_resource_log where tenant_id = #{tenant_id}
+	</delete>
+	
+	<!-- 删除DataResource -->
+	<delete id="deleteDataResourceByTenantId" parameterType="String">
+	delete from tenant_data_resource where tenant_id = #{tenant_id}
+	</delete>
+	
+	<!-- 增加DataResource_log -->
+	<insert id="saveDataResourceLog" parameterType="com.chinaunicom.wodp.pojo.DataResource">
+	insert into tenant_data_resource_log 
+	<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="tenant_id != null" >
+		    tenant_id,
+		  </if>
+		  <if test="service_name != null" >
+		    service_name,
+		  </if>
+		  <if test="create_time == null" >
+		    create_time,
+		  </if>
+		  <if test="resource_log_id != null" >
+		    resource_log_id,
+		  </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="tenant_id != null" >
+		    #{tenant_id,jdbcType=VARCHAR},
+		  </if>
+		  <if test="service_name != null" >
+		    #{service_name,jdbcType=VARCHAR},
+		  </if>
+		  <if test="create_time == null" >
+		    now(),
+		  </if>
+		   <if test="resource_log_id != null" >
+		    #{resource_log_id}
+		  </if>
+		</trim>
+	</insert>
+	
+	<!-- 增加DataResource -->
+	<insert id="saveDataResource" parameterType="com.chinaunicom.wodp.pojo.DataResource">
+	insert into tenant_data_resource
+	 <trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="tenant_id != null" >
+		    tenant_id,
+		  </if>
+		  <if test="service_name != null" >
+		    service_name,
+		  </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+		  <if test="tenant_id != null" >
+		    #{tenant_id,jdbcType=VARCHAR},
+		  </if>
+		  <if test="service_name != null" >
+		    #{service_name,jdbcType=VARCHAR},
+		  </if>
+		</trim>
+	</insert>
+	<!-- 更新Resource -->
+	<update id="updateResource" parameterType="com.chinaunicom.wodp.pojo.Resource" >
+		<if test="tenant_id != null" >
+		update tenant_resource set 
+		<trim  suffixOverrides="," >
+		  <if test="tenant_id != null" >
+		    tenant_id = #{tenant_id},
+		  </if>
+		  <if test="disk != null" >
+		    disk = #{disk},
+		  </if>
+		</trim>
+		</if>
+		where tenant_id = #{tenant_id}
+	</update>
+	<!-- 更新ResourceLog -->
+	<update id="updateResourceLog" parameterType="com.chinaunicom.wodp.pojo.Resource">
+		<if test="tenant_id != null" >
+		update tenant_resource_log set 
+		<trim  suffixOverrides="," >
+		  <if test="tenant_id != null" >
+		    tenant_id = #{tenant_id},
+		  </if>
+		  <if test="disk != null" >
+		    disk = #{disk},
+		  </if>
+		  <if test="serial_num != null" >
+		    serial_num = #{serial_num},
+		  </if>
+		  <if test="system_id != null" >
+		    system_id = #{system_id},
+		  </if>
+		  <if test="operate_type != null" >
+		    operate_type = #{operate_type},
+		  </if>
+		  <if test="resource_check != null" >
+		    resource_check = #{resource_check},
+		  </if>
+		  <if test="check_time == null" >
+		    check_time = now(),
+		  </if>
+		</trim>
+		</if>
+		where id = #{id}
+	</update>
+	<!-- 更新DataResource -->
+	<update id="updateDataResource" parameterType="com.chinaunicom.wodp.pojo.DataResource" >
+		update tenant_data_resource set 
+		<trim  suffixOverrides="," >
+		  <if test="tenant_id != null" >
+		    tenant_id = #{tenant_id},
+		  </if>
+		  <if test="service_name != null" >
+		    disk = #{service_name},
+		  </if>
+		</trim>
+		where tenant_id = #{tenant_id}
+	</update>
+	<!-- 更新DataResourceLog -->
+	<update id="updateDataResourceLog" parameterType="com.chinaunicom.wodp.pojo.DataResource">
+		update tenant_data_resource_log set 
+		<trim  suffixOverrides="," >
+		  <if test="tenant_id != null" >
+		    tenant_id = #{tenant_id},
+		  </if>
+		  <if test="service_name != null" >
+		    disk = #{service_name},
+		  </if>
+		</trim>
+		where tenant_id = #{tenant_id}
+	</update>
+	
+</mapper>

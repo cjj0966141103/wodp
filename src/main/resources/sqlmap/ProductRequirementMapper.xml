@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaunicom.wodp.mapper.ProductRequirementMapper">
+	<insert id="save" parameterType="com.chinaunicom.wodp.pojo.ProductRequirement"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into product_requirement(field_name, field_desc, field_type, product_id, create_time)
+		values(#{field_name}, #{field_desc}, #{field_type},#{product_id},#{create_time})
+	</insert>
+</mapper>

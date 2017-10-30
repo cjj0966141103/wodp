@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+    	html,body{width: 100%;font-size:12px;}
+        *{padding: 0;margin: 0;}
+        .title{
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .title span{
+            padding: 0 10px 6px 10px;         
+            font-weight: bold;
+            line-height: 30px;
+            height: 30px;
+            border-bottom: 3px solid #cf0a0e;
+        }
+        .title2 input[type="text"]{
+            width: 128px;
+            line-height: 26px;
+            height: 26px;
+            border: 1px solid #d2d2d2;
+            outline: none;
+        }
+        .title2 input[type="button"],#fenye input[type="button"]{
+            background-color: #d9080d;
+            color: white;
+            width: 44px;
+            line-height: 26px;
+            height: 26px;
+            outline: none;
+            border: none;
+        }
+        table{
+            border: 1px solid #dfdfdf;
+            border-bottom: none;
+            width: 100%;
+            text-align: center;
+        }
+
+        table td{
+            line-height: 36px;
+            border-bottom: 1px solid #dfdfdf;
+        }
+        #operatorTitle tbody tr:nth-child(even){
+            background-color: #fbfbfb;
+           
+        }
+        
+        #operatorTitle thead tr:first-child{
+            background-color: #ecedec;
+        }
+
+        #second{
+            border: none;
+        }
+        #second td{
+            line-height: 36px;
+            border-bottom: 1px solid transparent;
+        }
+        #second tr:nth-child(odd){
+            background-color: transparent;
+        }
+        #second tr:first-child{
+            background-color: transparent;
+        }
+
+        #second tr td:nth-child(odd){
+            text-align: right;
+        }
+        #second tr td:nth-child(even){
+            text-align: left;
+        }
+        #operator{
+            /*display: none;*/
+        }
+        #merchant p,#operator p,#list p{
+            margin: 30px 0 15px 0;
+        }
+        #second>.p1{
+            padding-left: 20px;
+        }
+        #second>.p1:first-child{
+            margin-top: 20px;
+        }
+        #second>.p1:nth-child(odd){
+            /*background-color: #efefef;*/
+        }
+        #second .p1 input[type="text"]{
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+        #second .p1 span,#second .p1 input[type="text"]{
+            line-height: 40px;
+        }
+        #second input[type="button"]{
+            display: inline-block;
+            margin: 10px auto 0;
+            color: white;
+            width: 72px;
+            line-height: 40px;
+            height: 40px;
+            outline: none;
+            border: none;
+            background-color: #d9080d;
+        }
+        #submitbox{ text-align: center; }
+        #second{
+        border: none;
+            margin-left: 20%;   
+		    border-bottom: none;
+		    width:auto;
+            margin-top: 30px;     
+        }
+        input[type="text"]{
+            text-indent: 10px;
+        }
+        #second .p1 td:first-child span{
+            font-weight:bold;
+        }
+         #fenyebox{
+         	margin-top:30px;  
+            text-align: center;
+        }
+        #fenye a,#currentPage{
+            margin:0 3px;
+            font-size: 12px;
+            text-align: center;
+            display: inline-block;
+            border: 1px solid #cecece;
+            color: #9b9999;
+            line-height: 22px;
+            width: 22px;
+            height: 22px;
+        }
+        #fenye span{
+            font-size: 12px;
+            color: #666666;
+        }
+        #fenye #pre,#fenye #next{
+            width: 64px;
+        }
+        .selected{
+            background-color: #e9e9e9;
+            font-weight: bold;
+        }
+         #pre:hover,#next:hover,#center a:hover{
+        	color:red;
+        	cursor: pointer;
+        }
+        #operatorResults tr td:nth-child(8){ cursor: pointer;}
+        .current{
+        	background-color:#e9e9e9;
+        	font-weight: bold;
+        }
+		#user_name2,#operator_check,#phone_no2,#email2,#operate_type2,#roles2,#operator_check2,#message{
+            margin-left: 1px;
+	        width: 230px!important;
+		    line-height: 26px!important;
+		    height: 26px!important;
+		    /* border: 1px solid #d2d2d2!important; */
+		    outline: none!important;	  
+		    text-indent: 10px!important;
+        }
+        /* .border{ border: 1px solid #d2d2d2!important;}
+        .bordernone{ border: none!important;} */
+        #message{ height: 150px!important;}
+        #operator_check{ width: 128px!important;border: 1px solid #d2d2d2!important;}
+        #operator_check,#operator_check2{text-indent: 7px!important; }
+        #operator2{
+        	display:none;
+        }
+     
+    </style>
+</head>
+<body>
+<div id="operator">
+    <div class="title">
+        <span style="font-size:16px;">操作员列表</span>
+    </div>
+    <p class="title2">
+        <span>商户名称: </span><input id="bus_name" type="text" name="bus_name">
+        <span>操作员名称: </span><input id="user_name" type="text" name="user_name">
+        <span>审核状态: </span>
+        <select id="operator_check" name="operator_check">
+        	<option value="-1">全部</option>
+       		<option selected="selected" value="2">待审核</option>
+            <option value="1">审核通过</option>
+            <option value="0">审核不通过</option>
+        </select>
+        
+        <input id="listSearch" type="button" value="查询">
+    </p>
+    <table id="operatorTitle"  cellspacing="0" cellpadding="0">
+    	<thead>
+    		 <tr>
+	            <td>商户名称</td>
+	            <td>姓名</td>
+	            <td>联系手机</td>
+	            <td>EMAIL</td>
+	            <td>角色</td>
+	            <td>操作类型</td>
+	            <td>审核状态</td>
+	         </tr>
+    	</thead>
+    	<tbody id="operatorResults">
+
+    	</tbody>
+    </table>
+</div>
+
+<div id="fenyebox">
+    <div id="fenye">
+        <a id="pre">&lt;上一页</a>
+        	<span id="center"></span>
+        <a id="next">下一页&gt;</a>
+        <span>跳到第</span><input id="currentPage" class="currentPage"></input><span>页</span>
+        <input id="queding" type="button" value="确定">
+        <span style="margin-left: 20px;">第<span class="currentPage"></span>/<span id="totalPage"></span>页,共<span id="totalCount"></span>条记录</span>
+    </div> 
+</div>
+
+<div id="operator2">
+    <div class="title">
+        <span style="font-size:16px;">操作员审核</span>
+    </div>
+    <table id="second" cellspacing="0" cellpadding="0">
+        <tr class="p1">
+            <td><span>姓名: </span></td><td><input id="user_name2" name="user_name" type="text" value=""></td>
+        </tr>
+        <tr class="p1">
+            <td><span>联系手机: </span></td><td><input id="phone_no2" name="phone_no" type="text" value=""></td>
+        </tr>
+        <tr class="p1">  
+            <td><span>EMAIL: </span></td><td><input id="email2" name="email" type="text" value=""></td>
+        </tr>
+        <tr class="p1">
+            <td><span>操作类型: </span></td><td><input id="operate_type2" name="operate_type" type="text" value=""></td>
+        </tr>
+        <tr class="p1">    
+            <td><span>角色权限: </span></td><td><input id="roles2" name="roles" type="text" value=""></td>
+        </tr> 
+        <tr class="p1">
+            <td><span>审核: </span></td><td>
+								            <select id="operator_check2" name="operator_check">
+								            	<!-- <option>请选择</option> -->
+									            <option value="1">审核通过</option>
+									            <option value="0">审核不通过</option>
+								        	</select>
+								        </td>
+        </tr>             
+        <tr class="p1">
+            <td><span>审核意见: </span></td><td><textarea id="message" name="message" >请输入审核意见</textarea></td>
+        </tr>
+        <tr><td></td><td  style="text-align:center;"><input id="submit" type="button" value="提交"> <input id="submit2" type="button" value="返回"></tr>
+    </table>
+</div>
+</body>
+<script  type="text/javascript" src="../res/JS/constant.js"></script>
+<script  type="text/javascript" src="../res/JS/jquery.min.js"></script>
+<script  type="text/javascript">
+$(function(){
+	/* 查找事件 */
+    $('#listSearch').click(function(){
+    	
+    	var bus_name=$('#bus_name').val();
+       	var user_name=$('#user_name').val();     
+        var operator_check=$("#operator_check").find("option:selected").val();
+    
+    $.ajax({
+    	 type: "post",
+         url: "../operator/findOperatorLog",
+         data:{
+      	     "operator_check":operator_check,
+             "bus_name":bus_name,
+             "user_name":user_name
+         },
+         dataType : "json", 
+         success : function(data){   
+    		/* 分页机制 */
+    	    $('.currentPage').html(data.currentPage);
+    		$('#currentPage').val(data.currentPage);
+    		$('#totalCount').html(data.totalCount);
+    		$('#totalPage').html(data.totalPage); 
+			
+    		for(i=1,html1="";i<=data.totalPage;i++){
+    			    html1+="<a>"+i+"</a>";
+    		}
+    		$("#center").html(html1)
+    		$("#center a:eq(0)").addClass("current");
+
+    		/* 列表 查询结果展示 */
+            for(i=0,html="";i<data.data.length;i++){
+             	 var operator_check=data.data[i].operator_check;
+             	 if(operator_check==0){
+             		/*  operator_check="审核不通过"; */
+             		 operator_check="<td>审核不通过</td>"; 
+             	 }else if(operator_check==1){
+             		 /* operator_check="审核通过"; */
+             		 operator_check="<td>审核通过</td>"; 
+             	 }else if(operator_check==2){
+             		 /* operator_check="待审核"; */
+             		 operator_check="<td style='color: red;'>待审核</td>"; 
+             	 }
+             	 
+             	 var operate_type=data.data[i].operate_type;
+             	 if(operate_type==1){
+             		 operate_type="新增";
+             	 }else if(operate_type=="2"){
+             		 operate_type="修改";
+             	 }else if(operate_type=="3"){
+             		 operate_type="删除";
+             	 }else if(operate_type=="4"){
+             		 operate_type="信息同步";
+             	 }  
+             	 
+				
+				var lengths=data.data[i].roles.split(",");
+				 var roless="";
+				 for(j=0;j<lengths.length;j++){
+					 if(lengths[j]==1){
+						 lengths[j]=" 数据作业 ";
+					 }else if(lengths[j]==2){
+						 lengths[j]=" 数据挖掘 ";
+					 }else if(lengths[j]==3){
+						 lengths[j]=" 数据审计 ";
+					 } 
+					 roless+=lengths[j];
+				 }
+
+             	 html+="<tr>"+
+  	           	 "<td>"+data.data[i].bus_name+"</td>"+
+  	           	 "<td class='hidden' style='display:none;'>"+data.data[i].id+"</td>"+
+  	           	 "<td>"+data.data[i].user_name+"</td>"+
+  	           	 "<td>"+data.data[i].phone_no+"</td>"+                    
+  	           	 "<td>"+data.data[i].email+"</td>"+
+  	           	 "<td>"+roless+"</td>"+
+  	           	 "<td>"+operate_type+"</td>"+
+  	           	  operator_check
+  	           	/*  "<td>"+operator_check+"</td>"+ */
+  	   		   "</tr>"            
+             }
+       		$("#operatorResults").html(html);
+        },
+        error:function(){
+            alert('异常!!!!');
+        }
+    });
+})
+
+	/* 返回 */
+      $("#submit2").unbind().click(function(){
+   	    $("#operator,#fenyebox").show();
+		$("#operator2").hide();
+   	   })
+	$("#operatorResults tr td:nth-child(8)").live("click",function(){
+		if($(this).html()=="待审核"){		
+			$("#operator,#fenyebox").hide();
+			$("#operator2").show();
+			/* 列表详情部分只读 */
+			$("#user_name2,#phone_no2,#email2,#operate_type2,#roles2").attr("readonly","readonly");
+        	var operate_type=$(this).parent().children("td:eq(6)").html();
+			var roles=$(this).parent().children("td:eq(5)").html();
+			var user_name=$(this).parent().children("td:eq(2)").html();
+			var phone_no=$(this).parent().children("td:eq(3)").html();
+			var email=$(this).parent().children("td:eq(4)").html();
+			var id=$(this).parent().children("td:eq(1)").html();/* 获取隐藏域的id */
+			$("#user_name2").val(user_name);
+			$("#phone_no2").val(phone_no);
+			$("#email2").val(email);
+			$("#operate_type2").val(operate_type);
+			$("#roles2").val(roles);
+			
+			$("#submit").unbind().click(function(){
+				var operator_check=$("#operator_check2").find("option:selected").val();
+				var message=$('#message').val();
+				
+			    $.ajax({
+			    	 type: "post",
+			         url: "../operator/checkOperator",
+			         data:{
+			      	     "message":message,
+			             "id":id,
+			             "operator_check":operator_check
+			         },
+			         dataType : "json", 
+			         success : function(data){
+			        	 if(data.result_flag==1){
+			        		 alert("操作成功");
+			        	 }else if(data.result_flag==0){
+			        		 alert("操作失败");
+			        	 }
+			        	
+			 			 $("#operator2").hide();
+			 			 
+			        	 var bus_name=$('#bus_name').val();
+			             var user_name=$('#user_name').val();     
+			             var operator_check=$("#operator_check").find("option:selected").val();
+         	    		 
+                         $.ajax({
+                        	 type: "post",
+                             url: "../operator/findOperatorLog",
+                             data:{
+                          	     "operator_check":operator_check,
+                                 "bus_name":bus_name,
+                                 "user_name":user_name
+                             },
+                             dataType : "json",
+                             success : function(data){
+                            	 /* 分页机制 */
+                         	    $('.currentPage').html(data.currentPage);
+                         		$('#currentPage').val(data.currentPage);
+                         		$('#totalCount').html(data.totalCount);
+                         		$('#totalPage').html(data.totalPage); 
+                     			
+                         		for(i=1,html1="";i<=data.totalPage;i++){
+                         			    html1+="<a>"+i+"</a>";
+                         		}
+                         		$("#center").html(html1)
+                         		$("#center a:eq(0)").addClass("current");
+
+                         		/* 列表 查询结果展示 */
+                                for(i=0,html="";i<data.data.length;i++){
+                                 	 var operator_check=data.data[i].operator_check;
+                                 	 if(operator_check==0){
+                                 		/*  operator_check="审核不通过"; */
+                                 		 operator_check="<td>审核不通过</td>"; 
+                                 	 }else if(operator_check==1){
+                                 		 /* operator_check="审核通过"; */
+                                 		 operator_check="<td>审核通过</td>"; 
+                                 	 }else if(operator_check==2){
+                                 		 /* operator_check="待审核"; */
+                                 		 operator_check="<td style='color: red;'>待审核</td>"; 
+                                 	 }
+                                 	 
+                                 	 var operate_type=data.data[i].operate_type;
+                                 	 if(operate_type==1){
+                                 		 operate_type="新增";
+                                 	 }else if(operate_type=="2"){
+                                 		 operate_type="修改";
+                                 	 }else if(operate_type=="3"){
+                                 		 operate_type="删除";
+                                 	 }else if(operate_type=="4"){
+                                 		 operate_type="信息同步";
+                                 	 }  
+                                 	 
+               					
+               					var lengths=data.data[i].roles.split(",");
+               					 var roless="";
+	               					for(j=0;j<lengths.length;j++){
+	               					 if(lengths[j]==1){
+	               						 lengths[j]=" 数据作业 ";
+	               					 }else if(lengths[j]==2){
+	               						 lengths[j]=" 数据挖掘 ";
+	               					 }else if(lengths[j]==3){
+	               						 lengths[j]=" 数据审计 ";
+	               					 } 
+	               					 roless+=lengths[j];
+	               				 }
+
+                                 	 html+="<tr>"+
+                      	           	 "<td>"+data.data[i].bus_name+"</td>"+
+                      	           	 "<td class='hidden' style='display:none;'>"+data.data[i].id+"</td>"+
+                      	           	 "<td>"+data.data[i].user_name+"</td>"+
+                      	           	 "<td>"+data.data[i].phone_no+"</td>"+                    
+                      	           	 "<td>"+data.data[i].email+"</td>"+
+                      	           	 "<td>"+roless+"</td>"+
+                      	           	 "<td>"+operate_type+"</td>"+
+                      	           	  operator_check
+                      	           	/*  "<td>"+operator_check+"</td>"+ */
+                      	   		   "</tr>"            
+                                 }
+                            		$("#operatorResults").html(html); 
+                             },
+                             error:function(){
+                                 alert('异常!!!!');
+                             }
+                         }); 
+                         $("#operator,#fenyebox").show();
+			        	 
+			        },
+			        error:function(){
+			            alert('异常!!!!');
+			        }
+			    });
+				
+			})
+		}
+	})
+
+})
+</script>
+<script  type="text/javascript">
+window.onload=function(){
+	/* 默认显示 分页*/
+   $.ajax({
+        type : "post",
+        url : "../operator/findOperatorLog",
+        data:{
+     	     "operator_check":2,   
+        },		
+        dataType:'json',
+        success : function(data){	
+        		/* 分页机制 */
+        	    $('.currentPage').html(data.currentPage);
+        		$('#currentPage').val(data.currentPage);
+        		$('#totalCount').html(data.totalCount);
+        		$('#totalPage').html(data.totalPage); 
+				
+        		for(i=1,html1="";i<=data.totalPage;i++){
+        			    html1+="<a>"+i+"</a>";
+        		};
+        		$("#center").html(html1);
+        		$("#center a:eq(0)").addClass("current");
+				
+        		/* 列表 查询结果展示 */
+                for(i=0,html="";i<data.data.length;i++){
+                  	 var operator_check=data.data[i].operator_check;
+                  	 if(operator_check==0){
+                  		/*  operator_check="审核不通过"; */
+                  		 operator_check="<td>审核不通过</td>"; 
+                  	 }else if(operator_check==1){
+                  		 /* operator_check="审核通过"; */
+                  		 operator_check="<td>审核通过</td>"; 
+                  	 }else if(operator_check==2){
+                  		 /* operator_check="待审核"; */
+                  		 operator_check="<td style='color: red;'>待审核</td>"; 
+                  	 }
+                  	 
+                  	 var operate_type=data.data[i].operate_type;
+                  	 if(operate_type==1){
+                  		 operate_type="新增";
+                  	 }else if(operate_type=="2"){
+                  		 operate_type="修改";
+                  	 }else if(operate_type=="3"){
+                  		 operate_type="删除";
+                  	 }else if(operate_type=="4"){
+                 		 operate_type="信息同步";
+                 	 }  
+                  	 
+					
+					var lengths=data.data[i].roles.split(",");
+					 var roless="";
+					 for(j=0;j<lengths.length;j++){
+						 if(lengths[j]==1){
+							 lengths[j]=" 数据作业 ";
+						 }else if(lengths[j]==2){
+							 lengths[j]=" 数据挖掘 ";
+						 }else if(lengths[j]==3){
+							 lengths[j]=" 数据审计 ";
+						 } 
+						 roless+=lengths[j];
+					 }
+
+                  	 html+="<tr>"+
+       	           	 "<td>"+data.data[i].bus_name+"</td>"+
+       	           	 "<td class='hidden' style='display:none;'>"+data.data[i].id+"</td>"+
+       	           	 "<td>"+data.data[i].user_name+"</td>"+
+       	           	 "<td>"+data.data[i].phone_no+"</td>"+                    
+       	           	 "<td>"+data.data[i].email+"</td>"+
+       	           	 "<td>"+roless+"</td>"+
+       	           	 "<td>"+operate_type+"</td>"+
+       	           	  operator_check
+       	           	/*  "<td>"+operator_check+"</td>"+ */
+       	   		   "</tr>"            
+                  }
+            	$("#operatorResults").html(html);
+        },
+        error:function(){
+            alert('异常!!!!');
+        }
+    });
+	
+   var currentPage;
+   
+   /* 上一页 */	
+   $("#pre").live("click",function(){
+  
+   	if(parseInt($('#currentPage').val())>1){   
+
+   		currentPage=parseInt($('#currentPage').val())-1;      	
+       	var currentPage2=currentPage-1;
+       	$('.currentPage').html(currentPage);
+       	var bus_name=$('#bus_name').val();
+       	var user_name=$('#user_name').val();     	
+        var operator_check=$("#operator_check").find("option:selected").val();
+        
+        /* console.log("点击上一页的实际要请求的页:"+currentPage); */
+        
+           $.ajax({
+               type: "post",
+               url: "../operator/findOperatorLog",
+               data:{
+            	   "operator_check":operator_check,
+                   "bus_name":bus_name,
+                   "user_name":user_name,
+                   "currentPage":currentPage
+               },
+               dataType : "json",
+               success : function(data){
+            	   /* 分页机制 */
+             	    $('.currentPage').html(data.currentPage);
+             		$('#currentPage').val(data.currentPage);
+             		$('#totalCount').html(data.totalCount);
+             		$('#totalPage').html(data.totalPage); 
+   
+             		for(i=1,html1="";i<=data.totalPage;i++){
+             			    html1+="<a>"+i+"</a>";
+             		};
+             		$("#center").html(html1);
+             		$("#center a:eq("+currentPage2+")").addClass("current");
+     	
+             		/* 列表 查询结果展示 */
+                    for(i=0,html="";i<data.data.length;i++){
+                     	 var operator_check=data.data[i].operator_check;
+                     	 if(operator_check==0){
+                     		/*  operator_check="审核不通过"; */
+                     		 operator_check="<td>审核不通过</td>"; 
+                     	 }else if(operator_check==1){
+                     		 /* operator_check="审核通过"; */
+                     		 operator_check="<td>审核通过</td>"; 
+                     	 }else if(operator_check==2){
+                     		 /* operator_check="待审核"; */
+                     		 operator_check="<td style='color: red;'>待审核</td>"; 
+                     	 }
+                     	 
+                     	 var operate_type=data.data[i].operate_type;
+                     	 if(operate_type==1){
+                     		 operate_type="新增";
+                     	 }else if(operate_type=="2"){
+                     		 operate_type="修改";
+                     	 }else if(operate_type=="3"){
+                     		 operate_type="删除";
+                     	 }else if(operate_type=="4"){
+                     		 operate_type="信息同步";
+                     	 }  
+                     	 
+   					
+   					var lengths=data.data[i].roles.split(",");
+   					 var roless="";
+	   					for(j=0;j<lengths.length;j++){
+	   					 if(lengths[j]==1){
+	   						 lengths[j]=" 数据作业 ";
+	   					 }else if(lengths[j]==2){
+	   						 lengths[j]=" 数据挖掘 ";
+	   					 }else if(lengths[j]==3){
+	   						 lengths[j]=" 数据审计 ";
+	   					 } 
+	   					 roless+=lengths[j];
+	   				 }
+
+                     	 html+="<tr>"+
+          	           	 "<td>"+data.data[i].bus_name+"</td>"+
+          	           	 "<td class='hidden' style='display:none;'>"+data.data[i].id+"</td>"+
+          	           	 "<td>"+data.data[i].user_name+"</td>"+
+          	           	 "<td>"+data.data[i].phone_no+"</td>"+                    
+          	           	 "<td>"+data.data[i].email+"</td>"+
+          	           	 "<td>"+roless+"</td>"+
+          	           	 "<td>"+operate_type+"</td>"+
+          	           	  operator_check
+          	           	/*  "<td>"+operator_check+"</td>"+ */
+          	   		   "</tr>"            
+                     }
+                 	$("#operatorResults").html(html); 
+               },
+               error:function(){
+                   alert('异常!!!!');
+               }
+           });
+   	}
+   })
+   
+   /* 下一页 */
+    $("#next").live("click",function(){  
+   	if( parseInt($('#currentPage').val()) < parseInt($('#totalPage').html()) ){   
+   		
+       	currentPage=parseInt($('#currentPage').val())+1;      	
+       	var currentPage2=currentPage-1;
+       	$('.currentPage').html(currentPage);
+       	var bus_name=$('#bus_name').val();
+       	var user_name=$('#user_name').val();     	
+        var operator_check=$("#operator_check").find("option:selected").val();
+        
+        console.log("点击下一页的实际要请求的页:"+currentPage);
+          $.ajax({
+              type: "post",
+              url: "../operator/findOperatorLog",
+              data:{
+            	  "operator_check":operator_check,
+                  "bus_name":bus_name,
+                  "user_name":user_name,
+                  "currentPage":currentPage
+              },
+              dataType : "json",
+              success : function(data){
+            	  /* 分页机制 */
+          	    $('.currentPage').html(data.currentPage);
+          		$('#currentPage').val(data.currentPage);
+          		$('#totalCount').html(data.totalCount);
+          		$('#totalPage').html(data.totalPage); 
+	
+          		for(i=1,html1="";i<=data.totalPage;i++){
+          			    html1+="<a>"+i+"</a>";
+          		};
+          		$("#center").html(html1);
+          		$("#center a:eq("+currentPage2+")").addClass("current");
+  	
+          		/* 列表 查询结果展示 */
+                for(i=0,html="";i<data.data.length;i++){
+                 	 var operator_check=data.data[i].operator_check;
+                 	 if(operator_check==0){
+                 		/*  operator_check="审核不通过"; */
+                 		 operator_check="<td>审核不通过</td>"; 
+                 	 }else if(operator_check==1){
+                 		 /* operator_check="审核通过"; */
+                 		 operator_check="<td>审核通过</td>"; 
+                 	 }else if(operator_check==2){
+                 		 /* operator_check="待审核"; */
+                 		 operator_check="<td style='color: red;'>待审核</td>"; 
+                 	 }
+                 	 
+                 	 var operate_type=data.data[i].operate_type;
+                 	 if(operate_type==1){
+                 		 operate_type="新增";
+                 	 }else if(operate_type=="2"){
+                 		 operate_type="修改";
+                 	 }else if(operate_type=="3"){
+                 		 operate_type="删除";
+                 	 }else if(operate_type=="4"){
+                 		 operate_type="信息同步";
+                 	 }  
+                 	 
+					
+					var lengths=data.data[i].roles.split(",");
+					 var roless="";
+					 for(j=0;j<lengths.length;j++){
+						 if(lengths[j]==1){
+							 lengths[j]=" 数据作业 ";
+						 }else if(lengths[j]==2){
+							 lengths[j]=" 数据挖掘 ";
+						 }else if(lengths[j]==3){
+							 lengths[j]=" 数据审计 ";
+						 } 
+						 roless+=lengths[j];
+					 }
+
+                 	 html+="<tr>"+
+      	           	 "<td>"+data.data[i].bus_name+"</td>"+
+      	           	 "<td class='hidden' style='display:none;'>"+data.data[i].id+"</td>"+
+      	           	 "<td>"+data.data[i].user_name+"</td>"+
+      	           	 "<td>"+data.data[i].phone_no+"</td>"+                    
+      	           	 "<td>"+data.data[i].email+"</td>"+
+      	           	 "<td>"+roless+"</td>"+
+      	           	 "<td>"+operate_type+"</td>"+
+      	           	  operator_check
+      	           	/*  "<td>"+operator_check+"</td>"+ */
+      	   		   "</tr>"            
+                 }
+              	$("#operatorResults").html(html);
+              },
+              error:function(){
+                  alert('异常!!!!');
+              }
+          });
+       }
+   	})
+   	
+	   /* 输入页码，点击确定转到相应的页 */
+ 	    $("#queding").click(function(){      	
+ 	    	
+ 	    	currentPage=parseInt($('#currentPage').val());
+ 	    	var currentPage2=currentPage-1;/* 给当前页添加样式用的index */
+     	    if( currentPage >= 1 && currentPage <=  parseInt($('#totalPage').html()) ){
+   	    	var bus_name=$('#bus_name').val();
+   	       	var user_name=$('#user_name').val();     	
+   	        var operator_check=$("#operator_check").find("option:selected").val();
+             $.ajax({
+                 type: "post",
+                 url: "../operator/findOperatorLog",
+                 data:{
+                	 "operator_check":operator_check,
+                     "bus_name":bus_name,
+                     "user_name":user_name,
+                     "currentPage":currentPage
+                 },
+                 dataType : "json",
+                 success : function(data){
+                	 /* 分页机制 */
+               	    $('.currentPage').html(data.currentPage);
+               		$('#currentPage').val(data.currentPage);
+               		$('#totalCount').html(data.totalCount);
+               		$('#totalPage').html(data.totalPage); 
+       			
+               		for(i=1,html1="";i<=data.totalPage;i++){
+               			    html1+="<a>"+i+"</a>";
+               		};
+               		$("#center").html(html1);
+               		$("#center a:eq("+currentPage2+")").addClass("current");
+       	
+               		/* 列表 查询结果展示 */
+                    for(i=0,html="";i<data.data.length;i++){
+                     	 var operator_check=data.data[i].operator_check;
+                     	 if(operator_check==0){
+                     		/*  operator_check="审核不通过"; */
+                     		 operator_check="<td>审核不通过</td>"; 
+                     	 }else if(operator_check==1){
+                     		 /* operator_check="审核通过"; */
+                     		 operator_check="<td>审核通过</td>"; 
+                     	 }else if(operator_check==2){
+                     		 /* operator_check="待审核"; */
+                     		 operator_check="<td style='color: red;'>待审核</td>"; 
+                     	 }
+                     	 
+                     	 var operate_type=data.data[i].operate_type;
+                     	 if(operate_type==1){
+                     		 operate_type="新增";
+                     	 }else if(operate_type=="2"){
+                     		 operate_type="修改";
+                     	 }else if(operate_type=="3"){
+                     		 operate_type="删除";
+                     	 }else if(operate_type=="4"){
+                     		 operate_type="信息同步";
+                     	 }  
+                     	 
+   					
+   					var lengths=data.data[i].roles.split(",");
+   					 var roless="";
+	   					for(j=0;j<lengths.length;j++){
+	   					 if(lengths[j]==1){
+	   						 lengths[j]=" 数据作业 ";
+	   					 }else if(lengths[j]==2){
+	   						 lengths[j]=" 数据挖掘 ";
+	   					 }else if(lengths[j]==3){
+	   						 lengths[j]=" 数据审计 ";
+	   					 } 
+	   					 roless+=lengths[j];
+	   				 }
+                     	 html+="<tr>"+
+          	           	 "<td>"+data.data[i].bus_name+"</td>"+
+          	           	 "<td class='hidden' style='display:none;'>"+data.data[i].id+"</td>"+
+          	           	 "<td>"+data.data[i].user_name+"</td>"+
+          	           	 "<td>"+data.data[i].phone_no+"</td>"+                    
+          	           	 "<td>"+data.data[i].email+"</td>"+
+          	           	 "<td>"+roless+"</td>"+
+          	           	 "<td>"+operate_type+"</td>"+
+          	           	  operator_check
+          	           	/*  "<td>"+operator_check+"</td>"+ */
+          	   		   "</tr>"            
+                     }
+                   	$("#operatorResults").html(html);
+                 },
+                 error:function(){
+                     alert('异常!!!!');
+                 }
+             });           	
+         }
+     	})
+     	
+     	    /* 点击具体页码的时候转到相应的页 */
+        	$("#center a").live("click",function(){
+        		
+    	    	currentPage=parseInt($(this).html());
+    	    	$(this).addClass("current");
+    	    	$(this).siblings().removeClass("current");
+    	    	
+        	    if( currentPage >= 1 && currentPage <=  parseInt($('#totalPage').html()) ){
+        	    	
+           	    	var bus_name=$('#bus_name').val();
+           	       	var user_name=$('#user_name').val();     	
+           	        var operator_check=$("#operator_check").find("option:selected").val();
+           	        
+                     $.ajax({
+                         type: "post",
+                         url: "../operator/findOperatorLog",
+                         data:{
+                        	 "operator_check":operator_check,
+                             "bus_name":bus_name,
+                             "user_name":user_name,
+                             "currentPage":currentPage
+                         },
+                         dataType : "json",
+                         success : function(data){
+                        	 /* 分页机制 */
+                       	    $('.currentPage').html(data.currentPage);
+                       		$('#currentPage').val(data.currentPage);
+                       		$('#totalCount').html(data.totalCount);
+                       		$('#totalPage').html(data.totalPage); 
+                       		/* 列表 查询结果展示 */
+                            for(i=0,html="";i<data.data.length;i++){
+                             	 var operator_check=data.data[i].operator_check;
+                             	 if(operator_check==0){
+                             		/*  operator_check="审核不通过"; */
+                             		 operator_check="<td>审核不通过</td>"; 
+                             	 }else if(operator_check==1){
+                             		 /* operator_check="审核通过"; */
+                             		 operator_check="<td>审核通过</td>"; 
+                             	 }else if(operator_check==2){
+                             		 /* operator_check="待审核"; */
+                             		 operator_check="<td style='color: red;'>待审核</td>"; 
+                             	 }
+                             	 
+                             	 var operate_type=data.data[i].operate_type;
+                             	 if(operate_type==1){
+                             		 operate_type="新增";
+                             	 }else if(operate_type=="2"){
+                             		 operate_type="修改";
+                             	 }else if(operate_type=="3"){
+                             		 operate_type="删除";
+                             	 }else if(operate_type=="4"){
+                             		 operate_type="信息同步";
+                             	 }    
+                             	 
+           					
+           					var lengths=data.data[i].roles.split(",");
+           					 var roless="";
+	           					for(j=0;j<lengths.length;j++){
+	           					 if(lengths[j]==1){
+	           						 lengths[j]=" 数据作业 ";
+	           					 }else if(lengths[j]==2){
+	           						 lengths[j]=" 数据挖掘 ";
+	           					 }else if(lengths[j]==3){
+	           						 lengths[j]=" 数据审计 ";
+	           					 } 
+	           					 roless+=lengths[j];
+	           				 }
+
+                             	 html+="<tr>"+
+                  	           	 "<td>"+data.data[i].bus_name+"</td>"+
+                  	           	 "<td class='hidden' style='display:none;'>"+data.data[i].id+"</td>"+
+                  	           	 "<td>"+data.data[i].user_name+"</td>"+
+                  	           	 "<td>"+data.data[i].phone_no+"</td>"+                    
+                  	           	 "<td>"+data.data[i].email+"</td>"+
+                  	           	 "<td>"+roless+"</td>"+
+                  	           	 "<td>"+operate_type+"</td>"+
+                  	           	  operator_check
+                  	           	/*  "<td>"+operator_check+"</td>"+ */
+                  	   		   "</tr>"            
+                             }
+                           	$("#operatorResults").html(html);
+                         },
+                         error:function(){
+                             alert('异常!!!!');
+                         }
+                     });            	
+            }
+        	})
+}
+</script>
+</html>

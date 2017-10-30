@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaunicom.wodp.mapper.TenantMapper">
+	
+	<!-- 条件查询公用方法 -->
+	<sql id="query_tenant_where">
+		<where>
+				t.status = 1
+			<if test="bus_name != null and bus_name != ''">
+				and t.bus_name like "%"#{bus_name}"%"
+			</if>
+			<if test="resource_check != null">
+				and r.resource_check = #{resource_check}
+			</if>
+				and t.resource_log_Id=r.id
+		</where>
+	</sql>
+	<!-- 增加tenant表 -->
+	<insert id="save" parameterType="com.chinaunicom.wodp.pojo.Tenant" useGeneratedKeys="true" keyProperty="id">
+		insert into tenant 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+		  <if test="bus_id != null" >
+		    bus_id,
+		  </if>
+		  <if test="bus_name != null" >
+		    bus_name,
+		  </if>
+		  <if test="phone_no != null" >
+		    phone_no,
+		  </if>
+		  <if test="status != null" >
+		    status,
+		  </if>
+		  <if test="darwin_orgId != null" >
+		    darwin_orgId,
+		  </if>
+		  <if test="gateway_orgId != null" >
+		    gateway_orgId,
+		  </if>
+		  <if test="create_time == null" >
+		    create_time,
+		  </if>
+		  <if test="resource_log_Id != null" >
+		    resource_log_Id,
+		  </if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+		   <if test="bus_id != null" >
+		    #{bus_id},
+		  </if>
+		  <if test="bus_name != null" >
+		    #{bus_name},
+		  </if>
+		  <if test="phone_no != null" >
+		    #{phone_no},
+		  </if>
+		  <if test="status != null" >
+		    #{status},
+		  </if>
+		  <if test="darwin_orgId != null" >
+		    #{darwin_orgId},
+		  </if>
+		  <if test="gateway_orgId != null" >
+		    #{gateway_orgId},
+		  </if>
+		  <if test="create_time == null" >
+		    now(),
+		  </if>
+		  <if test="resource_log_Id != null" >
+		    #{resource_log_Id},
+		  </if>
+		</trim>
+	</insert>
+	
+	<!-- 根据商户id 查询tenant表-->
+	<select id="select" parameterType="java.lang.String" resultType="com.chinaunicom.wodp.pojo.Tenant">
+		select * from tenant where bus_id = #{bus_id} and status = 1
+	</select>
+	<!-- 根据商户id 查询tenant表id-->
+	<select id="selectId" parameterType="java.lang.String" resultType="int">
+		select id from tenant where bus_id = #{bus_id}
+	</select>
+	<!-- 根据表id查询 -->
+	<select id="selectById" parameterType="java.lang.String" resultType="com.chinaunicom.wodp.pojo.Tenant">
+		select * from tenant where id = #{tenant_id}
+	</select>
+	
+	<!--多条件查询-->
+	<select id="selectByCondition"  resultType="com.chinaunicom.wodp.pojo.Tenant">
+		SELECT * FROM tenant t,  tenant_resource_log r
+
+		    <include refid="query_tenant_where"/>
+		     
+			<if test="begin != null">
+				limit #{begin},#{pageSize}
+			</if>
+	</select>
+	
+	<!-- 根据条件查询总数 -->
+	<select id="selectCountByCondition"  resultType="int">
+		SELECT  count(*) FROM tenant t,  tenant_resource_log r
+		    <include refid="query_tenant_where"/>
+	</select>
+	
+	<!-- 查询所有 -->
+	<select id="selectAll"  resultType="com.chinaunicom.wodp.pojo.Tenant">
+		select * from tenant
+	</select>
+	
+	
+	<!-- 注销商户（逻辑删除） -->
+	<update id="deletTenantByBus_id" parameterType="java.lang.String">
+		update tenant set status=0 where bus_id = #{bus_id}
+	</update>
+	
+	<!-- 更新resourceId -->
+	<update id="updateResourceId" parameterType="com.chinaunicom.wodp.pojo.Tenant">
+		update tenant set resource_log_Id=#{resource_log_Id} where bus_id = #{bus_id}
+	</update>
+	
+	<!-- 更新商户的信息 -->
+	<update id="updateTenant" parameterType="com.chinaunicom.wodp.pojo.Tenant">
+		update tenant set 
+		<trim  suffixOverrides="," >
+		  <if test="bus_id != null" >
+		    bus_id = #{bus_id},
+		  </if>
+		  <if test="bus_name != null" >
+		    bus_name = #{bus_name},
+		  </if>
+		  <if test="phone_no != null" >
+		    phone_no = #{phone_no},
+		  </if>
+		  <if test="status != null" >
+		    status = #{status},
+		  </if>
+		  <if test="darwin_orgname != null" >
+		    darwin_orgname = #{darwin_orgname},
+		  </if>
+		</trim>
+		where id = #{id}
+	</update>
+</mapper>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	body { background-color: #ddd; }
+        *{padding: 0; margin: 0; font-family: "微软雅黑";}
+        body{   height: 100%;}
+
+        /*#header*/
+        .bg_header{  border-bottom: 1px solid #a9a9a9;}
+        #header{
+            width: 1196px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        #header img,#header .h_right{
+            font-size: 16px;
+            line-height: 75px;
+            float: left;
+        }
+        #header img{
+            margin: 0 20px 0 10px;
+            width: 75px;
+        }
+        #header .h_left1,#header .h_left2{
+            float: right;
+        }
+        #header .h_left1{
+            width: 205px;
+            background-color: #1a58a1;
+        }
+        #header .h_left2{
+            width: 84px;
+            background-color: #2b2b2b;
+        }
+        #header .h_left1 p,#header .h_left2 a{
+            text-decoration: none;
+            line-height: 75px;
+            text-align: center;
+            font-size: 16px;
+            color: white;
+        }
+        #header .h_left2 a{
+            display: block;
+        }
+        
+        #titBox{
+        	position:absolute;
+        	left:50%;
+        	top:50%;
+        	margin-left:-103px;
+        	margin-top:-32px;
+        }
+</style>
+</head>
+<script type="text/javascript"> 
+function countDown(secs,surl){ 
+ //alert(surl); 
+ var jumpTo = document.getElementById('jumpTo');
+ jumpTo.innerHTML=secs; 
+ if(--secs>0){
+   setTimeout("countDown("+secs+",'"+surl+"')",1000); 
+ }
+ else
+ {  
+  location.href=surl; 
+ } 
+} 
+</script>
+<body>
+<div class="bg_header">
+    <div id="header">
+        <img class="logo" src="./res/images/weblogo.png">
+        <h1 class="h_right">一级数据中心能力基础能力平台</h1>
+
+    </div>
+</div>
+<div id="titBox">
+	<span id="tips" style="border: none; color:green; font-weight:bold;font-size: 30px;"></span><br>
+	<span id="jumpTo" style="border: none; color:red; font-weight:bold;">5</span>秒后自动跳转到&nbsp;<a id="login1" href="">  登录    </a> &nbsp;页面
+</div>
+<script type="text/javascript">
+
+	function getParameter(param){ 
+	    var query = window.location.search; 
+		var iLen = param.length; 
+		var iStart = query.indexOf(param); 
+		if (iStart == -1) 
+		　return ""; 
+		iStart += iLen + 1; 
+		var iEnd = query.indexOf("&", iStart); 
+		if (iEnd == -1) 
+		　return query.substring(iStart); 
+		return query.substring(iStart, iEnd); 
+	}
+	var ss=decodeURI(getParameter("data"));
+	
+	 document.getElementById("tips").innerText = ss;
+</script>	
+<script type="text/javascript" src="./res/JS/constant.js"></script>
+<script type="text/javascript">
+		document.getElementById("login1").href =login;
+        countDown(5,login);
+</script>
+</body>
+</html>

@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        *{padding: 0; margin: 0; font-family: "微软雅黑";}
+        body,html{width: 100%; overflow-y: hidden;}
+        body{ 
+        	 height: 100%;
+        }
+		.bg_header{width: 100%;position: fixed;}
+        #header{
+            color: white;
+            background-image: url("../res/images/top.png");
+            width: 100%;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        #header h1{
+            line-height: 100px;
+            font-size: 24px;
+            letter-spacing: 4px;
+        }
+        #header img,#header .h_right{
+            float: left;
+        }
+        #header img{
+            margin: 20px 20px 0 1.5%;
+        }
+        #header .h_left1,#header .h_left2,#header .h_left3{
+            float: right;
+            margin-top: 27px;
+        }
+        #header .h_left2{margin-right: 5.2%;}
+        #header .h_left1 p{ width: 176px;}
+        #header .h_left2 a,#header .h_left3 a{
+            width: 96px;
+            display: block;
+            margin: 0 5.2% 0 14px;
+        }
+        #header .h_left1 p,#header .h_left2 a,.h_left3 a{
+            background-color: rgba(0,0,0,0.2);
+            text-decoration: none;
+            line-height: 42px;
+            text-align: center;
+            font-size: 16px;
+            color: white;
+        }
+        .bg_footer{ 
+	        background-color: #2b2b2b; 
+	        position: fixed;
+	        text-align: center;
+	        position: fixed; 
+	        bottom: 0;
+	        width: 100%; 
+	     }
+        #footer{
+            font-size: 14px;
+            line-height: 40px;
+            color: white;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        body{margin:0;padding:0;overflow-x:hidden;}
+        html, body{
+        	height:100%; 
+        	background-color: #2b2b2b;    	
+        }
+        img{border:none;}
+        dl,dt,dd{
+            display:block;
+            margin:0;
+        }
+        a{
+            text-decoration:none;
+        }
+
+        .bg_main{   
+            position: relative;
+    		top: 100px;  
+            /* overflow: hidden;  */
+            width: 100%;
+            background-color: #2b2b2b;
+            overflow-y:auto;
+        }
+        #main{
+        	height: 100%;
+            /* height: 900px; */
+            margin: 0 auto;
+            width: 100%;
+           /*  overflow: visible; */
+        }
+        #main .m_left{
+            float: left;
+            width: 15%;
+            height:auto !important;
+            overflow:visible !important;
+        }
+
+        #main .m_left div{
+            cursor: pointer;
+            border-bottom: 1px solid #e7ecf2;
+        }
+        #main .m_left div a{
+            text-align: center;
+            display: block;
+            margin: 0 auto;
+            text-indent: 45px;
+            font-family: "微软雅黑";
+            font-size: 16px;
+            line-height: 79px;
+        }
+        .system_log dt{ background: url("../res/images/sjzy.png") no-repeat  12% 16px,url("../res/images/arrowup.png") no-repeat  87.6% 24px;}
+        .custom dt{ background: url("../res/images/sjwj.png") no-repeat  12% 16px,url("../res/images/arrowup.png") no-repeat  87.6% 24px;}
+        .channel dt{ background: url("../res/images/sjsj.png") no-repeat  12% 16px,url("../res/images/arrowup.png") no-repeat  87.6% 24px;}
+        .settings dt{ background: url("../res/images/xtgl.png") no-repeat  12% 16px,url("../res/images/arrowup.png") no-repeat  87.6% 24px;}
+        .system_log .system_log_down{ background: url("../res/images/sjzy.png") no-repeat  12% 16px,url("../res/images/arrowdow.png") no-repeat  86.8% 26px;}
+        .custom .custom_down{ background: url("../res/images/sjwj.png") no-repeat  12% 16px,url("../res/images/arrowdow.png") no-repeat  86.8% 26px;}
+        .channel .channel_down{ background: url("../res/images/sjsj.png") no-repeat  12% 16px,url("../res/images/arrowdow.png") no-repeat  86.8% 26px;}
+        .settings .settings_down{ background: url("../res/images/xtgl.png") no-repeat  12% 16px,url("../res/images/arrowdow.png") no-repeat  86.8% 26px;} 
+        .m_left dt{
+            padding-left: 32%;
+            padding-right:10px;
+            color: #d6d2d2;
+            font-size:16px;
+            position:relative;
+            line-height: 60px;
+            cursor:pointer;
+        }
+        .m_left dl{
+            background-color: #2b2b2b;
+            color: #d6d2d2;
+            line-height:20px;
+            border-bottom: 1px solid #555;
+        }
+        .m_left dd{
+            line-height: 34px;
+            cursor: pointer;
+            padding-left: 32%;
+        }
+        #m_left dl dd:last-child{
+            margin-bottom: 15px;
+        }
+        .hover{
+            background: white url("../res/images/selec.png") repeat-y;
+            color: #392e2e;
+            background-position-x: right;
+        }
+        .hover1{
+            background: white url("../res/images/selec.png") repeat-y;
+            color: #392e2e;
+            background-position-x: right;
+        }
+        #main .m_right{
+            height: 100%;
+            float: right;
+            width:calc(100% - 15%);
+        }
+        #m_right{
+            background-color: #f3f3f3;
+        }
+        #m_right iframe{
+	        padding: 38px 0 0 38px;
+		    overflow: auto;
+		    border: none;
+		    display: inline-block;
+		    width: calc(100% - 8%);
+		    height: 88%;   
+        }
+        #m_right iframe body{
+        	margin-top:0!important;
+        	margin-left:0!important;
+        	padding-top:0!important;
+        	padding-left:0!important;
+        }
+        #dialogA{
+       		border-radius: 2px;
+            background-color: white;
+        	width:420px;
+			z-index:11;
+			display:none;
+			margin-top: -125px;
+		    margin-left: -125px;
+		    left: 50%;
+		    position: fixed;
+		    top: 50%;
+		}
+		#message,#message2{
+			border:none;
+		}
+		.closeDialog,.closeDialog2{	
+			cursor: pointer;
+    		background-color: #d9080d;
+		    width: 50px;
+		    line-height: 30px;
+		    height: 30px;
+		    outline: none;
+		    border: none;
+		    border-radius: 2px;
+		    color: white;
+		}
+		#dialogA tr td{			
+			text-indent: 10px;
+		}
+		#bg_colorbg{
+			position: fixed;
+			top:0;
+			left:0;
+			display:none;
+			width:100%;
+			background-color:rgba(0,0,0,0.7);
+			z-index:10;
+		}
+		#oldPassword,#newPassword,#newPassword2{
+			text-indent: 10px;
+			line-height: 22px;
+			height:22px;
+		}
+		#td1 td{
+			padding-top:30px;
+		}
+		#td3 td{
+			padding-bottom: 20px;
+		}
+		#td4 td{
+			padding-top: 20px;
+		}
+		    
+    </style>
+
+</head>
+<body>
+<div class="bg_header">
+    <div id="header">
+        <img class="logo" src="../res/images/logowhite.png">
+        <h1 class="h_right">一级数据中心基础能力平台</h1>
+        <div class="h_left2">
+            <a id="logout1" href="">退出</a>
+        </div>
+        <div class="h_left3">
+            <a id="change" style="cursor: pointer">修改密码</a>
+        </div>
+        <div class="h_left1">
+            <p>欢迎!admin</p>
+        </div>
+    </div>
+</div>
+
+<div class="bg_main">
+    <div id="main">
+        <div class="m_left" id="m_left">
+			<dl class="system_log"></dl>
+			
+            <dl class="custom"></dl>
+           
+            <dl class="channel"></dl>
+
+            <dl class="settings"></dl>
+        </div>
+
+        <div class="m_right"  id="m_right">
+            <iframe id="right" target="_self"   src=""></iframe>
+        </div>
+    </div>
+</div>	
+<div class="bg_footer">
+    <p id="footer">
+        Copyright &copy; 1999-2014 中国联通 ALL Rights Reserved 京ICP备11000964号-3
+    </p>
+</div>
+
+<table id="dialogA" style="BORDER-LEFT-WIDTH: 0px; BORDER-COLLAPSE: collapse"  cellSpacing=0 cellPadding=0  align=center>
+	 <tr id="td1">
+		<td align=right>原始密码:</td><td align=left><input id="oldPassword"  name="oldPassword" type="password" ></td>     
+	 </tr>
+	 <tr id="tip">
+		<td></td><td align=left><input style="color:red;" id="message" readonly="readonly"  type="text" value="" ></td>     
+	 </tr>
+	 <tr id="td2">
+	 	<td align=right>新密码:</td><td align=left><input id="newPassword"  name="newPassword" type="password" ></td>        
+	 </tr>
+	 <tr id="td4">
+	 	<td align=right>确认密码:</td><td align=left><input id="newPassword2"  type="password" ></td>        
+	 </tr>
+	 <tr id="tip2">
+		<td></td><td align=left><input style="color:red;"  id="message2" readonly="readonly"   type="text" value="" ></td>     
+	 </tr>
+	 <tr id="td3">
+	 	<td colspan=2 align=center><input type='button' value='确定'  class='closeDialog'> <input type='button' value='返回'  class='closeDialog2'></td>
+	 </tr>
+</table>
+<div id="bg_colorbg"></div>
+	
+<script  type="text/javascript" src="../res/JS/jquery.min.js"></script>
+<script type="text/javascript" src="../res/JS/constant.js"></script>
+<script  type="text/javascript">
+	
+	$.ajax({
+        type : "GET",
+        url : gw_erjiurl,
+        dataType : "jsonp",
+        success : function(data){
+        	if(data.length>0){
+                var html="<dt>数据审计</dt>";
+                for(i=0;i<data.length;i++){
+                    html+="<dd style='display: none;line-height:24px;' id="+data[i].id+">"+data[i].name+
+                            "<span style='display: none'>"+data[i].url+"</span>"+"</dd>"
+                }
+                $(".channel").html(html);
+        	}
+        }
+    });
+//达尔文
+    $.ajax({
+        type : "get",
+        url : dew_erjiurl,
+        dataType : "jsonp",
+        data:{"method":"second"},
+        success : function(data){
+        	if(data.length>0){
+                var html2="<dt>数据作业</dt>";
+                for(i=0;i<data.length;i++){
+                    html2+="<dd style='display: none;line-height:24px;'>"+data[i].name+"<span style='display: none'>"+data[i].url+"</span>"+"</dd>"
+                }
+                $(".system_log").html(html2);
+        	}
+        }
+    });
+//数据挖掘
+    $.ajax({
+        type : "post",
+        async:false,
+        url : sjwj_erjiurl,
+        dataType : "jsonp",//数据类型为jsonp
+        success : function(data){
+        	if(data.length>0){
+                var html1="<dt>数据挖掘</dt>";
+                for(i=0;i<data.length;i++){
+                    html1+="<dd style='display: none;line-height:24px;'>"+data[i].name+"<span style='display: none'>"+data[i].url+"</span>"+"</dd>"
+                }
+                $(".custom").html(html1);
+       		}
+        }
+    });
+ 
+//二级平台权限  
+
+//在页面显示登录名称
+$.ajax({
+    type : "get",
+    url : "./loginUser",
+    dataType : "json",
+    success : function(data){
+        document.getElementsByTagName('p').item(0).innerHTML = "欢迎!  "+data.loginuser;
+    },
+    error:function(){
+        alert("系统异常");
+    }
+});
+ var html = "<dt>系统管理</dt>";
+ function sangeXitong(){
+	 $.ajax({
+         type : "GET",
+         async: false,
+         url : gw_sysurl,
+         dataType : "jsonp",
+         success : function(data){
+             if(data.status=="1"){
+                 html+="<dd style='display: none;line-height:24px;' id='dd3'>数据审计系统管理</dd>";
+                 $(".settings").html(html);
+             }
+         }
+     });
+     $.ajax({
+         type : "GET",
+         async: false,
+         url : dew_sysurl,
+         dataType : "jsonp",
+         success : function(data){
+             if(data.status=="1"){
+                 html+="<dd style='display: none;line-height:24px;' id='dd1'>数据作业系统管理</dd>";
+                 $(".settings").html(html);
+             }
+         }
+     });
+     $.ajax({
+         type : "GET",
+         async: false,
+         url : sjwj_sysurl,
+         dataType : "jsonp",
+         success : function(data){
+             if(data.status=="1"){
+                 html+="<dd style='display: none;line-height:24px;' id='dd2'>数据挖掘系统管理</dd>";
+                 $(".settings").html(html);
+             }
+         }
+     });
+ }
+function getsystem(){
+    $.ajax({
+    	type : "post",
+        url : "./checkUsernameIsAdmin",
+        dataType : "json",
+        success : function(data){
+        	if(data!=null && data.length>0){              
+                for(i=0;i<data.length;i++){   
+                    html+="<dd style='display: none;line-height:24px;' id='dd"+(4+i)+"'>"+data[i]+"</dd>";
+                }
+                $(".settings").html(html);
+        	} 
+                sangeXitong();
+        }
+    });
+}
+getsystem();
+//页面的退出路径
+document.getElementById("logout1").href =logout;
+function aaa(){
+    $(".settings dd").unbind("click").live("click",function(){
+        var url;
+        var id=$(this).attr("id");
+        if(id=="dd1"){
+            url=dew_ctrurl;
+        }else if(id=="dd2"){
+            url=sjwj_ctrurl;
+        }else if(id=="dd3"){     
+            url=gw_ctrurl;
+        }else if(id=="dd4"){
+            url="merchant.html";
+        }else if(id=="dd5"){
+            url="operator.html";
+        }else if(id=="dd6"){
+            url="list.html";
+        }
+        $("#right").attr("src",url);
+    })
+}       
+</script>
+<script  type="text/javascript">
+    window.onload=function(){
+    	var scHeight=document.body.scrollHeight-150; 	
+    	$(".bg_main").height(scHeight);
+    	aaa();
+//    gateway
+        $(".channel dd").live("click", function () {
+            var url=$(this).children("span").text();
+            var id=$(this).attr("id");
+            url=url+"?id="+id;
+            $("#right").attr("src",url);
+        });
+//    达尔文
+        $(".system_log dd").live("click", function () {
+            var url=$(this).children("span").text();
+            $("#right").attr("src",url);
+        });
+        //    数据挖掘
+        $(".custom dd").live("click",function(){
+            var url=$(this).children("span").text();
+            $("#right").attr("src",url);
+        });
+        
+        
+    	/* 鼠标经过和点击效果 */
+        $(".m_left dd").live("mouseenter", function (){
+            $(this).addClass("hover");
+        });
+        $(".m_left dd").live("mouseleave", function (){
+            $(this).removeClass("hover");
+        });
+        $(".m_left dd").live("click", function (){
+            $(this).addClass("hover1").siblings().removeClass("hover1");
+            $(this).parent("dl").siblings().children("dd").removeClass("hover1");
+        });
+        /* 鼠标经过和点击效果结束 */ 
+        /* 点击选项卡的时候箭头指向问题 */
+        $(" #m_left dl dt").live("click", function () {
+            $(this).parent("dl").siblings().find('dd').slideUp(function(){ 	
+            	var index2=$(this).parent().index();	
+        		if(index2==0){     		
+                	if($(this).parent().find('dd').css("display")=="block"){ 	
+                		$(this).parent().find('dt').addClass('system_log_down');                 
+                    }else if($(this).parent().find('dd').css("display")=="none"){
+                    	$(this).parent().find('dt').removeClass('system_log_down');
+                    }
+                }else if(index2==1){     	
+                	if($(this).parent().find('dd').css("display")=="block"){        
+                		$(this).parent().find('dt').addClass('custom_down'); 
+                    }else if($(this).parent().find('dd').css("display")=="none"){
+                    	$(this).parent().find('dt').removeClass('custom_down');
+                    }    	
+                }else if(index2==2){	
+                    if($(this).parent().find('dd').css("display")=="block"){ 	
+                    	$(this).parent().find('dt').addClass('channel_down');
+                    }else if($(this).parent().find('dd').css("display")=="none"){
+                    	$(this).parent().find('dt').removeClass('channel_down');
+                    }
+                }else{
+                	if($(this).parent().find('dd').css("display")=="block"){ 
+                		$(this).parent().find('dt').addClass('settings_down');                 
+                    }else if($(this).parent().find('dd').css("display")=="none"){   	
+                    	$(this).parent().find('dt').removeClass('settings_down');
+                    }     
+                }
+            	
+            });
+            $(this).parent().find('dd').slideToggle(function(){    	
+            	var index=$(this).parent().index();
+                if(index==0){
+                	if($(this).parent().find('dd').css("display")=="none"){ 	
+                		$(this).parent().find('dt').removeClass('system_log_down');                 
+                    }else{    
+                    	$(this).parent().find('dt').addClass('system_log_down');       
+                    }
+                }else if(index==1){     	
+                	if($(this).parent().find('dd').css("display")=="none"){        
+                		$(this).parent().find('dt').removeClass('custom_down'); 
+                    }else{
+                    	$(this).parent().find('dt').addClass('custom_down');
+                    }     	
+                }else if(index==2){
+                    if($(this).parent().find('dd').css("display")=="none"){
+                    	$(this).parent().find('dt').removeClass('channel_down');
+                    }else{
+                    	$(this).parent().find('dt').addClass('channel_down');
+                    }
+                }else if(index==3){
+                	if($(this).parent().find('dd').css("display")=="none"){
+                    	$(this).parent().find('dt').removeClass('settings_down');
+                    }else{	
+                    	$(this).parent().find('dt').addClass('settings_down');
+                    }  
+                }	
+            });
+        });  
+        /* 点击选项卡的时候箭头指向问题 结束*/
+        function showFirst(){
+        	
+        	/*判断默认第一个加载进来的展开显示 */
+            var Show1=$(" #m_left dl:first-child").html();
+            var Show2=$(" #m_left dl:nth-child(2)").html();
+            var Show3=$(" #m_left dl:nth-child(3)").html();
+            var Show4=$(" #m_left dl:last-child").html();
+            if(Show1!=""){ 	      	
+                $(" #m_left dl:first-child").children().show();
+                $(" #m_left dl:first-child").children('dd:eq(0)').addClass("hover");
+                $(" #m_left dl:first-child dt").addClass('system_log_down');
+                var url=$(" #m_left dl:first-child dd:nth-of-type(1) span").text();
+                $("#right").attr("src",url);
+            }else if(Show2!=""){   	
+                $(" #m_left dl:nth-child(2)").children().show();
+                $(" #m_left dl:nth-child(2)").children('dd:eq(0)').addClass("hover");
+                $(" #m_left dl:nth-child(2) dt").addClass('custom_down');
+                var url=$(" #m_left dl:nth-child(2) dd:nth-of-type(1) span").text();
+                $("#right").attr("src",url);
+            }else if(Show3!=""){
+                $(" #m_left dl:nth-child(3)").children().show();
+                $(" #m_left dl:nth-child(3)").children('dd:eq(0)').addClass("hover");
+                $(" #m_left dl:nth-child(3) dt").addClass('channel_down');
+                var url=$(" #m_left dl:nth-child(3) dd:nth-of-type(1) span").text();
+                var id=$("#m_left dl:nth-child(3) dd:nth-of-type(1)").attr("id");
+                $("#right").attr("src",url+"?id="+id);         
+            }else if(Show4!=""){
+                $(" #m_left dl:last-child").children().show();
+                $(" #m_left dl:last-child").children('dd:eq(0)').addClass("hover");
+                $(" #m_left dl:last-child dt").addClass('settings_down');
+                var url=$(" #m_left dl:last-child dd:nth-of-type(1) span").text();
+                $("#right").attr("src",url);
+            }
+            /*  判断默认第一个加载进来的展开显示结束 */
+        }   
+        if(navigator.appName == "Microsoft Internet Explorer" && navigator.appVersion .split(";")[1].replace(/[ ]/g,"")=="MSIE9.0"){
+        	setTimeout(showFirst,500);	    	
+        	/* 检测到ie9给ie9单独写个方法让其延迟执行0.5秒 */
+        }else{
+        	showFirst();
+        	/* 其他的ie内核或者其他浏览器正常执行 */
+        } 
+        
+        /* 修改密码 */
+        $("#change").unbind().click(function(){
+        	$("#message2").val("");
+    		$("#message").val("");   
+        	$(".closeDialog2").click(function(){
+        		$("#dialogA,#bg_colorbg").hide();
+        	})
+        	var bg_colorHeight=document.body.scrollHeight;
+        	bg_colorHeight+="px";
+        	$("#bg_colorbg").css("height",bg_colorHeight);
+        	$("#dialogA,#bg_colorbg").show();
+           	$(".closeDialog").unbind().click(function(){ 
+           		var oldPassword=$("#oldPassword").val();
+              	var newPassword=$("#newPassword").val();
+              	var newPassword2=$("#newPassword2").val();
+              	if(newPassword==newPassword2){
+               			$.ajax({
+	                    	type : "post",
+	                        url : "./alterPassword",
+	                        data:{
+	                       	    "oldPassword":oldPassword,
+	                            "newPassword":newPassword   
+	                        },
+	                        dataType : "json",
+	                        success : function(data){
+	                        	var a=data.message;    	
+	                        	if(a=="原始密码不正确" || a=="新旧密码一致,不建议如此!"){             		
+	                        		$("#oldPassword").focus();
+	                        		$("#message").val(a);
+	                        		$("#message2").val("");         		
+	                        	}else if(a=="密码修改成功"){
+	                        		$("#dialogA,#bg_colorbg").hide();
+	                        		alert(a);	
+	                        		$("#message2").val("");
+	                        		$("#message").val("");                   		
+	                        	}
+	                        }
+	                    });	   				
+              	}else{	
+              		$("#message2").val("*两次密码输入不一样");
+              		$("#newPassword2").focus();
+              		$("#message").val("");
+              		return;
+              	}
+   			}); 
+
+        })
+    }
+</script> 
+</body>
+</html>

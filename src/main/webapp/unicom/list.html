@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href="../res/CSS/datePicker.css" rel="stylesheet" type="text/css" media="all" />
+    
+    <style>
+     	html,body{width: 100%;font-size:12px;}
+        *{padding: 0;margin: 0;}
+        .title{
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .title span{
+            padding: 0 10px 6px 10px;
+            font-weight: bold;
+            line-height: 30px;
+            height: 30px;
+            border-bottom: 3px solid #cf0a0e;
+        }
+        .title2 input[type="text"]{
+            width: 128px;
+            line-height: 26px;
+            height: 26px;
+            border: 1px solid #d2d2d2;
+            outline: none;
+        }
+        .title2 input[type="button"],#fenye input[type="button"]{
+            background-color: #d9080d;
+            color: white;
+            width: 44px;
+            line-height: 26px;
+            height: 26px;
+            outline: none;
+            border: none;
+        }
+        table{
+            border: 1px solid #dfdfdf;
+            border-bottom: none;
+            width: 100%;
+            text-align: center;
+        }
+
+        table td{
+            line-height: 36px;
+            border-bottom: 1px solid #dfdfdf;
+        }
+        
+        #listTitle tbody tr:nth-child(even){
+            background-color: #fbfbfb; 
+        }
+        
+        #listTitle thead tr:first-child{
+            background-color: #ecedec;
+        }
+        #second{
+            border: none;
+        }
+        #second td{
+            line-height: 36px;
+            border-bottom: 1px solid transparent;
+        }
+        #second tr:nth-child(odd){
+            background-color: transparent;
+        }
+        #second tr:first-child{
+            background-color: transparent;
+        }
+        #second tr td:nth-child(odd){
+            text-align: right;
+        }
+        #second tr td:nth-child(even){
+            text-align: left;
+        }
+        #list p{
+            margin: 30px 0 8px 0;
+        }
+        #second>.p1{
+            padding-left: 20px;
+        }
+        #second>.p1:first-child{
+            margin-top: 20px;
+        }
+        #second>.p1:nth-child(odd){
+            /*background-color: #efefef;*/
+        }
+        #second .p1 input[type="text"]{
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+        #second .p1 span,#second .p1 input[type="text"]{
+            line-height: 40px;
+            height: 40px;
+        }
+        #second input[type="button"]{
+            display: inline-block;
+            color: white;
+            width: 72px;
+            line-height: 40px;
+            height: 40px;
+            outline: none;
+            border: none;
+            background-color: #d9080d;
+        }
+        #submitbox{ text-align: center; }
+        #second{
+       		border: none;
+            margin-left: 20%;   
+		    border-bottom: none;
+		    width:auto;
+            margin-top: 30px;
+        }
+        input[type="text"]{
+            text-indent: 10px;
+        }
+		#second .p1 td:first-child span{
+            font-weight:bold;
+        }
+        #fenyebox{
+        	margin-top:30px;
+            text-align: center;
+        }
+        #fenye a,#currentPage{
+            margin:0 3px;
+            font-size: 12px;
+            text-align: center;
+            display: inline-block;
+            border: 1px solid #cecece;
+            color: #9b9999;
+            line-height: 22px;
+            width: 22px;
+            height: 22px;
+        }
+        #fenye span{
+            font-size: 12px;
+            color: #666666;
+        }
+        #fenye #pre,#fenye #next{
+            width: 64px;
+        }
+        .selected{
+            background-color: #e9e9e9;
+            font-weight: bold;
+        }
+        #status{
+            height: 28px;
+            width: 130px;
+            border: 1px solid #d2d2d2;
+            outline: none;
+        }      
+        #list2{
+        	display:none;
+        }
+        #work_no2,#bus_name2,#product_name2,#execute_status2,#file_name2,#remark2,#ip,#port,#user,#password,#file_path{
+            margin-left: 1px;
+		    width: 230px!important;
+		    line-height: 26px!important;
+		    height: 26px!important;
+		    /* border: 1px solid #d2d2d2!important; */
+		    outline: none!important;
+		    text-indent: 10px!important;
+        }
+        /* #execute_status2,#file_name2,#remark2{ border: 1px solid #d2d2d2!important;} */
+        .border{ border: 1px solid #d2d2d2!important;}
+        .bordernone{ border: none!important;}
+        #remark2{ height: 150px!important;}
+        #execute_status2{ text-indent: 7px!important; }
+        #pre:hover,#next:hover,#center a:hover{
+        	color:red;
+        	cursor: pointer;
+        }
+        .current{
+        	background-color:#e9e9e9;
+        	font-weight: bold;
+        }
+        #listSearch,#queding,#submit,#listResults tr td:last-child input{
+        	cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div id="list">
+    <div class="title">
+        <span style="font-size:16px;">工单列表</span>
+    </div>
+    <p  class="title2">
+        <span>商户名称: </span><input type="text" id="bus_name" name="bus_name">
+        <span>产品名称: </span><input type="text" id="product_name" name="product_name">
+        <span>工单状态: </span>
+        <select name="status" id="status">
+        	<option value="3">全部</option>
+            <option value="0">待受理</option>
+            <option value="1">已受理</option>
+            <option value="2">审核失败</option>
+        </select>
+        <br>
+
+        <span style="line-height: 50px;">提交日期: </span>
+        <input type="text" id="datePicker" readonly="readonly" name="begin_time" class="date_picker" placeholder="选择开始日期"/><span style="margin: 0 5px;">至</span><input type="text" readonly="readonly" id="datePicker2" name="end_time" class="date_picker" placeholder="选择结束日期"/>
+
+        <input type="button" id="listSearch" value="查询">
+    </p>
+    <table id="listTitle"  cellspacing="0" cellpadding="0">
+    	<thead>
+	        <tr>
+	            <td>工单编号</td>
+	            <td>商户名称</td>
+	            <td>产品名称</td>
+	            <td>提交日期</td>
+	            <td>工单状态</td>
+	            <td>操作</td>
+	        </tr>
+	     </thead>
+	     <tbody id="listResults"></tbody>  
+    </table>
+</div>
+
+<div id="fenyebox">
+    <div id="fenye">
+        <a id="pre">&lt;上一页</a>
+        	<span id="center"></span>
+        <a id="next">下一页&gt;</a>
+        <span>跳到第</span><input id="currentPage" class="currentPage"></input><span>页</span>
+        <input id="queding" type="button" value="确定">
+        <span style="margin-left: 20px;">第<span class="currentPage"></span>/<span id="totalPage"></span>页,共<span id="totalCount"></span>条记录</span>
+    </div> 
+</div>
+
+<div id="list2">
+    <div class="title">
+        <span style="font-size:16px;">工单操作</span>
+    </div>
+    <table id="second" cellspacing="0" cellpadding="0">
+        <tr class="p1">
+            <td><span>工单编号: </span></td><td><input id="work_no2"  name="work_no" type="text" ></td>  
+        </tr>
+        <tr class="p1"> 
+            <td><span>产品名称: </span></td><td><input id="product_name2" name="product_name" type="text" ></td>
+        </tr>
+        <tr class="p1">
+        	<td><span>商户名称: </span></td><td><input id="bus_name2" name="bus_name" type="text" ></td>
+        </tr>
+        <tr class="p1">
+            <td><span>ftp服务器地址: </span></td><td><input id="ip" name="ip" type="text" value=""></td>
+        </tr>
+        <tr class="p1">
+            <td><span>端口号: </span></td><td><input id="port" name="port" type="text" value=""></td>
+        </tr>
+        <tr class="p1">
+            <td><span>ftp登录用户: </span></td><td><input id="user" name="user" type="text" value=""></td>
+        </tr>
+        <tr class="p1">
+            <td><span>ftp用户密码(明文): </span></td><td><input id="password" name="password" type="text" value=""></td>
+        </tr>
+        <tr class="p1">
+            <td><span>目录: </span></td><td><input id="file_path" name="file_path" type="text" value=""></td>
+        </tr>
+        
+        <tr class="p1">
+            <td><span>文件名称: </span></td><td><input id="file_name2" name="file_name" type="text" value="填写文件名称"></td>
+        </tr>
+        <tr class="p1">
+            <td><span>工单状态: </span></td><td>
+		            							 <select name="execute_status" id="execute_status2">
+		            							 	<option value="11">请选择状态</option>										        
+										            <option value="1">已受理</option>
+										            <option value="2">审核失败</option>
+										         </select>
+            								</td>
+        </tr>
+        <tr class="p1">
+            <td><span>备注: </span></td><td><textarea id="remark2" name="remark">请填写备注</textarea></td>
+        </tr>
+        <tr class="p1">
+        	<td></td><td  style="text-align:center;"><input id="submit" type="button" value="提交"> <input id="submit2" type="button" value="返回"></td>
+        </tr>
+    </table>
+</div>
+<script  type="text/javascript" src="../res/JS/constant.js"></script>
+<script  type="text/javascript" src="../res/JS/jquery.min.js"></script>
+<script type="text/javascript" src="../res/JS/jquery.date_input.pack.js"></script>
+<script type="text/javascript">
+    $(function(){
+//        日期
+        $('#datePicker').date_input();
+        $('#datePicker2').date_input();
+		
+        /* 查找事件 */
+        $('#listSearch').click(function(){
+        	
+            var bus_name=$('#bus_name').val();
+            var product_name=$('#product_name').val();
+            var status=$("#status").find("option:selected").val();
+            var begin_time=$('#datePicker').val();
+            var end_time=$('#datePicker2').val();
+            $.ajax({
+                type : "post",
+                url : "../workBillQuery",
+                data:{
+                    "bus_name":bus_name,
+                    "product_name":product_name,
+                    "status":status,
+                    "begin_time":begin_time,
+                    "end_time":end_time
+                },
+                dataType : "json",
+                success : function(data){
+                		
+	                	/* 分页机制 */
+	            		$('.currentPage').html(data.currentPage);
+	            		$('#currentPage').val(data.currentPage);
+	            		$('#totalCount').html(data.totalCount);
+	            		$('#totalPage').html(data.totalPage);
+       
+	            		for(i=1,html1="";i<=data.totalPage;i++){
+	            			    html1+="<a>"+i+"</a>";
+	            		}
+	            		$("#center").html(html1);
+	            		$("#center a:eq(0)").addClass("current");/* 任何查询结果默认第一页渲染 */
+                		
+                		/* 列表 查询结果展示 */
+	                    for(i=0,html="";i<data.rows.length;i++){
+	                    	var status=data.rows[i].status;
+	                    	if(status==3){
+	                    		status="全部";
+	                    	}else if(status==0){
+	                    		/* status="待受理"; */
+	                    		status="<td>待受理</td>"+
+	                            "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+	                    	}else if(status==1){
+	                    		/* status="已受理"; */
+	                    		status="<td>已受理</td>"+
+	                            "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='查看'></td>";
+	                    	}else if(status==2){
+	                    		/* status="审核失败"; */
+	                    		status="<td>审核失败</td>"+
+	                            "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+	                    	}
+	                        html+="<tr>"+
+				                        "<td class='first-child'  style='display:none;'>"+"<span>"+data.rows[i].ip+"</span>"+"<span>"+data.rows[i].port+"</span>"+
+			        					"<span>"+data.rows[i].user+"</span>"+"<span>"+data.rows[i].password+"</span>"+
+			        					"<span>"+data.rows[i].file_path+"</span>"+"<span>"+data.rows[i].serial_num+"</span>"+"</td>"+
+			                            "<td>"+data.rows[i].work_no+"</td>"+
+			                            "<td>"+data.rows[i].bus_name+"</td>"+			                      
+			                            "<td>"+data.rows[i].product_name+"</td>"+
+			                            /* "<td>"+data.rows[i].times.split(" ")[0]+"</td>"+ *//* 按照空格分割 */
+			                            "<td>"+data.rows[i].page_createTime+"</td>"+/* 按照空格分割 */
+			                             status
+			                           /*  "<td>"+status+"</td>"+
+			                            "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>"+ */
+	                       		   "</tr>"         
+	                    }
+	                	$("#listResults").html(html); 
+                },
+                error:function(){
+                    alert('异常!!!!');
+                }
+            });
+        })
+        
+        /* 返回 */
+   		$("#submit2").unbind().click(function(){
+   			$("#list2").hide();
+   			$("#list,#fenyebox").show();
+   		})		
+        $("#listResults tr td:last-child input").live("click",function(){
+        	$("#list,#fenyebox").hide();
+        	$("#list2").show();
+        	var work_no2=$(this).parent().parent().children("td:eq(1)").html();
+        	var bus_name2=$(this).parent().parent().children("td:eq(2)").html();
+        	var product_name2=$(this).parent().parent().children("td:eq(3)").html();	
+        	$("#work_no2").val(work_no2);
+        	$("#bus_name2").val(bus_name2);
+        	$("#product_name2").val(product_name2);
+        	
+        	function test(){
+        		
+        		if($.trim($("#ip").val()).length == 0 || $("#ip").val()=="" ){
+    				alert("请填写ftp服务器地址！！！");
+    				$("#ip").focus();
+    				return 0; 
+    			}else if($.trim($("#port").val()).length == 0 || $("#port").val()=="" ){
+    				alert("请填写端口号！！！");
+    				$("#port").focus();
+    				return 0; 
+    			}else if($.trim($("#user").val()).length == 0 || $("#user").val()=="" ){
+    				alert("请填写ftp登录用户！！！");
+    				$("#user").focus();
+    				return 0; 
+    			}else if($.trim($("#password").val()).length == 0 || $("#password").val()=="" ){
+    				alert("请填写ftp登录密码！！！");
+    				$("#password").focus();
+    				return 0; 
+    			}else if($.trim($("#file_path").val()).length == 0 || $("#file_path").val()=="" ){
+    				alert("请填写目录！！！");
+    				$("#file_path").focus();
+    				return 0; 
+    			}
+        		
+        		if($("#execute_status2").find("option:selected").text()=="已受理"){
+        			if($.trim($("#file_name2").val()).length == 0 || $("#file_name2").val()=="填写文件名称" ){
+        				alert("请填写文件名！！！");
+        				$("#file_name2").focus();
+        				return 0;
+        			}
+        		}else if($("#execute_status2").find("option:selected").text()=="审核失败"){
+        			if($.trim($("#remark2").val()).length == 0 || $("#remark2").val()=="请填写备注" ){
+        				alert("请填写备注！！！");
+        				$("#remark2").focus();
+        				return 0; 
+        			}	
+        		}else if($("#execute_status2").find("option:selected").text()=="待受理"){
+        			return 1;
+        		}else{
+        			alert("请选择工单状态！！！")
+        			return 0;
+        		}	
+        	}
+        	/* 阻止修改只读模式 */
+        	if($(this).val()=="修改"){
+        		var serial_num=$(this).parent().parent().children("td:first-child").children("span:last-child").html();
+        		/* 默认为请选择 */
+            	$("#execute_status2").attr("disabled",false);
+            	$("#remark2,#file_name2,#execute_status2,#ip,#port,#user,#password,#file_path").attr("readonly",false);
+            	$("#execute_status2  option[value=11] ").attr("selected",true);
+        		/* 状态为修改点击进来页面的展示 */
+        		$("#work_no2,#bus_name2,#product_name2").attr("readonly","readonly");
+                $("#execute_status2,#file_name2,#remark2,#ip,#port,#user,#password,#file_path").addClass("border").removeClass("bordernone");
+            	$("#submit").unbind().click(function(){		
+            		if(test()==0){
+            			return;
+            		}else{
+                		var work_no2=$("#work_no2").val();
+        	        	var bus_name2=$("#bus_name2").val();
+        	        	var product_name2=$("#product_name2").val();   
+                    	var execute_status2=$("#execute_status2").val();	
+                    	var file_name2=$("#file_name2").val();
+                    	var remark2=$("#remark2").val();	
+						var ip=$("#ip").val();
+						var port=$("#port").val();
+						var user=$("#user").val();
+						var password=$("#password").val();
+						var file_path=$("#file_path").val();
+
+                    	$.ajax({
+                	        type : "post",
+                	        url : "../workBillNotice",
+                	        data:{
+                	        	"serial_num":serial_num, 
+                	        	"ip":ip,
+                	        	"port": port,
+                	        	"user":user,             	        
+                	        	"password":password,
+                	        	"file_path":file_path,
+                	            "work_no":work_no2,
+                	            "bus_name":bus_name2,
+                	            "product_name":product_name2,
+                	            "execute_status":execute_status2,
+                	            "file_name":file_name2,
+                	            "remark":remark2
+                	        },     	   
+                	        success : function(data){
+                	        	 var dataObj=eval("("+data+")");
+                	        	 alert(dataObj.message);
+                	         	 $("#list2").hide(); 
+                	         	 /* $(".select").children("td:eq(4)").html(status3); *//* 回写修改 */ 
+                	    	    	currentPage=parseInt($('#currentPage').val());
+                	    	    	var currentPage2=currentPage-1;/* 给当前页添加样式用的index */	
+                	            	$('.currentPage').html(currentPage);/* 选定当前页，回头渲染当前页在这里 */
+                		
+                	            	var bus_name=$('#bus_name').val();
+                	                var product_name=$('#product_name').val();
+                	                var status=$("#status").find("option:selected").val();
+                	                var begin_time=$('#datePicker').val();
+                	                var end_time=$('#datePicker2').val();
+                	                
+                	                $.ajax({
+                	                    type: "post",
+                	                    url: "../workBillQuery",
+                	                    data:{
+                	                        "bus_name":bus_name,
+                	                        "product_name":product_name,
+                	                        "status":status,
+                	                        "begin_time":begin_time,
+                	                        "end_time":end_time,
+                	                        "currentPage":currentPage
+                	                    },
+                	                    dataType : "json",
+                	                    success : function(data){
+                	                    		/* 分页机制 */
+                	                    		$('.currentPage').html(data.currentPage);
+                	                    		$('#currentPage').val(data.currentPage);
+                	                    		$('#totalCount').html(data.totalCount);
+                	                    		$('#totalPage').html(data.totalPage);
+                	                    		
+                	                    		for(i=1,html1="";i<=data.totalPage;i++){
+                	                    			    html1+="<a>"+i+"</a>";
+                	                    		}
+                	                    		$("#center").html(html1);
+                	                    		$("#center a:eq("+currentPage2+")").addClass("current");
+                	                    		/* 列表 查询结果展示 */
+                	                            for(i=0,html="";i<data.rows.length;i++){
+                	                            	var status=data.rows[i].status;
+                	                            	if(status==3){
+                	                            		status="全部";
+                	                            	}else if(status==0){
+                	                            		/* status="待受理"; */
+                	                            		status="<td>待受理</td>"+
+                	                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+                	                            	}else if(status==1){
+                	                            		/* status="已受理"; */
+                	                            		status="<td>已受理</td>"+
+                	                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='查看'></td>";
+                	                            	}else if(status==2){
+                	                            		/* status="审核失败"; */
+                	                            		status="<td>审核失败</td>"+
+                	                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+                	                            	}
+                	                                html+="<tr>"+
+			                	                                "<td class='first-child'  style='display:none;'>"+"<span>"+data.rows[i].ip+"</span>"+"<span>"+data.rows[i].port+"</span>"+
+			                                					"<span>"+data.rows[i].user+"</span>"+"<span>"+data.rows[i].password+"</span>"+
+			                                					"<span>"+data.rows[i].file_path+"</span>"+"<span>"+data.rows[i].serial_num+"</span>"+"</td>"+
+                	            	                            "<td>"+data.rows[i].work_no+"</td>"+
+                	            	                            "<td>"+data.rows[i].bus_name+"</td>"+			                      
+                	            	                            "<td>"+data.rows[i].product_name+"</td>"+
+                	            	                            /* "<td>"+data.rows[i].times.split(" ")[0]+"</td>"+ *//* 按照空格分割 */
+                	    			                            "<td>"+data.rows[i].page_createTime+"</td>"+/* 按照空格分割 */
+                	            	                             status
+                	            	                           /*  "<td>"+status+"</td>"+
+                	            	                            "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>"+ */
+                	                               		   "</tr>"         
+                	                            }
+                	                        	$("#listResults").html(html); 
+                	                    },
+                	                    error:function(){
+                	                        alert('异常!!!!');
+                	                    }
+                	                });           	
+                	         	 $("#list,#fenyebox").show(); 
+                	        },
+                	        error:function(){
+                	            alert('异常!!!!');
+                	        }
+                	    });
+            		}
+
+            	})
+        	}else if($(this).val()=="查看"){     	
+        		var execute_statuss=$(this).parent().parent().children("td:eq(5)").text(); 		
+        		if(execute_statuss=="已受理"){
+        			$("#execute_status2  option[value=1] ").attr("selected",true);
+        		}else if(execute_statuss=="审核失败"){
+        			$("#execute_status2  option[value=2] ").attr("selected",true);
+        		}
+        		var work_no3=$(this).parent().parent().children("td:eq(1)").html();
+         		$.ajax({
+                    type: "post",
+                    url: "../huiXianMessage",
+                    data:{
+                        "work_no":work_no3  
+                    },
+                    dataType : "json",
+                    success : function(data){ 	
+                    	$("#ip").val(data.ip);
+                		$("#port").val(data.port);
+                		$("#user").val(data.user);
+                		$("#password").val(data.password);
+                		$("#file_path").val(data.file_path);   
+                		$("#remark2").val(data.remark);
+                		$("#file_name2").val(data.file_name);
+                    },
+                    error:function(){
+                        alert('异常!!!!');
+                    }
+                });  
+        		/* 状态为查看点击进来页面的展示 */
+        		$("#work_no2,#bus_name2,#product_name2,#execute_status2,#file_name2,#remark2,#ip,#port,#user,#password,#file_path").attr("readonly","readonly");
+        		$("#execute_status2").attr("disabled","disabled");
+                $("#execute_status2,#file_name2,#remark2,#ip,#port,#user,#password,#file_path").addClass("bordernone").removeClass("border");
+		
+        		$("#submit").unbind().click(function(){
+        			$("#list2").hide();
+        			$("#list,#fenyebox").show();
+        		})
+        	}
+
+        	
+        })
+    })	
+
+</script>
+<script type="text/javascript">
+window.onload=function(){ 
+	
+    var bus_name=$('#bus_name').val();
+    var product_name=$('#product_name').val();
+    var status=$("#status").find("option:selected").val();
+    var begin_time=$('#datePicker').val();
+    var end_time=$('#datePicker2').val();
+    
+	/* 默认显示 分页*/
+    $.ajax({
+        type : "post",
+        url : "../workBillQuery",
+        data:{
+            "bus_name":bus_name,
+            "product_name":product_name,
+            "status":status,
+            "begin_time":begin_time,
+            "end_time":end_time
+        },
+        dataType : "json",
+        success : function(data){
+        		/* 分页机制 */
+        		$('.currentPage').html(data.currentPage);
+        		$('#currentPage').val(data.currentPage);
+        		$('#totalCount').html(data.totalCount);
+        		$('#totalPage').html(data.totalPage);
+
+        		for(i=1,html1="";i<=data.totalPage;i++){
+        			    html1+="<a>"+i+"</a>";
+        		}
+        		$("#center").html(html1)
+        		$("#center a:eq(0)").addClass("current");
+	
+        		/* 列表 查询结果展示 */
+                for(i=0,html="";i<data.rows.length;i++){
+                	var status=data.rows[i].status;
+                	if(status==3){
+                		status="全部";
+                	}else if(status==0){
+                		/* status="待受理"; */
+                		status="<td>待受理</td>"+
+                        "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+                	}else if(status==1){
+                		/* status="已受理"; */
+                		status="<td>已受理</td>"+
+                        "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='查看'></td>";
+                	}else if(status==2){
+                		/* status="审核失败"; */
+                		status="<td>审核失败</td>"+
+                        "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+                	}
+                    html+="<tr>"+
+                    			"<td class='first-child'  style='display:none;'>"+"<span>"+data.rows[i].ip+"</span>"+"<span>"+data.rows[i].port+"</span>"+
+                    					"<span>"+data.rows[i].user+"</span>"+"<span>"+data.rows[i].password+"</span>"+
+                    					"<span>"+data.rows[i].file_path+"</span>"+"<span>"+data.rows[i].serial_num+"</span>"+"</td>"+
+	                            "<td>"+data.rows[i].work_no+"</td>"+
+	                            "<td>"+data.rows[i].bus_name+"</td>"+			                      
+	                            "<td>"+data.rows[i].product_name+"</td>"+
+	                            /* "<td>"+data.rows[i].times.split(" ")[0]+"</td>"+ *//* 按照空格分割 */
+	                            "<td>"+data.rows[i].page_createTime+"</td>"+/* 按照空格分割 */
+	                             status
+	                           /*  "<td>"+status+"</td>"+
+	                            "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>"+ */
+                   		   "</tr>"         
+                }
+            	$("#listResults").html(html);
+        },
+        error:function(){
+            alert('异常!!!!');
+        }
+    });
+    
+    var currentPage;
+    /* 上一页 */	
+        $("#pre").live("click",function(){
+        	if(parseInt($('#currentPage').val())>1){    	
+            	currentPage=parseInt($('#currentPage').val())-1;	
+            	var currentPage2=currentPage-1;/* 给当前页添加样式用的index */
+            	$('.currentPage').html(currentPage);/* 选定当前页，回头渲染当前页在这里 */
+	
+            	var bus_name=$('#bus_name').val();
+                var product_name=$('#product_name').val();
+                var status=$("#status").find("option:selected").val();
+                var begin_time=$('#datePicker').val();
+                var end_time=$('#datePicker2').val();
+                
+                $.ajax({
+                    type: "post",
+                    url: "../workBillQuery",
+                    data:{
+                        "bus_name":bus_name,
+                        "product_name":product_name,
+                        "status":status,
+                        "begin_time":begin_time,
+                        "end_time":end_time,
+                        "currentPage":currentPage
+                    },
+                    dataType : "json",
+                    success : function(data){
+                    		/* 分页机制 */
+                    	    $('.currentPage').html(data.currentPage);
+                    	    $('#currentPage').val(data.currentPage);
+                    		$('#totalCount').html(data.totalCount);
+                    		$('#totalPage').html(data.totalPage);
+                    		
+                    		for(i=1,html2="";i<=data.totalPage;i++){
+                    			    html2+="<a>"+i+"</a>";
+                    		}
+                    		$("#center").html(html2);
+                    		$("#center a:eq("+currentPage2+")").addClass("current");
+                    		/* console.log(data.currentPage+"*************"+data.totalCount+"*********"+data.totalPage);  */
+                    		
+                    		/* 列表 查询结果展示 */
+                            for(i=0,html="";i<data.rows.length;i++){
+                            	var status=data.rows[i].status;
+                            	if(status==3){
+                            		status="全部";
+                            	}else if(status==0){
+                            		/* status="待受理"; */
+                            		status="<td>待受理</td>"+
+                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+                            	}else if(status==1){
+                            		/* status="已受理"; */
+                            		status="<td>已受理</td>"+
+                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='查看'></td>";
+                            	}else if(status==2){
+                            		/* status="审核失败"; */
+                            		status="<td>审核失败</td>"+
+                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+                            	}
+                                html+="<tr>"+
+			                                "<td class='first-child'  style='display:none;'>"+"<span>"+data.rows[i].ip+"</span>"+"<span>"+data.rows[i].port+"</span>"+
+			            					"<span>"+data.rows[i].user+"</span>"+"<span>"+data.rows[i].password+"</span>"+
+			            					"<span>"+data.rows[i].file_path+"</span>"+"<span>"+data.rows[i].serial_num+"</span>"+"</td>"+
+            	                            "<td>"+data.rows[i].work_no+"</td>"+
+            	                            "<td>"+data.rows[i].bus_name+"</td>"+			                      
+            	                            "<td>"+data.rows[i].product_name+"</td>"+
+            	                            /* "<td>"+data.rows[i].times.split(" ")[0]+"</td>"+ *//* 按照空格分割 */
+    			                            "<td>"+data.rows[i].page_createTime+"</td>"+/* 按照空格分割 */
+            	                             status
+            	                           /*  "<td>"+status+"</td>"+
+            	                            "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>"+ */
+                               		   "</tr>"         
+                            }
+                        	$("#listResults").html(html);  
+                    },
+                    error:function(){
+                        alert('异常!!!!');
+                    }
+                });
+        	}
+        })
+  
+    
+    /* 下一页 */
+        $("#next").live("click",function(){
+        	
+        	if( parseInt($('#currentPage').val()) < parseInt($('#totalPage').html()) ){
+
+            	currentPage=parseInt($('#currentPage').val())+1;
+            	var currentPage2=currentPage-1;/* 给当前页添加样式用的index */
+            	$('.currentPage').html(currentPage);/* 选定当前页，回头渲染当前页在这里 */
+	
+            	var bus_name=$('#bus_name').val();
+                var product_name=$('#product_name').val();
+                var status=$("#status").find("option:selected").val();
+                var begin_time=$('#datePicker').val();
+                var end_time=$('#datePicker2').val();
+                
+                $.ajax({
+                    type: "post",
+                    url: "../workBillQuery",
+                    data:{
+                        "bus_name":bus_name,
+                        "product_name":product_name,
+                        "status":status,
+                        "begin_time":begin_time,
+                        "end_time":end_time,
+                        "currentPage":currentPage
+                    },
+                    dataType : "json",
+                    success : function(data){
+                    		/* 分页机制 */
+                    		$('.currentPage').html(data.currentPage);
+                    		$('#currentPage').val(data.currentPage);
+                    		$('#totalCount').html(data.totalCount);
+                    		$('#totalPage').html(data.totalPage);
+                    		
+                    		for(i=1,html1="";i<=data.totalPage;i++){
+                    			    html1+="<a>"+i+"</a>";
+                    		}
+                    		$("#center").html(html1)
+                    		$("#center a:eq("+currentPage2+")").addClass("current");
+                    		
+                    		/* 列表 查询结果展示 */
+                            for(i=0,html="";i<data.rows.length;i++){
+                            	var status=data.rows[i].status;
+                            	if(status==3){
+                            		status="全部";
+                            	}else if(status==0){
+                            		/* status="待受理"; */
+                            		status="<td>待受理</td>"+
+                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+                            	}else if(status==1){
+                            		/* status="已受理"; */
+                            		status="<td>已受理</td>"+
+                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='查看'></td>";
+                            	}else if(status==2){
+                            		/* status="审核失败"; */
+                            		status="<td>审核失败</td>"+
+                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+                            	}
+                                html+="<tr>"+
+			                                "<td class='first-child'  style='display:none;'>"+"<span>"+data.rows[i].ip+"</span>"+"<span>"+data.rows[i].port+"</span>"+
+			            					"<span>"+data.rows[i].user+"</span>"+"<span>"+data.rows[i].password+"</span>"+
+			            					"<span>"+data.rows[i].file_path+"</span>"+"<span>"+data.rows[i].serial_num+"</span>"+"</td>"+
+            	                            "<td>"+data.rows[i].work_no+"</td>"+
+            	                            "<td>"+data.rows[i].bus_name+"</td>"+			                      
+            	                            "<td>"+data.rows[i].product_name+"</td>"+
+            	                            /* "<td>"+data.rows[i].times.split(" ")[0]+"</td>"+ *//* 按照空格分割 */
+    			                            "<td>"+data.rows[i].page_createTime+"</td>"+/* 按照空格分割 */
+            	                             status
+            	                           /*  "<td>"+status+"</td>"+
+            	                            "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>"+ */
+                               		   "</tr>"         
+                            }
+                        	$("#listResults").html(html); 
+                    },
+                    error:function(){
+                        alert('异常!!!!');
+                    }
+                });
+            	
+            }
+        	})
+        	
+        	/* 输入页码，点击确定转到相应的页 */
+    	    $("#queding").click(function(){      	
+    	    	
+    	    	currentPage=parseInt($('#currentPage').val());
+    	    	var currentPage2=currentPage-1;/* 给当前页添加样式用的index */
+    	    	/* console.log(currentPage+"******ashashha*****"+parseInt($('#totalPage').html())); */
+        	    if( currentPage >= 1 && currentPage <=  parseInt($('#totalPage').html()) ){
+            	
+            	$('.currentPage').html(currentPage);/* 选定当前页，回头渲染当前页在这里 */
+	
+            	var bus_name=$('#bus_name').val();
+                var product_name=$('#product_name').val();
+                var status=$("#status").find("option:selected").val();
+                var begin_time=$('#datePicker').val();
+                var end_time=$('#datePicker2').val();
+                
+                $.ajax({
+                    type: "post",
+                    url: "../workBillQuery",
+                    data:{
+                        "bus_name":bus_name,
+                        "product_name":product_name,
+                        "status":status,
+                        "begin_time":begin_time,
+                        "end_time":end_time,
+                        "currentPage":currentPage
+                    },
+                    dataType : "json",
+                    success : function(data){
+                    		/* 分页机制 */
+                    		$('.currentPage').html(data.currentPage);
+                    		$('#currentPage').val(data.currentPage);
+                    		$('#totalCount').html(data.totalCount);
+                    		$('#totalPage').html(data.totalPage);
+                    		
+                    		for(i=1,html1="";i<=data.totalPage;i++){
+                    			    html1+="<a>"+i+"</a>";
+                    		}
+                    		$("#center").html(html1);
+                    		$("#center a:eq("+currentPage2+")").addClass("current");
+                    		
+                    		/* 列表 查询结果展示 */
+                            for(i=0,html="";i<data.rows.length;i++){
+                            	var status=data.rows[i].status;
+                            	if(status==3){
+                            		status="全部";
+                            	}else if(status==0){
+                            		/* status="待受理"; */
+                            		status="<td>待受理</td>"+
+                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+                            	}else if(status==1){
+                            		/* status="已受理"; */
+                            		status="<td>已受理</td>"+
+                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='查看'></td>";
+                            	}else if(status==2){
+                            		/* status="审核失败"; */
+                            		status="<td>审核失败</td>"+
+                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+                            	}
+                                html+="<tr>"+
+			                                "<td class='first-child' style='display:none;'>"+"<span>"+data.rows[i].ip+"</span>"+"<span>"+data.rows[i].port+"</span>"+
+			            					"<span>"+data.rows[i].user+"</span>"+"<span>"+data.rows[i].password+"</span>"+
+			            					"<span>"+data.rows[i].file_path+"</span>"+"<span>"+data.rows[i].serial_num+"</span>"+"</td>"+
+            	                            "<td>"+data.rows[i].work_no+"</td>"+
+            	                            "<td>"+data.rows[i].bus_name+"</td>"+			                      
+            	                            "<td>"+data.rows[i].product_name+"</td>"+
+            	                            /* "<td>"+data.rows[i].times.split(" ")[0]+"</td>"+ *//* 按照空格分割 */
+    			                            "<td>"+data.rows[i].page_createTime+"</td>"+/* 按照空格分割 */
+            	                             status
+            	                           /*  "<td>"+status+"</td>"+
+            	                            "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>"+ */
+                               		   "</tr>"         
+                            }
+                        	$("#listResults").html(html); 
+                    },
+                    error:function(){
+                        alert('异常!!!!');
+                    }
+                });           	
+            }
+        	})
+        	/* 点击具体页码的时候转到相应的页 */
+        	$("#center a").live("click",function(){
+        		
+    	    	currentPage=parseInt($(this).html());
+    	    	$(this).addClass("current");/* 给当前选定的添加样式 */
+    	    	$(this).siblings().removeClass("current");
+    	    	/* var currentPage2=currentPage-1; *//* 给当前页添加样式用的index */
+    	    	/* console.log(currentPage+"******ashashha*****"+parseInt($('#totalPage').html())); */
+        	    if( currentPage >= 1 && currentPage <=  parseInt($('#totalPage').html()) ){
+            	
+            	$('.currentPage').html(currentPage);/* 选定当前页，回头渲染当前页在这里 */
+	
+            	var bus_name=$('#bus_name').val();
+                var product_name=$('#product_name').val();
+                var status=$("#status").find("option:selected").val();
+                var begin_time=$('#datePicker').val();
+                var end_time=$('#datePicker2').val();
+                
+                $.ajax({
+                    type: "post",
+                    url: "../workBillQuery",
+                    data:{
+                        "bus_name":bus_name,
+                        "product_name":product_name,
+                        "status":status,
+                        "begin_time":begin_time,
+                        "end_time":end_time,
+                        "currentPage":currentPage
+                    },
+                    dataType : "json",
+                    success : function(data){
+                    		/* 分页机制 */
+                    		$('.currentPage').html(data.currentPage);
+                    		$('#currentPage').val(data.currentPage);
+                    		$('#totalCount').html(data.totalCount);
+                    		$('#totalPage').html(data.totalPage);
+
+                    		/* 列表 查询结果展示 */
+                            for(i=0,html="";i<data.rows.length;i++){
+                            	var status=data.rows[i].status;
+                            	if(status==3){ 
+                            		status="全部";
+                            	}else if(status==0){
+                            		/* status="待受理"; */
+                            		status="<td>待受理</td>"+
+                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+                            	}else if(status==1){
+                            		/* status="已受理"; */
+                            		status="<td>已受理</td>"+
+                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='查看'></td>";
+                            	}else if(status==2){
+                            		/* status="审核失败"; */
+                            		status="<td>审核失败</td>"+
+                                    "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>";
+                            	}
+                                html+="<tr>"+
+			                                "<td class='first-child'  style='display:none;'>"+"<span>"+data.rows[i].ip+"</span>"+"<span>"+data.rows[i].port+"</span>"+
+			            					"<span>"+data.rows[i].user+"</span>"+"<span>"+data.rows[i].password+"</span>"+
+			            					"<span>"+data.rows[i].file_path+"</span>"+"<span>"+data.rows[i].serial_num+"</span>"+"</td>"+
+            	                            "<td>"+data.rows[i].work_no+"</td>"+
+            	                            "<td>"+data.rows[i].bus_name+"</td>"+			                      
+            	                            "<td>"+data.rows[i].product_name+"</td>"+
+            	                            /* "<td>"+data.rows[i].times.split(" ")[0]+"</td>"+ *//* 按照空格分割 */
+    			                            "<td>"+data.rows[i].page_createTimee+"</td>"+/* 按照空格分割 */
+            	                             status
+            	                           /*  "<td>"+status+"</td>"+
+            	                            "<td><input style='border: none;color: red; background-color: transparent; outline: none;' type='button' value='修改'></td>"+ */
+                               		   "</tr>"         
+                            }
+                        	$("#listResults").html(html); 
+                    },
+                    error:function(){
+                        alert('异常!!!!');
+                    }
+                });           	
+            }
+        	})
+}
+</script>
+</body>
+</html>

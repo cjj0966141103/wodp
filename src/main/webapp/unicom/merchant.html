@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style> 
+    	 html,body{width: 100%; font-size:12px;}
+        *{padding: 0;margin: 0;}
+        .title{
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .title span{
+            padding: 0 10px 6px 10px;
+            font-weight: bold;
+            line-height: 30px;
+            height: 30px;
+            border-bottom: 3px solid #cf0a0e;
+        }
+        .title2 input[type="text"]{
+            width: 128px;
+            line-height: 26px;
+            height: 26px;
+            border: 1px solid #d2d2d2;
+            outline: none;
+        }
+        .title2 input[type="button"],#fenye input[type="button"],#fenye2 input[type="button"]{
+            background-color: #d9080d;
+            color: white;
+            width: 44px;
+            line-height: 26px;
+            height: 26px;
+            outline: none;
+            border: none;
+        }
+        table{
+            border: 1px solid #dfdfdf;
+            border-bottom: none;
+            width: 100%;
+            text-align: center;
+        }
+
+        table td{
+            line-height: 36px;
+            border-bottom: 1px solid #dfdfdf;
+        }
+        #merchantTitle tbody tr:nth-child(even), #three tbody tr:nth-child(even){
+            background-color: #fbfbfb;
+        }
+   
+        #merchantTitle thead tr:first-child,#three thead tr:first-child{
+            background-color: #ecedec;
+        }
+
+        #second{
+            border: none;
+            margin-left: 20%;   
+		    border-bottom: none;
+		    width:auto; 
+        }
+        #second td{
+            line-height: 36px;
+            border-bottom: 1px solid transparent;
+        }
+        #second tr:nth-child(odd){
+            background-color: transparent;
+        }
+        #second tr:first-child{
+            background-color: transparent;
+        }
+
+        #second tr td:nth-child(odd){
+            text-align: right;
+        }
+        #second tr td:nth-child(even){
+            text-align: left;
+        }
+        #merchant p,#operator p,#list p{
+            margin: 30px 0 15px 0;
+        }
+        #second>.p1{
+            padding-left: 20px;
+        }
+        #second>.p1:first-child{
+            margin-top: 20px;
+        }
+
+        #second .p1 input[type="text"]{
+            background-color: transparent;
+            border: none;
+            outline: none;
+        }
+        #second .p1 span,#second .p1 input[type="text"]{
+            line-height: 40px;
+            height: 40px;
+        }
+        #second .p1 td:first-child span{
+            font-weight:bold;
+        }
+        #second input[type="button"],#back{
+            display: inline-block;
+            margin: 10px auto 0;
+            color: white;
+            width: 72px;
+            line-height: 40px;
+            height: 40px;
+            outline: none;
+            border: none;
+            background-color: #d9080d;
+        }
+        #submitbox{ text-align: center; }
+		#back{width: 134px;}
+        #second,#three{
+            margin-top: 30px;       
+        }
+        input[type="text"]{
+            text-indent: 10px;
+        }
+
+       #fenyebox,#fenyebox2{
+            text-align: center;
+            margin-top:30px;  
+        }
+        #fenye a,#currentPage,#fenye2 a,#currentPage2{
+            margin:0 3px;
+            font-size: 12px;
+            text-align: center;
+            display: inline-block;
+            border: 1px solid #cecece;
+            color: #9b9999;
+            line-height: 22px;
+            width: 22px;
+            height: 22px;
+        }
+        #fenye span,#fenye2 span{
+            font-size: 12px;
+            color: #666666;
+        }
+        #fenye #pre,#fenye #next,#fenye2 #pre2,#fenye2 #next2{
+            width: 64px;
+        }
+        .selected{
+            background-color: #e9e9e9;
+            font-weight: bold;
+        }
+        #resource_check{
+            height: 28px;
+            width: 130px;
+            border: 1px solid #d2d2d2;
+            outline: none;
+        }
+        .current{
+        	background-color:#e9e9e9;
+        	font-weight: bold;
+        }
+        #pre:hover,#next:hover,#center a:hover,#pre2:hover,#next2:hover,#center2 a:hover{
+        	color:red;
+        	cursor: pointer;
+        }
+        #submit,#listSearch,#merchantResults tr td:nth-child(8) span,#merchantResults tr td:nth-child(7),#queding,#queding2{
+        	cursor: pointer;
+        }       
+        #disk,#service_namebox input,#resource_check,#check_desc,#resource_check2{
+            margin-left: 1px;
+	        width: 230px!important;
+		    line-height: 26px!important;
+		    height: 26px!important;	  
+		    outline: none!important;
+		    text-indent: 10px!important;
+        }
+        #check_desc{ height: 150px!important;}
+        #resource_check{ width: 128px!important;border: 1px solid #d2d2d2!important;}
+        #resource_check,#resource_check2{ text-indent: 7px!important;width: 128px; }
+        .border{ border: 1px solid #d2d2d2!important;}
+        .bordernone{ border: none!important;}
+        #merchant2,#merchant3,#fenyebox2{ display:none; }
+    </style>
+</head>
+<body>
+<div id="merchant">
+    <div class="title">
+        <span style="font-size:16px;">商户列表</span>
+    </div>
+    <p class="title2">
+        <span>商户名称: </span><input id="bus_name" type="text" name="bus_name">
+        <span>审核状态: </span>
+        <select name="resource_check" id="resource_check">
+        	<option value="3">全部</option>
+            <option value="2">待审核</option>
+            <option value="1">审核通过</option>
+            <option value="0">审核不通过</option>
+        </select>
+        <input id="listSearch" type="button" value="查询">
+    </p>
+    <table id="merchantTitle"  cellspacing="0" cellpadding="0">
+    	<thead>
+	        <tr>
+	            <td>商户名称</td>
+	            <td>创建时间</td>
+	            <td>资源审核状态</td>
+	            <td>审核时间</td>
+	            <td>操作员</td>
+	            <td>操作</td>
+	        </tr>
+	    </thead>
+	    <tbody id="merchantResults">
+	        
+	    </tbody>
+    </table>
+</div>
+
+<div id="fenyebox">
+    <div id="fenye">
+        <a id="pre">&lt;上一页</a>
+        	<span id="center"></span>
+        <a id="next">下一页&gt;</a>
+        <span>跳到第</span><input id="currentPage" class="currentPage"></input><span>页</span>
+        <input id="queding" type="button" value="确定">
+        <span style="margin-left: 20px;">第<span class="currentPage"></span>/<span id="totalPage"></span>页,共<span id="totalCount"></span>条记录</span>
+    </div> 
+</div>
+
+<div id="merchant2">
+    <div class="title">
+        <span style="font-size:16px;">资源审核</span>
+    </div>
+    <table id="second" cellspacing="0" cellpadding="0">
+         <tr class="p1">
+            <td><span>IT资源: </span></td><td><input id="disk" type="text" value=""></td>
+         </tr>
+         <tr class="p1">
+            <td><span>数据资源: </span></td><td id="service_namebox"></td>   
+         </tr> 
+         <tr class="p1">
+            <td><span>审核: </span></td><td>
+            								<select name="resource_check" id="resource_check2">
+		            							 	<option value="3">请选择状态</option>										        
+										            <option value="1">审核通过</option>
+										            <option value="0">审核不通过</option>  
+										     </select>
+										  </td>    
+         </tr>        
+         <tr class="p1">
+            <td><span>审核意见: </span></td><td><textarea id="check_desc" name="check_desc"></textarea></td>
+        </tr>
+        <tr><td></td><td style="text-align:center;"><input id="submit" type="button" value="提交"> <input id="submit2" type="button" value="返回"></td></tr>
+    </table>
+</div>
+<div id="merchant3">
+    <div class="title">
+        <span style="font-size:16px;">操作员列表</span>
+    </div>
+    <table id="three" cellspacing="0" cellpadding="0">
+    	<thead>
+    		<tr>
+            <td>姓名</td>
+            <td>联系手机</td>
+            <td>EMAIL</td>
+            <td>角色</td>
+            <td>创建时间</td>
+            <td>审核通过时间</td>
+        </tr>
+    	</thead>
+    	<tbody id="merchant3Results">
+	    	
+    	</tbody>
+    </table>
+</div>
+
+<div id="fenyebox2">
+    <div id="fenye2">
+        <a id="pre2">&lt;上一页</a>
+        	<span id="center2"></span>
+        <a id="next2">下一页&gt;</a>
+        <span>跳到第</span><input id="currentPage2" class="currentPage2"></input><span>页</span>
+        <input id="queding2" type="button" value="确定">
+        <span style="margin-left: 20px;">第<span class="currentPage2"></span>/<span id="totalPage2"></span>页,共<span id="totalCount2"></span>条记录</span>
+    </div> 
+    <br>
+    <button id="back">返回商户列表</button>
+</div>
+<script  type="text/javascript" src="../res/JS/constant.js"></script>
+<script  type="text/javascript" src="../res/JS/jquery.min.js"></script>
+<script  type="text/javascript">
+$(function(){
+	
+	/* 查找事件 */
+	        $('#listSearch').click(function(){
+	        	
+            var bus_name=$('#bus_name').val();
+            var resource_check=$("#resource_check").find("option:selected").val();
+            $.ajax({
+                type : "post",
+                url : "../tenant/select",
+                data:{
+                    "bus_name":bus_name,
+                    "resource_check":resource_check
+                },  
+                dataType:'json', 
+                success : function(data){   
+            		/* 分页机制 */
+            	    $('.currentPage').html(data.currentPage);
+            		$('#currentPage').val(data.currentPage);
+            		$('#totalCount').html(data.totalCount);
+            		$('#totalPage').html(data.totalPage); 
+    				
+            		for(i=1,html1="";i<=data.totalPage;i++){
+            			    html1+="<a>"+i+"</a>";
+            		}
+            		$("#center").html(html1)
+            		$("#center a:eq(0)").addClass("current");
+    	
+            		/* 列表 查询结果展示 */
+                     for(i=0,html="";i<data.listm.length;i++){
+                    	 var resource_check=data.listm[i].resource_check;
+                         /* var status=data.listm[i].status;*/
+                    	 if(resource_check==2){
+                      		resource_check="待审核";
+                      		status="<span>审核</span>";
+                      	}else if(resource_check==1){
+                      		resource_check="审核通过";
+                      		status="<span>查看</span> <span>注销</span>";
+                      	}else if(resource_check==0){
+                      		resource_check="审核不通过";
+                      		status="<span>查看</span>";
+                      	}
+
+                    	 html+="<tr>"+   	 
+                    	 "<td>"+data.listm[i].bus_name+"</td>"+		
+                    	 "<td class='hidden' style='display:none;'>"+data.listm[i].tenant_id+"</td>"+
+                    	 "<td class='hidden' style='display:none;'>"+data.listm[i].bus_id+"</td>"+
+                         "<td>"+data.listm[i].create_time+"</td>"+
+                         "<td>"+resource_check+"</td>"+	                      
+                         "<td>"+data.listm[i].check_time+"</td>"+
+                         "<td style='color:red;'>"+"查看"+"("+data.listm[i].operatornum+")"+"</td>"+
+                         "<td style='color:red;'>"+status+"</td>"+ 
+            		   "</tr>"            
+                    }
+            		
+                	$("#merchantResults").html(html);
+                },
+                error:function(){
+                    alert('异常!!!!');
+                }
+            });
+        })
+        
+        
+        
+        /* 返回 */
+       $("#submit2").unbind().click(function(){
+    			$("#merchant,#fenyebox").show();
+    	    	$("#merchant2").hide(); 
+    		})
+       /* 待审核的时候可以点击弹出隐藏  */
+       $("#merchantResults tr td:nth-child(8) span").live("click",function(){
+    	   
+    	    currentPage=parseInt($('#currentPage').val());
+	    	var currentPage2=currentPage-1;/* 给当前页添加样式用的index */	
+    	    if($(this).html()=="审核"){
+
+    	        $("#disk,#service_namebox input").addClass("bordernone").removeClass("border");
+    	        $("#check_desc,#resource_check2").addClass("border").removeClass("bordernone");
+    	        
+    	        $("#merchant,#fenyebox").hide();
+    	    	$("#merchant2").show(); 
+    	    	
+    	    	/* 阻止修改只读模式 */
+            	$("#disk,#service_namebox input").attr("readonly","readonly");
+            	$("#check_desc").attr("readonly",false);
+            	$("#resource_check2").attr("disabled",false);
+    	    	
+            	/* 默认为请选择 */
+            	$("#resource_check2  option[value=0] ").attr("selected",true);
+            	var tenant_id=$(this).parent().parent().children("td:eq(1)").html();	
+           	    $.ajax({
+               	        type : "post",
+               	        url : "../resource/checkedPage",
+               	        data:{
+               	            "tenant_id":tenant_id  	           
+               	        },  
+               	        dataType:"json",
+               	        success : function(data){ 
+               	        	var html2=""; 
+               	        	var html3="";
+               	        	for(i=0;i<data.length;i++){
+               	        		html3+="&nbsp;"+data[i].service_name+"&nbsp;"; 	  		
+               	        	}
+               	        	html2="<input style='width:200px';  type='text' value="+html3+">"
+               	        	$("#service_namebox").html(html2)
+               	        	$("#disk").val(data[0].disk); 
+               	        	$("#service_namebox input").attr("readonly","readonly"); 	
+               	        },
+               	        error:function(){
+               	            alert('异常!!!!');
+               	        }
+               	    });
+            	
+            	  $("#submit").unbind().click(function(){  
+            		  var check_desc=$('#check_desc').val();
+                      var resource_check=$("#resource_check2").val();
+                	  $.ajax({
+              	        type : "post",
+              	        url : "../resource/checked",
+              	        data:{
+              	            "tenant_id":tenant_id,
+              	            "check_desc":check_desc,
+              	            "resource_check":resource_check           
+              	        },  
+              	        dataType:"json",
+              	        success : function(data){	
+              	       		
+            	    		$("#merchant2").hide();	
+            	    		var currentPage=parseInt($('#currentPage').val());
+            	    		var bus_name=$('#bus_name').val();
+            	            var resource_check=$("#resource_check").find("option:selected").val();
+            	    		
+                            $.ajax({
+                                type: "post",
+                                url: "../tenant/select",
+                                data:{
+                                	 "bus_name":bus_name,
+                                     "resource_check":resource_check,
+                                     "currentPage":currentPage
+                                },
+                                dataType : "json",
+                                success : function(data){
+                                		
+                            		$('.currentPage').html(data.currentPage);
+                            		$('#currentPage').val(data.currentPage);
+                            		$('#totalCount').html(data.totalCount);
+                            		$('#totalPage').html(data.totalPage);
+                            	
+                            		for(i=1,html1="";i<=data.totalPage;i++){
+                            			    html1+="<a>"+i+"</a>";
+                            		}
+                            		$("#center").html(html1)
+                            		$("#center a:eq("+currentPage2+")").addClass("current");
+                            		
+                                    for(i=0,html="";i<data.listm.length;i++){
+                                    	var resource_check=data.listm[i].resource_check;
+                                        /* var status=data.listm[i].status;*/
+                                     	if(resource_check==2){
+                                     		resource_check="待审核";
+                                     		status="<span>审核</span>";
+                                     	}else if(resource_check==1){
+                                     		resource_check="审核通过";
+                                     		status="<span>查看</span> <span>注销</span>";
+                                     	}else if(resource_check==0){
+                                     		resource_check="审核不通过";
+                                     		status="<span>查看</span>";
+                                     	}
+                                   	 html+="<tr>"+
+            	                       	"<td>"+data.listm[i].bus_name+"</td>"+		
+            	                       	"<td class='hidden' style='display:none;'>"+data.listm[i].tenant_id+"</td>"+
+            	                       	"<td class='hidden' style='display:none;'>"+data.listm[i].bus_id+"</td>"+
+                                        "<td>"+data.listm[i].create_time+"</td>"+
+                                        "<td>"+resource_check+"</td>"+	                      
+                                        "<td>"+data.listm[i].check_time+"</td>"+
+                                        "<td style='color:red;'>"+"查看"+"("+data.listm[i].operatornum+")"+"</td>"+
+                                        "<td style='color:red;'>"+status+"</td>"+ 
+                           		   "</tr>"            
+                                   }
+                                   $("#merchantResults").html(html); 
+                                },
+                                error:function(){
+                                    alert('异常!!!!');
+                                }
+                            }); 
+            	    		/* $(".select").children("td:eq(5)").html(resource_check2); *//* 回写修改 */ 
+            	    		$("#merchant,#fenyebox").show();  
+              	        },
+              	        error:function(){
+              	            alert('异常!!!!');
+              	        }
+              	    });	
+          	    })
+    	    }else if($(this).html()=="查看"){
+    	    	$("#disk,#check_desc,#service_namebox,#resource_check2").addClass("bordernone").removeClass("border");
+    	    	$("#merchant,#fenyebox").hide();
+    	    	$("#merchant2").show();	
+    	    	/* 阻止修改只读模式 */
+            	$("#disk,#check_desc,#service_namebox").attr("readonly","readonly");
+    	    	var resource_check3=$(this).parent().parent().children("td:eq(4)").html();
+    	    	
+    	    	/* 默认为所对应的状态 */
+    	    	if(resource_check3=="审核通过"){
+    	    		$("#resource_check2  option[value=1] ").attr("selected",true);
+    	    	}else if(resource_check3=="审核不通过"){
+    	    		$("#resource_check2  option[value=0] ").attr("selected",true);
+    	    	}
+    	    	$("#resource_check2 option:selected").val(resource_check3);
+    	        $("#resource_check2").attr("disabled","disabled"); 
+
+    	    	/* $("#execute_status2,#file_name2,#remark2").addClass("border").removeClass("bordernone"); */
+            	var tenant_id=$(this).parent().parent().children("td:eq(1)").html();	
+           	    $.ajax({
+               	        type : "post",
+               	        url :  "../resource/checkedPage",
+               	        data:{
+               	            "tenant_id":tenant_id  	           
+               	        },  
+               	        dataType:"json",
+               	        success : function(data){    
+               	        	var html2=""; 
+               	        	var html3="";
+               	        	for(i=0;i<data.length;i++){
+               	        		html3+="&nbsp;"+data[i].service_name+"&nbsp;";	 	  		
+               	        	}       	
+               	        	html2="<input style='width:200px';  type='text' value="+html3+"> "
+               	        	$("#service_namebox").html(html2)
+               	        	$("#disk").val(data[0].disk); 
+               	        	$("#service_namebox input").attr("readonly","readonly"); 	
+               	        },
+               	        error:function(){
+               	            alert('异常!!!!');
+               	        }
+               	    });
+            	
+            	  $("#submit").unbind().click(function(){ 
+            		  $("#merchant2").hide();	
+            		  $("#merchant,#fenyebox").show();    
+          	    })
+    	    }else if($(this).html()=="注销"){
+    	    	
+            	var bus_id=$(this).parent().parent().children("td:eq(2)").html();
+           	    $.ajax({
+               	        type : "post",
+               	        url : "../tenant/cancelByPage",
+               	        data:{
+               	            "bus_id":bus_id  	           
+               	        },  
+               	        dataType:"json",
+               	        success : function(data){
+               	        	alert(data.message); 
+               	        	
+               	        	/* 把数据重新读取一遍 */
+            	    		var currentPage=parseInt($('#currentPage').val());
+            	    		var bus_name=$('#bus_name').val();
+            	            var resource_check=$("#resource_check").find("option:selected").val();
+            	    		
+                            $.ajax({
+                                type: "post",
+                                url: "../tenant/select",
+                                data:{
+                                	 "bus_name":bus_name,
+                                     "resource_check":resource_check,
+                                     "currentPage":currentPage
+                                },
+                                dataType : "json",
+                                success : function(data){
+                                		
+                            		$('.currentPage').html(data.currentPage);
+                            		$('#currentPage').val(data.currentPage);
+                            		$('#totalCount').html(data.totalCount);
+                            		$('#totalPage').html(data.totalPage);
+                            	
+                            		for(i=1,html1="";i<=data.totalPage;i++){
+                            			    html1+="<a>"+i+"</a>";
+                            		}
+                            		$("#center").html(html1)
+                            		$("#center a:eq("+currentPage2+")").addClass("current");
+                            		
+                                    for(i=0,html="";i<data.listm.length;i++){
+                                    	var resource_check=data.listm[i].resource_check;
+                                        /* var status=data.listm[i].status;*/
+                                     	if(resource_check==2){
+                                     		resource_check="待审核";
+                                     		status="<span>审核</span>";
+                                     	}else if(resource_check==1){
+                                     		resource_check="审核通过";
+                                     		status="<span>查看</span> <span>注销</span>";
+                                     	}else if(resource_check==0){
+                                     		resource_check="审核不通过";
+                                     		status="<span>查看</span>";
+                                     	}
+                                   	 html+="<tr>"+
+            	                       	"<td>"+data.listm[i].bus_name+"</td>"+		
+            	                       	"<td class='hidden' style='display:none;'>"+data.listm[i].tenant_id+"</td>"+
+            	                       	"<td class='hidden' style='display:none;'>"+data.listm[i].bus_id+"</td>"+
+                                        "<td>"+data.listm[i].create_time+"</td>"+
+                                        "<td>"+resource_check+"</td>"+	                      
+                                        "<td>"+data.listm[i].check_time+"</td>"+
+                                        "<td style='color:red;'>"+"查看"+"("+data.listm[i].operatornum+")"+"</td>"+
+                                        "<td style='color:red;'>"+status+"</td>"+ 
+                           		   "</tr>"            
+                                   }
+                                   $("#merchantResults").html(html); 
+                                },
+                                error:function(){
+                                    alert('异常!!!!');
+                                }
+                            }); 
+               	        },
+               	        error:function(){
+               	            alert('异常!!!!');
+               	        }
+               	    });
+            	
+            	  $("#submit").unbind().click(function(){ 
+            		  $("#merchant2").hide();	
+            		  $("#merchant,#fenyebox").show();    
+          	    })
+    	    }	
+        })   
+	
+})
+</script>
+<script  type="text/javascript">
+window.onload=function(){	
+	/* 默认显示 分页*/
+    $.ajax({
+        type : "post",
+        url : "../tenant/select",
+        dataType:'json',
+        success : function(data){
+       
+        		/* 分页机制 */
+        	    $('.currentPage').html(data.currentPage);
+        		$('#currentPage').val(data.currentPage);
+        		$('#totalCount').html(data.totalCount);
+        		$('#totalPage').html(data.totalPage); 
+				
+        		for(i=1,html1="";i<=data.totalPage;i++){
+        			    html1+="<a>"+i+"</a>";
+        		}
+        		$("#center").html(html1)
+        		$("#center a:eq(0)").addClass("current");
+	
+        		/* 列表 查询结果展示 */
+                 for(i=0,html="";i<data.listm.length;i++){
+                	var resource_check=data.listm[i].resource_check;
+                   /* var status=data.listm[i].status;*/
+                	if(resource_check==2){
+                 		resource_check="待审核";
+                 		status="<span>审核</span>";
+                 	}else if(resource_check==1){
+                 		resource_check="审核通过";
+                 		status="<span>查看</span> <span>注销</span>";
+                 	}else if(resource_check==0){
+                 		resource_check="审核不通过";
+                 		status="<span>查看</span>";
+                 	}
+                	
+                	 html+="<tr>"+
+                	 "<td>"+data.listm[i].bus_name+"</td>"+		
+                	 "<td class='hidden' style='display:none;'>"+data.listm[i].tenant_id+"</td>"+
+                	 "<td class='hidden' style='display:none;'>"+data.listm[i].bus_id+"</td>"+
+                     "<td>"+data.listm[i].create_time+"</td>"+
+                     "<td>"+resource_check+"</td>"+	                      
+                     "<td>"+data.listm[i].check_time+"</td>"+
+                     "<td style='color:red;'>"+"查看"+"("+data.listm[i].operatornum+")"+"</td>"+
+                     "<td style='color:red;'>"+status+"</td>"+ 
+        		   "</tr>"            
+                }
+        		
+            	$("#merchantResults").html(html);
+        },
+        error:function(){
+            alert('异常!!!!');
+        }
+    });
+	
+    var currentPage;
+
+    /* 下一页 */
+     $("#next").live("click",function(){  
+ 
+    	if( parseInt($('#currentPage').val()) < parseInt($('#totalPage').html()) ){   
+        	currentPage=parseInt($('#currentPage').val())+1;      	
+        	var currentPage2=currentPage-1;
+        	$('.currentPage').html(currentPage);
+        	var bus_name=$('#bus_name').val();
+            var resource_check=$("#resource_check").find("option:selected").val();
+
+           $.ajax({
+               type: "post",
+               url: "../tenant/select",
+               data:{
+                   "bus_name":bus_name,
+                   "resource_check":resource_check,
+                   "currentPage":currentPage
+               },
+               dataType : "json",
+               success : function(data){
+               		
+               		$('.currentPage').html(data.currentPage);
+               		$('#currentPage').val(data.currentPage);
+               		$('#totalCount').html(data.totalCount);
+               		$('#totalPage').html(data.totalPage);    	
+               		for(i=1,html1="";i<=data.totalPage;i++){
+               			    html1+="<a>"+i+"</a>";
+               		}
+               		$("#center").html(html1)
+               		$("#center a:eq("+currentPage2+")").addClass("current");
+               		
+                       for(i=0,html="";i<data.listm.length;i++){
+                    	   var resource_check=data.listm[i].resource_check;
+                           /* var status=data.listm[i].status;*/
+                    	   if(resource_check==2){
+                        		resource_check="待审核";
+                        		status="<span>审核</span>";
+                        	}else if(resource_check==1){
+                        		resource_check="审核通过";
+                        		status="<span>查看</span> <span>注销</span>";
+                        	}else if(resource_check==0){
+                        		resource_check="审核不通过";
+                        		status="<span>查看</span>";
+                        	}
+
+                      	 html+="<tr>"+
+                          	"<td>"+data.listm[i].bus_name+"</td>"+		
+                          	"<td class='hidden' style='display:none;'>"+data.listm[i].tenant_id+"</td>"+
+                          	"<td class='hidden' style='display:none;'>"+data.listm[i].bus_id+"</td>"+
+                           "<td>"+data.listm[i].create_time+"</td>"+
+                           "<td>"+resource_check+"</td>"+	                      
+                           "<td>"+data.listm[i].check_time+"</td>"+
+                           "<td style='color:red;'>"+"查看"+"("+data.listm[i].operatornum+")"+"</td>"+
+                           "<td style='color:red;'>"+status+"</td>"+ 
+              		   "</tr>"            
+                      }
+                      $("#merchantResults").html(html);
+               },
+               error:function(){
+                   alert('异常!!!!');
+               }
+           });
+        }
+    	})
+    	
+    /* 上一页 */	
+        $("#pre").live("click",function(){
+        	
+        	if(parseInt($('#currentPage').val())>1){   
+        		currentPage=parseInt($('#currentPage').val())-1;
+            	var currentPage2=currentPage-1;
+            	$('.currentPage').html(currentPage);
+            	var bus_name=$('#bus_name').val();
+                var resource_check=$("#resource_check").find("option:selected").val();
+
+                $.ajax({
+                    type: "post",
+                    url: "../tenant/select",
+                    data:{
+                    	 "bus_name":bus_name,
+                         "resource_check":resource_check,
+                         "currentPage":currentPage
+                    },
+                    dataType : "json",
+                    success : function(data){
+                    		
+                		$('.currentPage').html(data.currentPage);
+                		$('#currentPage').val(data.currentPage);
+                		$('#totalCount').html(data.totalCount);
+                		$('#totalPage').html(data.totalPage);
+                		
+                		for(i=1,html1="";i<=data.totalPage;i++){
+                			    html1+="<a>"+i+"</a>";
+                		}
+                		$("#center").html(html1)
+                		$("#center a:eq("+currentPage2+")").addClass("current");
+                		
+                        for(i=0,html="";i<data.listm.length;i++){
+                        	var resource_check=data.listm[i].resource_check;
+                            /* var status=data.listm[i].status;*/
+                        	if(resource_check==2){
+                         		resource_check="待审核";
+                         		status="<span>审核</span>";
+                         	}else if(resource_check==1){
+                         		resource_check="审核通过";
+                         		status="<span>查看</span> <span>注销</span>";
+                         	}else if(resource_check==0){
+                         		resource_check="审核不通过";
+                         		status="<span>查看</span>";
+                         	}
+                       	 html+="<tr>"+
+	                       	"<td>"+data.listm[i].bus_name+"</td>"+		
+	                       	"<td class='hidden' style='display:none;'>"+data.listm[i].tenant_id+"</td>"+
+	                       	"<td class='hidden' style='display:none;'>"+data.listm[i].bus_id+"</td>"+
+                            "<td>"+data.listm[i].create_time+"</td>"+
+                            "<td>"+resource_check+"</td>"+	                      
+                            "<td>"+data.listm[i].check_time+"</td>"+
+                            "<td style='color:red;'>"+"查看"+"("+data.listm[i].operatornum+")"+"</td>"+
+                            "<td style='color:red;'>"+status+"</td>"+ 
+               		   "</tr>"            
+                       }
+                       $("#merchantResults").html(html); 
+                    },
+                    error:function(){
+                        alert('异常!!!!');
+                    }
+                });
+        	}
+        })	
+        
+           /* 输入页码，点击确定转到相应的页 */
+    	    $("#queding").click(function(){      	
+    	    	
+    	    	currentPage=parseInt($('#currentPage').val());
+    	    	var currentPage2=currentPage-1;/* 给当前页添加样式用的index */
+    	    	/* console.log(currentPage+"******ashashha*****"+parseInt($('#totalPage').html())); */
+        	    if( currentPage >= 1 && currentPage <=  parseInt($('#totalPage').html()) ){
+            	var bus_name=$('#bus_name').val();
+                var resource_check=$("#resource_check").find("option:selected").val();
+                
+                $.ajax({
+                    type: "post",
+                    url: "../tenant/select",
+                    data:{
+                    	 "bus_name":bus_name,
+                         "resource_check":resource_check,
+                         "currentPage":currentPage
+                    },
+                    dataType : "json",
+                    success : function(data){
+                    		/* 分页机制 */
+                    	$('.currentPage').html(data.currentPage);
+                		$('#currentPage').val(data.currentPage);
+                		$('#totalCount').html(data.totalCount);
+                		$('#totalPage').html(data.totalPage);
+                		
+                		for(i=1,html1="";i<=data.totalPage;i++){
+                			    html1+="<a>"+i+"</a>";
+                		}
+                		$("#center").html(html1)
+                		$("#center a:eq("+currentPage2+")").addClass("current");
+                		/* console.log(data.currentPage+"*************"+data.totalCount+"*********"+data.totalPage); */
+                		
+                		/* 列表 查询结果展示 */
+                        for(i=0,html="";i<data.listm.length;i++){
+                        	var resource_check=data.listm[i].resource_check;
+                            /* var status=data.listm[i].status;*/
+                        	if(resource_check==2){
+                         		resource_check="待审核";
+                         		status="<span>审核</span>";
+                         	}else if(resource_check==1){
+                         		resource_check="审核通过";
+                         		status="<span>查看</span> <span>注销</span>";
+                         	}else if(resource_check==0){
+                         		resource_check="审核不通过";
+                         		status="<span>查看</span>";
+                         	}
+                       	 html+="<tr>"+
+	                       	"<td>"+data.listm[i].bus_name+"</td>"+		
+	                       	"<td class='hidden' style='display:none;'>"+data.listm[i].tenant_id+"</td>"+
+	                       	"<td class='hidden' style='display:none;'>"+data.listm[i].bus_id+"</td>"+
+                            "<td>"+data.listm[i].create_time+"</td>"+
+                            "<td>"+resource_check+"</td>"+	                      
+                            "<td>"+data.listm[i].check_time+"</td>"+
+                            "<td style='color:red;'>"+"查看"+"("+data.listm[i].operatornum+")"+"</td>"+
+                            "<td style='color:red;'>"+status+"</td>"+ 
+               		   "</tr>"            
+                       }
+                       $("#merchantResults").html(html); 
+                    },
+                    error:function(){
+                        alert('异常!!!!');
+                    }
+                });           	
+            }
+        	})
+        	
+        	/* 点击具体页码的时候转到相应的页 */
+        	$("#center a").live("click",function(){	
+   
+    	    	currentPage=parseInt($(this).html());
+    	    	$(this).addClass("current");/* 给当前选定的添加样式 */
+    	    	$(this).siblings().removeClass("current");
+    	    	
+        	    if( currentPage >= 1 && currentPage <=  parseInt($('#totalPage').html()) ){
+            	
+            	/* $('.currentPage').html(currentPage);/* 选定当前页，回头渲染当前页在这里 */ 
+	
+            	var bus_name=$('#bus_name').val();
+                var resource_check=$("#resource_check").find("option:selected").val();
+                
+                $.ajax({
+                    type: "post",
+                    url: "../tenant/select",
+                    data:{
+                    	 "bus_name":bus_name,
+                         "resource_check":resource_check,
+                         "currentPage":currentPage
+                    },
+                    dataType : "json",
+                    success : function(data){
+                 		/* 分页机制 */
+                    	$('.currentPage').html(data.currentPage);
+                		$('#currentPage').val(data.currentPage);
+                		$('#totalCount').html(data.totalCount);
+                		$('#totalPage').html(data.totalPage);
+
+                		/* 列表 查询结果展示 */
+                        for(i=0,html="";i<data.listm.length;i++){
+                        	var resource_check=data.listm[i].resource_check;
+                            /* var status=data.listm[i].status;*/
+                        	if(resource_check==2){
+                         		resource_check="待审核";
+                         		status="<span>审核</span>";
+                         	}else if(resource_check==1){
+                         		resource_check="审核通过";
+                         		status="<span>查看</span> <span>注销</span>";
+                         	}else if(resource_check==0){
+                         		resource_check="审核不通过";
+                         		status="<span>查看</span>";
+                         	}
+                       	 html+="<tr>"+
+	                       	"<td>"+data.listm[i].bus_name+"</td>"+	
+	                       	"<td class='hidden' style='display:none;'>"+data.listm[i].tenant_id+"</td>"+
+	                       	"<td class='hidden' style='display:none;'>"+data.listm[i].bus_id+"</td>"+
+                            "<td>"+data.listm[i].create_time+"</td>"+
+                            "<td>"+resource_check+"</td>"+	                      
+                            "<td>"+data.listm[i].check_time+"</td>"+
+                            "<td style='color:red;'>"+"查看"+"("+data.listm[i].operatornum+")"+"</td>"+
+                            "<td style='color:red;'>"+status+"</td>"+ 
+               		   "</tr>"            
+                       }
+                       $("#merchantResults").html(html); 
+                    },
+                    error:function(){
+                        alert('异常!!!!');
+                    }
+                });           	
+            }
+        	})
+        	
+        	/* 操作员列表 */
+        	$("#merchantResults tr td:nth-child(7)").live("click",function(){
+        		
+        		$("#merchant,#fenyebox").hide();
+        		$("#merchant3,#fenyebox2").show();
+        		/* 查看内容可读不可修改 */
+        		$("#merchant3Results").attr("readonly","readonly");
+        		/* 操作员列表默认展示 */
+        		var bus_id=$(this).parent().children("td:eq(2)").html();
+                $.ajax({
+                    type: "post",
+                    url: "../operator/findOperator",
+                    data:{
+                    	 "bus_id":bus_id,
+                         "operate_type":1,
+                         "operator_check":1
+                    },
+                    dataType : "json",
+                    success : function(data){
+                 		/* 分页机制 */
+                    	$('.currentPage2').html(data.currentPage);
+                		$('#currentPage2').val(data.currentPage);
+                		$('#totalCount2').html(data.totalCount);
+                		$('#totalPage2').html(data.totalPage);
+                		
+                		for(i=1,html1="";i<=data.totalPage;i++){
+            			    html1+="<a>"+i+"</a>";
+	            		}
+                		
+                		/*这里缺少翻译*/
+                		
+	            		$("#center2").html(html1)
+	            		$("#center2 a:eq(0)").addClass("current");
+
+                		/* 列表 查询结果展示 */
+                        for(i=0,html="";i<data.data.length;i++){     	
+                        	var lengths=data.data[i].roles.split(",");
+          					 var roless="";
+	          					for(j=0;j<lengths.length;j++){
+	          						 if(lengths[j]==1){
+	          							 lengths[j]="数据作业 ";
+	          						 }else if(lengths[j]==2){
+	          							 lengths[j]="数据挖掘 ";
+	          						 }else if(lengths[j]==3){
+	          							 lengths[j]="数据审计 ";
+	          						 } 
+	          						 roless+=lengths[j];
+	          					 }
+                       	  
+                       	 html+="<tr>"+
+	                       	"<td>"+data.data[i].user_name+"</td>"+	
+                            "<td>"+data.data[i].phone_no+"</td>"+
+                            "<td>"+data.data[i].email+"</td>"+	                      
+                            "<td>"+roless+"</td>"+
+                            "<td>"+data.data[i].page_create_time+"</td>"+
+                            "<td>"+data.data[i].page_check_time+"</td>"+ 
+               		   "</tr>"            
+                       }
+                       $("#merchant3Results").html(html); 
+                    },
+                    error:function(){
+                        alert('异常!!!!');
+                    }
+                });
+                
+                
+                var currentPage2;
+                /* 下一页 */
+                $("#next2").live("click",function(){
+	
+               	if( parseInt($('#currentPage2').val()) < parseInt($('#totalPage2').html()) ){   
+               		
+                   	currentPage2=parseInt($('#currentPage2').val())+1;      	
+                   	var currentPage22=currentPage2-1;
+                   	$('.currentPage2').html(currentPage2);
+
+                   /*  console.log("点击下一页的实际要请求的页:"+currentPage2); */
+                      $.ajax({
+                          type: "post",
+                          url: "../operator/findOperator",
+                          data:{
+                        	  "bus_id":bus_id,
+                              "operate_type":1,
+                              "operator_check":1,
+                              "currentPage":currentPage2
+                          },
+                          dataType : "json",
+                          success : function(data){
+                        	  /* 分页机制 */
+                          	$('.currentPage2').html(data.currentPage);
+                      		$('#currentPage2').val(data.currentPage);
+                      		$('#totalCount2').html(data.totalCount);
+                      		$('#totalPage2').html(data.totalPage);
+                      		
+                      		for(i=1,html1="";i<=data.totalPage;i++){
+                			    html1+="<a>"+i+"</a>";
+	                		}
+	                		$("#center2").html(html1)
+	                		$("#center2 a:eq("+currentPage22+")").addClass("current");
+                      		/* 列表 查询结果展示 */
+                              for(i=0,html="";i<data.data.length;i++){     	  
+                              	var lengths=data.data[i].roles.split(",");
+             					 var roless="";
+	             					for(j=0;j<lengths.length;j++){
+	             						 if(lengths[j]==1){
+	             							 lengths[j]="数据作业 ";
+	             						 }else if(lengths[j]==2){
+	             							 lengths[j]="数据挖掘 ";
+	             						 }else if(lengths[j]==3){
+	             							 lengths[j]="数据审计 ";
+	             						 } 
+	             						 roless+=lengths[j];
+	             					 }  
+                             	 html+="<tr>"+
+      	                       	"<td>"+data.data[i].user_name+"</td>"+	
+                                  "<td>"+data.data[i].phone_no+"</td>"+
+                                  "<td>"+data.data[i].email+"</td>"+	                      
+                                  "<td>"+roless+"</td>"+
+                                  "<td>"+data.data[i].page_create_time+"</td>"+
+                                  "<td>"+data.data[i].page_check_time+"</td>"+ 
+                     		   "</tr>"            
+                             }
+                             $("#merchant3Results").html(html); 
+                          },
+                          error:function(){
+                              alert('异常!!!!');
+                          }
+                      });
+                   }
+               	})
+               	
+    /* 上一页 */	
+        $("#pre2").live("click",function(){
+        	if(parseInt($('#currentPage2').val())>1){   
+        		currentPage2=parseInt($('#currentPage2').val())-1;
+            	var currentPage22=currentPage2-1;
+            	$('.currentPage2').html(currentPage2);
+	
+                $.ajax({
+                    type: "post",
+                    url: "../operator/findOperator",
+                    data:{
+                  	  "bus_id":bus_id,
+                        "operate_type":1,
+                        "operator_check":1,
+                        "currentPage":currentPage2
+                    },
+                    dataType : "json",
+                    success : function(data){
+                  	  /* 分页机制 */
+                    	$('.currentPage2').html(data.currentPage);
+                		$('#currentPage2').val(data.currentPage);
+                		$('#totalCount2').html(data.totalCount);
+                		$('#totalPage2').html(data.totalPage);
+                		
+                		for(i=1,html1="";i<=data.totalPage;i++){
+          			    html1+="<a>"+i+"</a>";
+              		}
+              		$("#center2").html(html1)
+              		$("#center2 a:eq("+currentPage22+")").addClass("current");
+                		/* 列表 查询结果展示 */
+                        for(i=0,html="";i<data.data.length;i++){
+                        	
+                        	var lengths=data.data[i].roles.split(",");
+        					 var roless="";
+        					 for(j=0;j<lengths.length;j++){
+        						 if(lengths[j]==1){
+        							 lengths[j]="数据作业 ";
+        						 }else if(lengths[j]==2){
+        							 lengths[j]="数据挖掘 ";
+        						 }else if(lengths[j]==3){
+        							 lengths[j]="数据审计 ";
+        						 } 
+        						 roless+=lengths[j];
+        					 }
+                       	  
+                       	 html+="<tr>"+
+	                       	"<td>"+data.data[i].user_name+"</td>"+	
+                            "<td>"+data.data[i].phone_no+"</td>"+
+                            "<td>"+data.data[i].email+"</td>"+	                      
+                            "<td>"+roless+"</td>"+
+                            "<td>"+data.data[i].page_create_time+"</td>"+
+                            "<td>"+data.data[i].page_check_time+"</td>"+ 
+               		   "</tr>"            
+                       }
+                       $("#merchant3Results").html(html); 
+                    },
+                    error:function(){
+                        alert('异常!!!!');
+                    }
+                });
+        	}
+        })
+        
+        /* 输入页码，点击确定转到相应的页 */
+    	    $("#queding2").click(function(){      	
+    	    	
+    	    	currentPage2=parseInt($('#currentPage2').val());
+    	    	var currentPage22=currentPage2-1;/* 给当前页添加样式用的index */
+    	    	/* console.log(currentPage+"******ashashha*****"+parseInt($('#totalPage').html())); */
+        	    if( currentPage2 >= 1 && currentPage2 <=  parseInt($('#totalPage2').html()) ){
+                    $.ajax({
+                        type: "post",
+                        url: "../operator/findOperator",
+                        data:{
+                      	    "bus_id":bus_id,
+                            "operate_type":1,
+                            "operator_check":1,
+                            "currentPage":currentPage2
+                        },
+                        dataType : "json",
+                        success : function(data){
+                      	  /* 分页机制 */
+                        	$('.currentPage2').html(data.currentPage);
+                    		$('#currentPage2').val(data.currentPage);
+                    		$('#totalCount2').html(data.totalCount);
+                    		$('#totalPage2').html(data.totalPage);
+                    		
+                    		for(i=1,html1="";i<=data.totalPage;i++){
+              			    html1+="<a>"+i+"</a>";
+                  		}
+                  		$("#center2").html(html1)
+                  		$("#center2 a:eq("+currentPage22+")").addClass("current");
+                    		/* 列表 查询结果展示 */
+                            for(i=0,html="";i<data.data.length;i++){
+                            	
+                            	var lengths=data.data[i].roles.split(",");
+            					 var roless="";
+            					 for(j=0;j<lengths.length;j++){
+            						 if(lengths[j]==1){
+            							 lengths[j]="数据作业 ";
+            						 }else if(lengths[j]==2){
+            							 lengths[j]="数据挖掘 ";
+            						 }else if(lengths[j]==3){
+            							 lengths[j]="数据审计 ";
+            						 } 
+            						 roless+=lengths[j];
+            					 }
+                           	  
+                           	 html+="<tr>"+
+    	                       	"<td>"+data.data[i].user_name+"</td>"+	
+                                "<td>"+data.data[i].phone_no+"</td>"+
+                                "<td>"+data.data[i].email+"</td>"+	                      
+                                "<td>"+roless+"</td>"+
+                                "<td>"+data.data[i].page_create_time+"</td>"+
+                                "<td>"+data.data[i].page_check_time+"</td>"+ 
+                   		   "</tr>"            
+                           }
+                           $("#merchant3Results").html(html); 
+                        },
+                        error:function(){
+                            alert('异常!!!!');
+                        }
+                    });
+            }
+        	})
+        	
+        	/* 点击具体页码的时候转到相应的页 */
+        	$("#center2 a").live("click",function(){	
+   
+    	    	currentPage2=parseInt($(this).html());
+    	    	$(this).addClass("current");/* 给当前选定的添加样式 */
+    	    	$(this).siblings().removeClass("current");
+    	    	
+        	    if( currentPage2 >= 1 && currentPage2 <=  parseInt($('#totalPage2').html()) ){
+        	    	$.ajax({
+                        type: "post",
+                        url: "../operator/findOperator",
+                        data:{
+                      	    "bus_id":bus_id,
+                            "operate_type":1,
+                            "operator_check":1,
+                            "currentPage":currentPage2
+                        },
+                        dataType : "json",
+                        success : function(data){
+                      	  /* 分页机制 */
+                        	$('.currentPage2').html(data.currentPage);
+                    		$('#currentPage2').val(data.currentPage);
+                    		$('#totalCount2').html(data.totalCount);
+                    		$('#totalPage2').html(data.totalPage);
+                    		
+                    		/* 列表 查询结果展示 */
+                            for(i=0,html="";i<data.data.length;i++){ 
+                            	
+	                             var lengths=data.data[i].roles.split(",");
+	           					 var roless="";
+		           					for(j=0;j<lengths.length;j++){
+		           					 if(lengths[j]==1){
+		           						 lengths[j]="数据作业 ";
+		           					 }else if(lengths[j]==2){
+		           						 lengths[j]="数据挖掘 ";
+		           					 }else if(lengths[j]==3){
+		           						 lengths[j]="数据审计 ";
+		           					 } 
+		           					 roless+=lengths[j];
+		           				 }
+                            	
+                           	 html+="<tr>"+
+    	                       	"<td>"+data.data[i].user_name+"</td>"+	
+                                "<td>"+data.data[i].phone_no+"</td>"+
+                                "<td>"+data.data[i].email+"</td>"+	                      
+                                "<td>"+roless+"</td>"+
+                                "<td>"+data.data[i].page_create_time+"</td>"+
+                                "<td>"+data.data[i].page_check_time+"</td>"+ 
+                   		   "</tr>"            
+                           }
+                           $("#merchant3Results").html(html); 
+                        },
+                        error:function(){
+                            alert('异常!!!!');
+                        }
+                    });
+            }
+        	}) 	
+        	})      	
+        	$("#back").click(function(){
+        		$("#merchant,#fenyebox").show();
+        		$("#merchant3,#fenyebox2").hide();
+        	})
+        	
+}
+</script>
+</html>
